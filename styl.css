@@ -2,8 +2,11 @@
     --kolor-tla: #060607;
     --kolor-tekstu: #EAFFD9;
     --kolor-akcent-jasny: #219147;
+    --kolor-akcent-jasny-szary: #536158;
+    --kolor-akcent-ciemny-szary: #272a28;
     --kolor-akcent-ciemny: #0b3d1c;
     --zdj-banner: url("zdj/zielone-liscie-tlo.jpg");
+    --wielkosc-tekstu: 16px;
 }
 
 body{
@@ -17,38 +20,37 @@ body{
     background-color: var(--kolor-tla);
     color: var(--kolor-tekstu);
     box-sizing: border-box;
+    /* font-size: var(--wielkosc-tekstu); */
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-header {
+header, nav {
+    background-color: var(--kolor-akcent-ciemny-szary);
     width: 100vw;
     /* zmienic heigh t */
-    height: 100px;
+    height: 150px;
+}
+
+nav ul{
+    float: left;
+}
+
+nav ul li::marker{
+    content: none;
+}
+
+nav {
+    display:flex;
+    justify-content: center;
 }
 
 a img {
-    height: 95px;
+    height: 100px;
     width: auto;
 }
 
 header p {
     text-align: center;
-}
-
-.main::before {
-   /* put an image below with lowered opacity but full text opacity! */
-        /* content: ' ';
-        display: block;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0.6;
-        background-image: var(--zdj-banner);
-        background-repeat: no-repeat;
-        background-position: 50% 0;
-        background-size: cover; */
-      
 }
 
 .main {
@@ -57,12 +59,19 @@ header p {
 }
 
 footer {
-    position: relative;
+    width: 100%;
+    position: absolute;
     bottom: 0px;
-    /* przyklejony do dolu  */
+    height: 10%;
+    padding: 10px;
 }
 
-/* dwa białe bloki z lewo prawo pod header */
+footer, footer * {
+    background-color: var(--kolor-akcent-ciemny);
+    text-align: right;
+}
+
+/* dwa czerne bloki z lewo prawo pod header */
 
 
 /* responsywność? */

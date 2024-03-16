@@ -6,6 +6,11 @@
     <title>UnterrichtApp - edycja</title>
 </head>
 <body>
-    
+    <h2>Wybierz plan do edycji</h2>
+
+    <form action="#" method="get">
+        
+    </form>
+
 </body>
 </html>

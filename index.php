@@ -8,18 +8,18 @@
 </head>
 <body>
 <header>
+     <p>Szybkie akcje</p>
      <nav>
-          <p>Szybkie akcje</p>
           <ul>
-               <li><a href="">Nauczyciele</a></li>
-               <li><a href="">Klasy</a></li>
+               <li><a href="ucz.php?szuk=nau">Nauczyciele</a></li>
+               <li><a href="ucz.php?szuk=klasy">Klasy</a></li>
           </ul>
           <ul>
-               <li><a href=""><img src="zdj/plus.png" alt=""></a></li>
+               <li><a href="tworzPlan.php"><img src="zdj/plus.png" alt=""></a></li>
           </ul>
           <ul>
-               <li><a href="">Edytuj plan</a></li>
-               <li><a href="">Dodaj nauczyciela</a></li>
+               <li><a href="edycjaPlan.php">Edytuj plan</a></li>
+               <li><a href="dodNau.php">Dodaj nauczyciela</a></li>
           </ul>
           <!-- <ul>
                <li><a href=""></a></li>
