@@ -16,7 +16,7 @@ body{
 
 * {
     margin: 0;
-    padding: 0;
+    padding: 0;  
     background-color: var(--kolor-tla);
     color: var(--kolor-tekstu);
     box-sizing: border-box;
@@ -33,6 +33,7 @@ header, nav {
 
 nav ul{
     float: left;
+    background-color: var(--kolor-akcent-ciemny-szary);
 }
 
 nav ul li::marker{
@@ -41,7 +42,10 @@ nav ul li::marker{
 
 nav {
     display:flex;
-    justify-content: center;
+    text-align:center;
+    justify-content: space-around;
+    align-items: center;
+    
 }
 
 a img {
@@ -58,6 +62,15 @@ header p {
     /* opacity: 0.5; */
 }
 
+.danger {
+    text-shadow: 1.5px 1.5px var(--kolor-tekstu);
+    color: red;
+}
+
+.prawy{
+    float: right;
+}
+
 footer {
     width: 100%;
     position: absolute;
@@ -71,6 +84,9 @@ footer, footer * {
     text-align: right;
 }
 
+header, header * {
+    background-color: var(--kolor-akcent-ciemny-szary);
+}
 /* dwa czerne bloki z lewo prawo pod header */
 
 

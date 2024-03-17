@@ -8,10 +8,11 @@
 </head>
 <body>
 <header>
-     <p>Szybkie akcje</p>
+     <!-- <p>Szybkie akcje</p> -->
      <nav>
           <ul>
-               <li><a href="ucz.php?szuk=nau">Nauczyciele</a></li>
+               <li><a href="szkola.php">Szkoły</a></li>
+               <li><a href="ucz.php?szuk=nauczyciele">Nauczyciele</a></li>
                <li><a href="ucz.php?szuk=klasy">Klasy</a></li>
           </ul>
           <ul>
@@ -20,6 +21,7 @@
           <ul>
                <li><a href="edycjaPlan.php">Edytuj plan</a></li>
                <li><a href="dodNau.php">Dodaj nauczyciela</a></li>
+               <li><a href="dodNau.php">Przełącz szkole</a></li>
           </ul>
           <!-- <ul>
                <li><a href=""></a></li>
@@ -37,6 +39,7 @@
           <h3>Aplikacja do tworzenia i zarządania planami lekcji twojej szkoły!</h3>
           <h2>UnterrichtApp</h2>
           
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, odit ducimus voluptate libero eius aperiam vero animi quasi. Ipsam illo, possimus iste hic aliquid commodi provident omnis eos at cum!</p>
      </div>
 </div>
      
