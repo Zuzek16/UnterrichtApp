@@ -11,7 +11,7 @@
      <!-- <p>Szybkie akcje</p> -->
      <nav>
           <ul>
-               <li><a href="szkola.php">Szkoły</a></li>
+               <li><a href="szkola.php?edit=true">Szkoły</a></li>
                <li><a href="ucz.php?szuk=nauczyciele">Nauczyciele</a></li>
                <li><a href="ucz.php?szuk=klasy">Klasy</a></li>
           </ul>
