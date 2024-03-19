@@ -57,6 +57,21 @@ header p {
     text-align: center;
 }
 
+table, tr, td, th {
+    border: 2.5px solid var(--kolor-tekstu);
+    border-collapse: collapse;
+}
+
+td, th{
+    text-align: center;
+    padding: 2px;
+}
+
+table {
+    margin: 20px;
+    /* or center this */
+}
+
 .main {
     text-align: center;
     /* opacity: 0.5; */
@@ -69,6 +84,10 @@ header p {
 
 .prawy{
     float: right;
+}
+
+.lewy {
+    float:left;
 }
 
 footer {

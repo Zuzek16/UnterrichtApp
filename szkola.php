@@ -7,6 +7,9 @@
      <link rel="stylesheet" href="styl.css">
 </head>
 <body>
+     <?php
+     include "conn.php";
+     ?>
      <div id="editON">
      <h3>Dodawanie szkoły</h3>
      <form action="#" method="post">
@@ -37,14 +40,41 @@
      </div>
      </div>
      <div id="editOFF">
-          <h3>Lista szkół</h3>
+          <div class="lewy">
 
-          <table>
+               <h3>Lista szkół</h3>
                
-          </table>
+               <table>
+                    <tr>
+                         <th>ID</th>
+                         <th>Nazwa</th>
+                    </tr>
+                    
+                    <?php
+
+
+$result = mysqli_query($conn, "SELECT * from szkola");
+
+while ($row = mysqli_fetch_assoc($result)) {
+     echo "<tr>" ;   
+     foreach($row as $el){
+          echo "<td>".$el."</td>";
+     }
+}
+?>
+
+</table>
+</div>
+
+          <div class="prawy">
+               <h3 class="editToggle"><a href="szkola.php?edit=true">Zarządzaj szkołami</a></h3>
+          </div>
+          
+
      </div>
      
      <script>
+     
           const queryString = window.location.search;
           const urlParams = new URLSearchParams(queryString);
           let edit;
@@ -54,14 +84,42 @@
                edit = "false";
           }
 
+          
+
           if (edit == "true") {//włączamy odd i usuwanie szkoly/edit szkoy
                document.getElementById("editOFF").style.display = "none";//could also do an class of displaing and toggle it on and off
                document.getElementById("editON").style.display = "block";
 
-          } else if (edit == "false"){
+          } else {
                document.getElementById("editOFF").style.display = "block";
                document.getElementById("editON").style.display = "none";
           }
+
+          const btns = document.querySelectorAll(".editToggle");//nie dizala
+
+          btns.forEach(element => {
+               element.addEventListener("click", ()=>{
+               if (edit == "true") {
+                    edit = "false"
+               } else if (edit == "false") {
+                    edit = "true"
+               }})     
+          });
+
+          for (let i = 0; i < btns.length; i++) {
+btns[i].addEventListener("click", ()=>{
+     if (edit == "true") {
+                    edit = "false"
+               } else if (edit == "false") {
+                    edit = "true"
+               }
+     
+})
+}
+          
+
+          urlParams.set("edit", edit);
+
      </script>
 </body>
 </html>
