@@ -2,8 +2,11 @@
     --kolor-tla: #060607;
     --kolor-tekstu: #EAFFD9;
     --kolor-akcent-jasny: #219147;
+    --kolor-akcent-jasny-szary: #536158;
+    --kolor-akcent-ciemny-szary: #272a28;
     --kolor-akcent-ciemny: #0b3d1c;
     --zdj-banner: url("zdj/zielone-liscie-tlo.jpg");
+    --wielkosc-tekstu: 16px;
 }
 
 body{
@@ -13,20 +16,40 @@ body{
 
 * {
     margin: 0;
-    padding: 0;
+    padding: 0;  
     background-color: var(--kolor-tla);
     color: var(--kolor-tekstu);
     box-sizing: border-box;
+    /* font-size: var(--wielkosc-tekstu); */
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-header {
+header, nav {
+    background-color: var(--kolor-akcent-ciemny-szary);
     width: 100vw;
     /* zmienic heigh t */
-    height: 100px;
+    height: 150px;
+}
+
+nav ul{
+    float: left;
+    background-color: var(--kolor-akcent-ciemny-szary);
+}
+
+nav ul li::marker{
+    content: none;
+}
+
+nav {
+    display:flex;
+    text-align:center;
+    justify-content: space-around;
+    align-items: center;
+    
 }
 
 a img {
-    height: 95px;
+    height: 100px;
     width: auto;
 }
 
@@ -34,21 +57,19 @@ header p {
     text-align: center;
 }
 
-.main::before {
-   /* put an image below with lowered opacity but full text opacity! */
-        /* content: ' ';
-        display: block;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0.6;
-        background-image: var(--zdj-banner);
-        background-repeat: no-repeat;
-        background-position: 50% 0;
-        background-size: cover; */
-      
+table, tr, td, th {
+    border: 2.5px solid var(--kolor-tekstu);
+    border-collapse: collapse;
+}
+
+td, th{
+    text-align: center;
+    padding: 2px;
+}
+
+table {
+    margin: 20px;
+    /* or center this */
 }
 
 .main {
@@ -56,13 +77,36 @@ header p {
     /* opacity: 0.5; */
 }
 
-footer {
-    position: relative;
-    bottom: 0px;
-    /* przyklejony do dolu  */
+.danger {
+    text-shadow: 1.5px 1.5px var(--kolor-tekstu);
+    color: red;
 }
 
-/* dwa białe bloki z lewo prawo pod header */
+.prawy{
+    float: right;
+}
+
+.lewy {
+    float:left;
+}
+
+footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    height: 10%;
+    padding: 10px;
+}
+
+footer, footer * {
+    background-color: var(--kolor-akcent-ciemny);
+    text-align: right;
+}
+
+header, header * {
+    background-color: var(--kolor-akcent-ciemny-szary);
+}
+/* dwa czerne bloki z lewo prawo pod header */
 
 
 /* responsywność? */

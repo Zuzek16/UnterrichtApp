@@ -16,9 +16,9 @@
      $conn = mysqli_connect($host, $user, $pass, $db);
 
      if ($conn) {
-          echo "Połączenie powiodło się\n";
+          echo "<p class='conn'>Połączenie powiodło się\n</p>";
      } else {
-          echo "Błąd połączenia: ". mysqli_connect_error();
+          echo "<p class='conn'>Błąd połączenia: ". mysqli_connect_error()."</p>";
      }
      ?>
 </body>
