@@ -20,8 +20,9 @@ $wynik = mysqli_query($conn, $sql);
 $tab = [];
 
 while ($row = mysqli_fetch_assoc($wynik)) {
-    if ($tab == NULL) array_push($tab, $row); //does it still work?
-    else array_push($tab, $row);
+    // if ($tab == NULL) array_push($tab, $row); //does it still work?
+    //else 
+    array_push($tab, $row);
 }
 
 if ($tab == NULL) {
@@ -45,8 +46,9 @@ if ($tab == NULL) {
 
 <p>
     <?php
-    //set teh szkolaaktyw variabvle.
-    echo "Wybrana szkoła: ".$szkolaAktyw;
+    if (isset($_POST['szkolaAktyw'])) {
+        echo "Wybrana szkoła: ".($_POST['szkolaAktyw']);
+    }
     ?>
 </p>
 
