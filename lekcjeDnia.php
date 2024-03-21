@@ -8,12 +8,16 @@
 </head>
 <body>
      <!-- <a href="gotoweLekcje.php">Wybierz z poprzednich lekcji</a> -->
+     <?php
+include "conn.php";
+?>
      <form action="" method="post">
           <label for="przedmiot">Przedmiot</label>
           <select name="przedmiot" id="przedmiot">
           <?php
           include 'getAll.php';
           foreach($przedmiot as $el){echo "<option value='".$el['nazwa']."'>".$el['nazwa']."</option>";}
+          //!!TU NIE DZIALA ! spr getAll.php
           ?>
           </select>
 
@@ -32,16 +36,33 @@
           <form action="" method="post">
                <label for="nauczyciel">Nauczyciel: </label>
                <select name="nauczyciel" id="nauczyciel">
+                    <!-- <option value="">HALO </option> -->
                     <?php
-               //     foreach(nauczycieleKtorzyUcza($_POST['przedmiot'])){
-// !! dok this function in getAll.php
-                    // }
+                    // $nauczyciuele = nauczycieleKtorzyUcza($_POST['przedmiot']); 
+                    echo "<option value=''>$nauczyciele</option>";
+                   foreach( $nauczyciuele as $nau){
+                         echo "<option value='$nau'>$nau</option>";
+                    }
                     ?>
                </select>
           </form>
-          
+          <!-- WYBRANY PRZEDMIOT ... -->
           <?php
-     }
+     
+}
+echo "!!!!!";
+echo $_POST['przedmiot'];
+var_dump($_POST['przedmiot']);
+     // echo nauczycie////leKtorzyUcza($_POST['przedmiot']);
+     // var_dump(nauczycieleKtorzyUcza("fizyka"));
+     $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa LIKE $przedmiot;";
+     $result = mysqli_query($conn, $sql);
+     $tabN = [];
+     while ($row = mysqli_fetch_assoc($result)) {
+           array_push($tabN, $row);
+           echo $row;
+          }
+
      ?>
 
      <script>

@@ -1,1 +1,3 @@
-<??>
+<?
+//wraz z nauczyanym przedmiotem
+?>

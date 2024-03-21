@@ -2,9 +2,18 @@
 include "conn.php";
 
 // is this a good idea?
-function nauczycieleKtorzyUcza($przedmiot){//zwraca tablice
-     $sql = "SELECT * from nauczany_przedmiot WHERE";//do this querey now - wyklikać w phpmyadmin
+function nauczycieleKtorzyUcza($przedmiot){
+     //do wszystkich przedmiotow $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id;";//do this querey now - wyklikać w phpmyadmin
+
+     //[przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko]
+     $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa LIKE $przedmiot;";
      $result = mysqli_query($conn, $sql);
+     $tabN = [];
+     while ($row = mysqli_fetch_assoc($result)) {
+           array_push($tabN, $row);
+           echo $row;
+          }
+     return $tabN;
 
 }
 
