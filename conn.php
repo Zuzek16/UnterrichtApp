@@ -12,7 +12,6 @@
      $db = "plan_lekcji";
      $host = "localhost";
      
-
      $conn = mysqli_connect($host, $user, $pass, $db);
 
      if ($conn) {
