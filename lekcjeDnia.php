@@ -15,7 +15,7 @@ include "conn.php";
           <label for="przedmiot">Przedmiot</label>
           <select name="przedmiot" id="przedmiot">
           <?php
-          include 'getAll.php';
+          include('getAll.php');
           foreach($przedmiot as $el){echo "<option value='".$el['nazwa']."'>".$el['nazwa']."</option>";}
           //!!TU NIE DZIALA ! spr getAll.php
           ?>
@@ -23,7 +23,8 @@ include "conn.php";
 
           <!-- <label for="">Nauczyciel</label> -->
 
-          <label for="">Sala</label>
+          <label for="sala">Sala</label>
+          <select name="sala" id="sala"></select>
      
 
           <button type="submit">Zatwierdź</button>
@@ -33,34 +34,39 @@ include "conn.php";
      // can we have it have an 'ghost' so it doesnt appear out of nowhere?
      if (isset($_POST['przedmiot'])) {
           ?>
+               <!-- action można na .php ustawić -->
           <form action="" method="post">
                <label for="nauczyciel">Nauczyciel: </label>
                <select name="nauczyciel" id="nauczyciel">
-                    <!-- <option value="">HALO </option> -->
                     <?php
-                    // $nauczyciuele = nauczycieleKtorzyUcza($_POST['przedmiot']); 
-                    echo "<option value=''>$nauczyciele</option>";
-                   foreach( $nauczyciuele as $nau){
-                         echo "<option value='$nau'>$nau</option>";
-                    }
+                         foreach (nauczycieleKtorzyUcza($_POST['przedmiot']) as $nau) {
+                         echo "<option value='$nau'>".$nau."</option>";
+                         }
+                         /////////////////////////////////////
+                         // $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$_POST['przedmiot']."'";
+                         // $result = mysqli_query($conn, $sql);
+                         // $tabNau = [];
+                         // while ($row = mysqli_fetch_assoc($result)) {
+                         // array_push($tabNau, $row['imie']." ".$row['nazwisko']);
+                         // echo "<option>".$row['imie']." ".$row['nazwisko']."</option>";
+                         // }
                     ?>
                </select>
           </form>
-          <!-- WYBRANY PRZEDMIOT ... -->
           <?php
-     
+     echo"###";
+     echo $_POST['przedmiot'];
+     echo"###";
+
 }
 echo "!!!!!";
-echo $_POST['przedmiot'];
-var_dump($_POST['przedmiot']);
-     // echo nauczycie////leKtorzyUcza($_POST['przedmiot']);
      // var_dump(nauczycieleKtorzyUcza("fizyka"));
-     $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa LIKE $przedmiot;";
+     //*to dziolo
+     $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$_POST['przedmiot']."';";
      $result = mysqli_query($conn, $sql);
      $tabN = [];
      while ($row = mysqli_fetch_assoc($result)) {
-           array_push($tabN, $row);
-           echo $row;
+          echo $row['imie']." ".$row['nazwisko'];
           }
 
      ?>

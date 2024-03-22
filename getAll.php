@@ -1,17 +1,17 @@
 <?php
-include "conn.php";
-
-// is this a good idea?
 function nauczycieleKtorzyUcza($przedmiot){
+     global $conn;//!! czoosmi nie widzie
      //do wszystkich przedmiotow $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id;";//do this querey now - wyklikać w phpmyadmin
 
      //[przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko]
-     $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa LIKE $przedmiot;";
+                    // $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$_POST['przedmiot']."';";
+     $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$przedmiot."'";
      $result = mysqli_query($conn, $sql);
      $tabN = [];
      while ($row = mysqli_fetch_assoc($result)) {
-           array_push($tabN, $row);
-           echo $row;
+          //  array_push($tabN, $row);
+           array_push($tabN, $row['imie']." ".$row['nazwisko']);
+          //  echo $row['imie']." ".$row['nazwisko'];
           }
      return $tabN;
 
