@@ -1,0 +1,8 @@
+     // $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$_POST['przedmiot']."';";
+     // $result = mysqli_query($conn, $sql);
+     // $tabN = [];
+     // while ($row = mysqli_fetch_assoc($result)) {
+     //      echo $row['imie']." ".$row['nazwisko'];
+     //      }
+     ^kod łączenie nauczyant przedmiot
+     szkoła.php ma JS!

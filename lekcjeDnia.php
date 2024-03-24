@@ -21,11 +21,6 @@ include "conn.php";
           ?>
           </select>
 
-          <!-- <label for="">Nauczyciel</label> -->
-
-          <label for="sala">Sala</label>
-          <select name="sala" id="sala"></select>
-     
 
           <button type="submit">Zatwierdź</button>
      </form>
@@ -33,6 +28,7 @@ include "conn.php";
      <?php
      // can we have it have an 'ghost' so it doesnt appear out of nowhere?
      if (isset($_POST['przedmiot'])) {
+          echo "<p>Wybrany przedmiot - ".$_POST['przedmiot']."</p>";
           ?>
                <!-- action można na .php ustawić -->
           <form action="" method="post">
@@ -42,37 +38,29 @@ include "conn.php";
                          foreach (nauczycieleKtorzyUcza($_POST['przedmiot']) as $nau) {
                          echo "<option value='$nau'>".$nau."</option>";
                          }
-                         /////////////////////////////////////
-                         // $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$_POST['przedmiot']."'";
-                         // $result = mysqli_query($conn, $sql);
-                         // $tabNau = [];
-                         // while ($row = mysqli_fetch_assoc($result)) {
-                         // array_push($tabNau, $row['imie']." ".$row['nazwisko']);
-                         // echo "<option>".$row['imie']." ".$row['nazwisko']."</option>";
-                         // }
                     ?>
                </select>
+
+               <label for="sala">Sala</label>
+          <input type="text" name="sala" id="sala" size="5">
+
+          <button type="submit">Zapisz lekcję</button>
           </form>
           <?php
-     echo"###";
-     echo $_POST['przedmiot'];
-     echo"###";
-
 }
-echo "!!!!!";
-     // var_dump(nauczycieleKtorzyUcza("fizyka"));
-     //*to dziolo
-     $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$_POST['przedmiot']."';";
-     $result = mysqli_query($conn, $sql);
-     $tabN = [];
-     while ($row = mysqli_fetch_assoc($result)) {
-          echo $row['imie']." ".$row['nazwisko'];
-          }
+//walidacja i unieszkodliwienie sala 
+//maybe dodanie pustej opcji typu "wybierz" w select i dodać sprawdzanie czy opcja nie jest ""
+if (isset($_POST['sala']) && trim($_POST['sala']) != "" && isset($_POST['nauczyciel']) && trim($_POST['nauczyciel']) != "") {
+     
+     $dodLekcje = "";
+if (mysqli_query($con, $dodLekcje)) {
+     # code...
+}
+
+     unset($_POST['sala']);
+     unset($_POST['nauczyciel']);
+}
 
      ?>
-
-     <script>
-
-     </script>
 </body>
 </html>
