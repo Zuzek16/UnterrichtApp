@@ -106,7 +106,33 @@ footer, footer * {
 header, header * {
     background-color: var(--kolor-akcent-ciemny-szary);
 }
+
+p:not(footer p) {
+    margin: 0 60px 0 60px;
+}
+
 /* dwa czerne bloki z lewo prawo pod header */
 
 
-/* responsywność? */
+/* responsywność ma być wowowo */
+
+@media only screen and (max-width: 2600px) {
+
+    :root{
+        --wielkosc-tekstu:24px
+    }
+   
+}
+
+@media only screen and (max-width: 750px) {
+
+}
+
+@media only screen and (max-width: 680px) {
+          
+ 
+}
+
+@media only screen and (max-width: 480px) {
+    
+}

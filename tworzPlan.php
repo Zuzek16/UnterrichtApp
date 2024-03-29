@@ -47,7 +47,9 @@ if ($tab == NULL) {
 <p>
     <?php
     if (isset($_POST['szkolaAktyw'])) {
-        echo "Wybrana szkoła: ".($_POST['szkolaAktyw']);
+        echo "<p>Wybrana szkoła: ".($_POST['szkolaAktyw'])."</p>";
+    } else {
+        echo "<p>Proszę wybrać szkołę</p>";
     }
     ?>
 </p>
@@ -60,12 +62,53 @@ if ($tab == NULL) {
         <th>Czw</th>
         <th>Pt</th>
     </tr>
+    <?php
+    if (isset($_GET['pon']) && $_GET['pon'] == 'true' && isset($_GET['pon_id_lekcji'])) {
+        echo "wyświetlam lekcje adasdasd id:".$_GET['pon_id_lekcji'];
+    }
+    ?>
     <tr>
-        <td><a href="lekcjeDnia.php?dzien=pon">wybierz lekcje</a></td>
-        <td><a href="lekcjeDnia.php?dzien=wt">wybierz lekcje</a></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>
+        <?php
+        if (isset($_GET['ponL'])) {
+            echo "lekcja pierwsza";
+
+        } else {
+            echo '<a href="lekcjeDnia.php?dzien=pon">wybierz lekcje</a></td>';
+            
+        }
+        ?>    
+        <td>
+        <?php
+        if (isset($_GET[''])) {
+            echo "lekcja pierwsza";
+        }
+        ?>    
+        <a href="lekcjeDnia.php?dzien=wt">wybierz lekcje</a></td>
+        <td>
+<?php
+if (isset($_GET[''])) {
+    echo "lekcja pierwsza";
+}
+?>
+
+        </td>
+        <td>
+<?php
+if (isset($_GET[''])) {
+    echo "lekcja pierwsza";
+}
+?>
+
+        </td>
+        <td>
+<?php
+if (isset($_GET[''])) {
+    echo "lekcja pierwsza";
+}
+?>
+
+        </td>
     </tr>
 </table>
 
