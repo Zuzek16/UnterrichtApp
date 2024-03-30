@@ -72,6 +72,11 @@ table {
     /* or center this */
 }
 
+.tableContainer{
+    display:flex;
+    justify-content: center;
+}
+
 .main {
     text-align: center;
     /* opacity: 0.5; */

@@ -91,7 +91,15 @@ if (isset($_POST['sala']) && trim($_POST['sala']) != "" && isset($_POST['nauczyc
           $dodLekcje = "INSERT INTO `lekcja` (`id`, `id_sali`, `id_nauczyciela`, `id_przedmiotu`) VALUES (NULL, '".$idSala['id']."', '".$idNauczyciela['id']."', '".$idPrzedmiotu['id']."');";
 
           if (mysqli_query($conn, $dodLekcje)) {
-               echo "<h2>Dodawanie lekcji...</h2>";
+               // echo "<h2>Dodawanie lekcji...</h2>";
+               // sleep(2);
+               //to przekiweunje spowrotem do ogólnego planu lekcji wraz z info co tam jest i będzie widoczna lekcja którą ise dodało?
+
+               //można spróbwoać zrobić to na jednym ekranie żeby nie było ciągłęgo przeskakiwania
+               //wtedy: po kolei wysztko sie pyta i na końcu tylko walidacja
+               //możńa to wybróbować poprostu pododawać na tworzPlan.php jak i tak chcemy na jednej stornie to miec. 
+               //
+               header("Location: index.php?sus=true");//działą
           } else {
                echo "<h2>Błąd dodawania lekcji, proszę spróbować ponownie</h2>";
           }
@@ -102,8 +110,8 @@ if (isset($_POST['sala']) && trim($_POST['sala']) != "" && isset($_POST['nauczyc
 
      <div class='prawy'>
           <form action="" method="post">
-               <label for="">Wybierz z istniejących lekcji:</label>
-               <select>
+               <label for="gotowaLekcja">Wybierz z istniejących lekcji:</label>
+               <select name="gotowaLekcja" id="gotowaLekcja">
                     <?php
                     $sql = "SELECT DISTINCT sala.numer, nauczyciel.imie, nauczyciel.nazwisko, przedmiot.nazwa FROM lekcja INNER JOIN nauczyciel ON lekcja.id_nauczyciela = nauczyciel.id INNER JOIN sala ON lekcja.id_sali = sala.id INNER JOIN przedmiot ON lekcja.id_przedmiotu = przedmiot.id;";
                     $result = mysqli_query($conn, $sql);
@@ -111,13 +119,17 @@ if (isset($_POST['sala']) && trim($_POST['sala']) != "" && isset($_POST['nauczyc
                     while ($row = mysqli_fetch_assoc($result)) {
                          echo "<option value=".$row['imie'].">".$row['numer']."-".$row['imie']." ".$row['nazwisko']."-".$row['nazwa']."</option>";
                     }
-
-                    
                     ?>
                </select>
                <button type="submit">Zapisz</button>
-
           </form>
+
+          <?php
+          if (isset($_POST['gotowaLekcja'])) {
+               echo "<p></p>";
+          }
+          ?>
+
      </div>
 </body>
 </html>

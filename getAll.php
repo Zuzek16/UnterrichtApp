@@ -28,5 +28,20 @@ $r_nauczany_przedmiot = mysqli_query($conn, "SELECT * from nauczany_przedmiot");
 $nauczany_przedmiot = [];
 while ($row = mysqli_fetch_assoc($r_nauczany_przedmiot)) array_push($nauczany_przedmiot, $row);
 
+function defAddLekcjaTd($id, $dzien){
+      global $przedmiot;
+      // $dzien;
 
+      echo "zawartość do dodawania";
+      echo '<form action="" method="get">
+      <label for="przedmiot">Przedmiot</label>
+      <select name="przedmiot" id="przedmiot">';
+      //$id bedzie podawane przez  $j i $i (iterator) np. przedmiotpon(czyli 0)4)(piąta lekcja bo od 0) i to wkładamy do id i name select żeby każdy dało sie rozóżnić
+      //wtedy dynamicznie również można tworzyć if ????? można każdy do tablicy dodawać i na niej patrzej po każdym (OBIEKTÓWKA zachęca wowowo)
+    
+      // include('getAll.php');
+      foreach($przedmiot as $el){echo "<option value='".$el['nazwa']."'>".$el['nazwa']."</option>";}
+
+      echo '</select><button type="submit">Zatwierdź</button></form>';
+};
 ?>
