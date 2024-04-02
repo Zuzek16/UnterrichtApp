@@ -64,7 +64,11 @@ table, tr, td, th {
 
 td, th{
     text-align: center;
-    padding: 2px;
+    padding: 5px;
+}
+
+tr:nth-of-type(odd) *{
+    background-color: var(--kolor-akcent-ciemny);
 }
 
 table {

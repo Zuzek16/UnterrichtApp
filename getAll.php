@@ -28,20 +28,87 @@ $r_nauczany_przedmiot = mysqli_query($conn, "SELECT * from nauczany_przedmiot");
 $nauczany_przedmiot = [];
 while ($row = mysqli_fetch_assoc($r_nauczany_przedmiot)) array_push($nauczany_przedmiot, $row);
 
+$ponLekcjeFormularzGotowy = [];//might need to give this to the url so JS can read it 
+$wtLekcjeFormularzGotowy = [];
+$srLekcjeFormularzGotowy = [];
+$czwLekcjeFormularzGotowy = [];
+$ptLekcjeFormularzGotowy = [];
+
 function defAddLekcjaTd($id, $dzien){
-      global $przedmiot;
-      // $dzien;
+      global $przedmiot;//! add global often
+      global $sala;
+      $selectPrzedmiotId = "przedmiot".$dzien.$id;
+      $selectSalaId = "sala".$dzien.$id;
+      $selectNauId = "nauczyciel".$dzien.$id;
+      // $postPrzedmiot
 
-      echo "zawartość do dodawania";
-      echo '<form action="" method="get">
-      <label for="przedmiot">Przedmiot</label>
-      <select name="przedmiot" id="przedmiot">';
-      //$id bedzie podawane przez  $j i $i (iterator) np. przedmiotpon(czyli 0)4)(piąta lekcja bo od 0) i to wkładamy do id i name select żeby każdy dało sie rozóżnić
-      //wtedy dynamicznie również można tworzyć if ????? można każdy do tablicy dodawać i na niej patrzej po każdym (OBIEKTÓWKA zachęca wowowo)
-    
-      // include('getAll.php');
-      foreach($przedmiot as $el){echo "<option value='".$el['nazwa']."'>".$el['nazwa']."</option>";}
+      echo '<form action="" method="post">
+      <label for="'.$selectPrzedmiotId.'">Przedmiot</label>
+      <select name="'.$selectPrzedmiotId.'" id="'.$selectPrzedmiotId.'">';
+      echo "<option value=''>Wybierz</option>"; 
+      if (isset($_POST[$selectPrzedmiotId])) {
+            foreach($przedmiot as $el){
+                  if ($_POST[$selectPrzedmiotId] == $el['nazwa']) {
+                        echo "<option value='".$el['nazwa']."'selected>".$el['nazwa']."</option>";
+                  } else {
+                        echo "<option value='".$el['nazwa']."'>".$el['nazwa']."</option>";
+                  }
+            }
+      
+    } else {
+      foreach($przedmiot as $el){
+            echo "<option value='".$el['nazwa']."'>".$el['nazwa']."</option>";
+      }
 
+    }    
+      
       echo '</select><button type="submit">Zatwierdź</button></form>';
+
+      if (isset($_POST[$selectPrzedmiotId]) ) {
+            // echo "<p>Wybrany przedmiot - ".$_POST['przedmiot']."</p>";
+            if ($_POST[$selectPrzedmiotId] != "") {
+                  echo "<p>Wybrany przedmiot - ".$_POST[$selectPrzedmiotId]."</p>";
+
+                  echo  '<form action="" method="post">
+                  <label for="'.$selectNauId.'">Nauczyciel: </label>
+                  <select name="'.$selectNauId.'" id="'.$selectNauId.'">';
+      
+                  //! add an empty option to each
+      
+                  foreach (nauczycieleKtorzyUcza($_POST[$selectPrzedmiotId]) as $nau) {
+                        echo "<option value='$nau'>".$nau."</option>";
+                        }
+      
+                  echo '</select>
+                  <label for="'.$selectSalaId.'">Sala</label>
+                     <select name="'.$selectSalaId.'" id="'.$selectSalaId.'">';
+      
+                     foreach ($sala as $elSala) {
+                        echo "<option value='".$elSala['numer']."'>".$elSala['numer']."</option>";
+                        }
+      
+                  echo '</select>
+      
+                  <button type="submit">Zapisz lekcję</button>
+                  </form>';
+            } else {
+            //?do we need anythung here?
+            }
+           
+
+      }
+
+      if (isset($_POST[$selectSalaId]) && isset($_POST[$selectNauId]) ) {
+            if (($_POST[$selectSalaId] == "") &&
+            ($_POST[$selectNauId]) == "") {
+                  # code...
+            } else {
+                  
+                  //normalnie, czyli dodajemy do tablicy że to jest już gotowe i jak wszytkie sa gotowe to finish (puste lekcje moga byc tylko na koncu a nie w środku)
+
+            }
+
+
+      }
 };
 ?>

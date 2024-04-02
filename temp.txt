@@ -6,3 +6,59 @@
      //      }
      ^kod łączenie nauczyant przedmiot
      szkoła.php ma JS!
+
+
+
+     ###usuniety kod
+<tr>
+        
+        <td>
+        <?php
+        if (isset($_GET['ponL'])) {
+            echo "lekcja pierwsza";
+
+        } else {
+            echo '<a href="lekcjeDnia.php?dzien=pon">wybierz lekcje</a>';
+            
+        }
+        
+        ?>
+        <!-- TESTOWY FORMULARZ -->
+        <hr>
+        <form action="" method="get">
+          <label for="przedmiot">Przedmiot</label>
+          <select name="przedmiot" id="przedmiot">
+          <?php
+          include('getAll.php');
+          foreach($przedmiot as $el){echo "<option value='".$el['nazwa']."'>".$el['nazwa']."</option>";}
+          ?>
+          </select>
+          <button type="submit">Zatwierdź</button>
+     </form>
+        <?php
+        
+        echo "";//lekcje dnia notatka - spróbować na jednej stronie zrobić dodawanie, można pobawić się w include'owanie plików jako funcjie oddzielne żeby było czytlenie
+        ?>
+        </td>
+            
+        <td>
+          
+        <!-- <a href="lekcjeDnia.php?dzien=wt">wybierz lekcje</a>-->
+    </td> 
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+
+
+    //za każdym jak dodajemy żeby miało to
+    // echo "<tr><td><button class='add'>Dodaj lekcje</button></td>
+    // <td></td>
+    // <td></td>
+    // <td></td>
+    // <td></td>
+    // </tr>";
+    

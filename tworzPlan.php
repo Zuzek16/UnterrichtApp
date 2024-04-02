@@ -46,6 +46,7 @@ if ($tab == NULL) {
     }
     ?>
 </p>
+<h5>Wskazówka: Jeśli potrzebujesz mieć mniej lekcji w danym dniu ostatnie z opcji pozostaw puste</h3>
 <div class="tableContainer">
 
 <table class="calosc">
@@ -56,53 +57,15 @@ if ($tab == NULL) {
         <th>Czw</th>
         <th>Pt</th>
     </tr>
-    <tr>
-        
-        <td>
-        <?php
-        if (isset($_GET['ponL'])) {
-            echo "lekcja pierwsza";
-
-        } else {
-            echo '<a href="lekcjeDnia.php?dzien=pon">wybierz lekcje</a>';
-            
-        }
-        
-        ?>
-        <!-- TESTOWY FORMULARZ -->
-        <hr>
-        <form action="" method="get">
-          <label for="przedmiot">Przedmiot</label>
-          <select name="przedmiot" id="przedmiot">
-          <?php
-          include('getAll.php');
-          foreach($przedmiot as $el){echo "<option value='".$el['nazwa']."'>".$el['nazwa']."</option>";}
-          ?>
-          </select>
-          <button type="submit">Zatwierdź</button>
-     </form>
-        <?php
-        
-        echo "";//lekcje dnia notatka - spróbować na jednej stronie zrobić dodawanie, można pobawić się w include'owanie plików jako funcjie oddzielne żeby było czytlenie
-        ?>
-        </td>
-            
-        <td>
-          
-        <a href="lekcjeDnia.php?dzien=wt">wybierz lekcje</a></td>
-        <td>
-        </td>
-        <td>
-        </td>
-        <td>
-        </td>
-    </tr>
+    
     <?php
-
+    //FORMULARZE LEKCJI
+    include('getAll.php');
     $licznik = 0;
     
 
-    for ($i=0; $i < 8; $i++) { 
+    for ($i=0; $i < 9; $i++) { 
+        global $licznik;
         echo "<tr>";
         for ($j=0; $j < 1; $j++) { //ZMIENIĆ NA 5555
 
@@ -113,7 +76,16 @@ if ($tab == NULL) {
                     break;
                 case 1:
                     $dzien = "wtorek";
-                    break;//finish tis
+                    break;
+                case 2:
+                    $dzien = "środa";
+                    break;
+                case 3:
+                    $dzien = "czwartek";
+                    break;
+                case 4:
+                    $dzien = "piątek";
+                    break;
             }
 
             echo "<td>";
@@ -124,15 +96,16 @@ if ($tab == NULL) {
         
        echo "</tr>";
     }
-    //za każdym jak dodajemy żeby miało to
-    // echo "<tr><td><button class='add'>Dodaj lekcje</button></td>
-    // <td></td>
-    // <td></td>
-    // <td></td>
-    // <td></td>
-    // </tr>";
-    
     ?>
+
+    <tr>
+    <?php
+    for ($i=0; $i < 5; $i++) { 
+        echo "<td><button id=wszystLekcje$i>Zatwierdz dzień<button></td>";
+    }
+    ?>
+    </tr>
+
 </table>
 </div>
 
@@ -142,7 +115,7 @@ if ($tab == NULL) {
 
 
 ?>
-<script>
+<!-- <script>
 
     let btns = document.querySelector('button.add');
 
@@ -197,7 +170,7 @@ if ($tab == NULL) {
     tableAll.appendChild(tr);
 
     })
-</script>
+</script> -->
 <!--  -->
 </body>
 </html>
