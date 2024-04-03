@@ -112,9 +112,20 @@ if ($tab == NULL) {
 
 <?php
 }
+global $przedmiotInputList;
 
+
+echo "<h1>Testy</h1>";
+echo "<h1>".implode($przedmiotInputList)."</h1>";
+echo "<h1>Testy</h1>";
 
 ?>
+<script>
+    //read value from przedmiot selection and 'dinamacly change what the teacher is avalable'
+    console.log("SUS");
+    console.log(<?php echo implode($przedmiotInputList); ?>;);
+    // alert()
+</script>
 <!-- <script>
 
     let btns = document.querySelector('button.add');

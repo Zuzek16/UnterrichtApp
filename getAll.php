@@ -29,15 +29,29 @@ $nauczany_przedmiot = [];
 while ($row = mysqli_fetch_assoc($r_nauczany_przedmiot)) array_push($nauczany_przedmiot, $row);
 
 $ponLekcjeFormularzGotowy = [];//might need to give this to the url so JS can read it 
+//save the info to somevhere and read it instad of relying on post (like cookies/session/get)
 $wtLekcjeFormularzGotowy = [];
 $srLekcjeFormularzGotowy = [];
 $czwLekcjeFormularzGotowy = [];
 $ptLekcjeFormularzGotowy = [];
 
+// $przedmiotInputList = [];
+$przedmiotInputList = array();//waht is its problem
+$licznikPIL = 0;
+
 function defAddLekcjaTd($id, $dzien){
       global $przedmiot;//! add global often
       global $sala;
+      global $licznikPIL;
       $selectPrzedmiotId = "przedmiot".$dzien.$id;
+      $przedmiotInputList[$licznikPIL] = $selectPrzedmiotId;
+      $licznikPIL++;
+      // if ($przedmiotInputList == NULL) {
+            
+      // }
+      // // $przedmiotInputList[] += $selectPrzedmiotId;
+      // array_push($przedmiotInputList, $selectPrzedmiotId);
+
       $selectSalaId = "sala".$dzien.$id;
       $selectNauId = "nauczyciel".$dzien.$id;
       // $postPrzedmiot
@@ -61,10 +75,11 @@ function defAddLekcjaTd($id, $dzien){
       }
 
     }    
-      
-      echo '</select><button type="submit">Zatwierdź</button></form>';
+      //!!
+      // echo '</select><button type="submit">Zatwierdź</button></form>';
 
       if (isset($_POST[$selectPrzedmiotId]) ) {
+            //if this ends up not working as intended then scrap this and make the user input everyting without hints
             // echo "<p>Wybrany przedmiot - ".$_POST['przedmiot']."</p>";
             if ($_POST[$selectPrzedmiotId] != "") {
                   echo "<p>Wybrany przedmiot - ".$_POST[$selectPrzedmiotId]."</p>";
