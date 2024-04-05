@@ -12,7 +12,26 @@
 
 <?php
 include "conn.php";
-//1. pusty szablon planu gdzie dodajemy lekcje poprzez wciśnięcia w td linku który przenośi nas że można dodać
+include('getAll.php');
+
+
+$nauczany_przedmiot = [
+    //przdmiot => wsyzscy nauczyciele co tego ucza
+    //iteracja przez przediotuy
+
+
+];
+
+foreach ($przedmiot as $el) {
+    // echo $el['nazwa'];
+    array_push($nauczany_przedmiot, $el['nazwa']);
+}
+
+$nauczany_przedmiot['fizyka'][0] = ["nauczycielfsdfsdf", "df"];
+
+// var_dump($nauczany_przedmiot);
+
+//get all przedmioty i nauczane przedmioty w tablicy na początkuy
 
 $sql = "SELECT * from szkola";
 $wynik = mysqli_query($conn, $sql);
@@ -60,7 +79,6 @@ if ($tab == NULL) {
     
     <?php
     //FORMULARZE LEKCJI
-    include('getAll.php');
     $licznik = 0;
     
 
@@ -102,6 +120,8 @@ if ($tab == NULL) {
     <?php
     for ($i=0; $i < 5; $i++) { 
         echo "<td><button id=wszystLekcje$i>Zatwierdz dzień<button></td>";
+      //żeby pierwsze 
+        
     }
     ?>
     </tr>

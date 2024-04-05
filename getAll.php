@@ -75,8 +75,6 @@ function defAddLekcjaTd($id, $dzien){
       }
 
     }    
-      //!!
-      // echo '</select><button type="submit">Zatwierdź</button></form>';
 
       if (isset($_POST[$selectPrzedmiotId]) ) {
             //if this ends up not working as intended then scrap this and make the user input everyting without hints
