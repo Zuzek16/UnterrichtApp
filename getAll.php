@@ -35,9 +35,18 @@ $srLekcjeFormularzGotowy = [];
 $czwLekcjeFormularzGotowy = [];
 $ptLekcjeFormularzGotowy = [];
 
-// $przedmiotInputList = [];
-$przedmiotInputList = array();//waht is its problem
-$licznikPIL = 0;
+function lekcjaInput($licznikLekcji, $dzien){//mabye add id's to inputs
+
+      echo '<select name='.$przedmiotName.'>';//!dynamic options and defiene the variables
+
+      echo '<option value="A">A</option>';
+
+
+  echo '</select>
+  <select name='.$nauczycielName.' class="nauczyciel"></select>';
+};
+
+
 
 function defAddLekcjaTd($id, $dzien){
       global $przedmiot;//! add global often

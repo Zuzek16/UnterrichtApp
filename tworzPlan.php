@@ -5,33 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UnterrichtApp - kreator</title>
     <link rel="stylesheet" href="styl.css">
-    
+    <?php
+    include "conn.php";
+    include('getAll.php');
+    global $conn;
+
+    $nauczany_przedmiot = [];
+
+foreach ($przedmiot as $el) {
+    $nauczany_przedmiot[$el['nazwa']] = [];
+
+    //nauczyciel
+    $sql = "SELECT przedmiot.nazwa, nauczyciel.id, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$el['nazwa']."'";
+    $result = mysqli_query($conn, $sql);
+    while ($row = mysqli_fetch_assoc($result)) {
+          array_push($nauczany_przedmiot[$el['nazwa']], [$row['id'],$row['imie']." ".$row['nazwisko']]);
+    }
+}
+    ?>
+    <script>
+        var nauczany_przedmiot = <?php echo json_encode($nauczany_przedmiot); ?>;
+        console.log(nauczany_przedmiot);
+    </script>
 </head>
 <body>
 <h2>Tworzenie planu</h2>
 
 <?php
-include "conn.php";
-include('getAll.php');
 
-
-$nauczany_przedmiot = [
-    //przdmiot => wsyzscy nauczyciele co tego ucza
-    //iteracja przez przediotuy
-
-
-];
-
-foreach ($przedmiot as $el) {
-    // echo $el['nazwa'];
-    array_push($nauczany_przedmiot, $el['nazwa']);
-}
-
-$nauczany_przedmiot['fizyka'][0] = ["nauczycielfsdfsdf", "df"];
-
-// var_dump($nauczany_przedmiot);
-
-//get all przedmioty i nauczane przedmioty w tablicy na początkuy
 
 $sql = "SELECT * from szkola";
 $wynik = mysqli_query($conn, $sql);
@@ -67,6 +68,8 @@ if ($tab == NULL) {
 </p>
 <h5>Wskazówka: Jeśli potrzebujesz mieć mniej lekcji w danym dniu ostatnie z opcji pozostaw puste</h3>
 <div class="tableContainer">
+<form action="#" method="post">
+    <!-- whole form -->
 
 <table class="calosc">
     <tr>
@@ -83,7 +86,7 @@ if ($tab == NULL) {
     
 
     for ($i=0; $i < 9; $i++) { 
-        global $licznik;
+        // global $licznik;
         echo "<tr>";
         for ($j=0; $j < 1; $j++) { //ZMIENIĆ NA 5555
 
@@ -107,7 +110,8 @@ if ($tab == NULL) {
             }
 
             echo "<td>";
-            defAddLekcjaTd($licznik, $dzien);
+            lekcjaInput($licznik, $dzien);
+            // defAddLekcjaTd($licznik, $dzien);
             echo "</td>";
             $licznik++;
         }
@@ -120,13 +124,13 @@ if ($tab == NULL) {
     <?php
     for ($i=0; $i < 5; $i++) { 
         echo "<td><button id=wszystLekcje$i>Zatwierdz dzień<button></td>";
-      //żeby pierwsze 
-        
     }
     ?>
     </tr>
 
 </table>
+</form>
+
 </div>
 
 
@@ -136,16 +140,15 @@ global $przedmiotInputList;
 
 
 echo "<h1>Testy</h1>";
-echo "<h1>".implode($przedmiotInputList)."</h1>";
+echo "<pre>";
+var_dump($nauczany_przedmiot);
+
+echo "</pre>";
+
+// echo "<h1>".implode($przedmiotInputList)."</h1>";
 echo "<h1>Testy</h1>";
 
 ?>
-<script>
-    //read value from przedmiot selection and 'dinamacly change what the teacher is avalable'
-    console.log("SUS");
-    console.log(<?php echo implode($przedmiotInputList); ?>;);
-    // alert()
-</script>
 <!-- <script>
 
     let btns = document.querySelector('button.add');
