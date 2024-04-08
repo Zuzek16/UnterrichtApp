@@ -20,13 +20,13 @@ $r_przedmiot = mysqli_query($conn, "SELECT * from przedmiot");
 $przedmiot = [];
 while ($row = mysqli_fetch_assoc($r_przedmiot)) array_push($przedmiot, $row);
 
-$r_nauczyciel = mysqli_query($conn, "SELECT * from nauczyciel");
-$nauczyciel = [];
-while ($row = mysqli_fetch_assoc($r_nauczyciel)) array_push($nauczyciel, $row);
+// $r_nauczyciel = mysqli_query($conn, "SELECT * from nauczyciel");
+// $nauczyciel = [];
+// while ($row = mysqli_fetch_assoc($r_nauczyciel)) array_push($nauczyciel, $row);
 
-$r_nauczany_przedmiot = mysqli_query($conn, "SELECT * from nauczany_przedmiot");
-$nauczany_przedmiot = [];
-while ($row = mysqli_fetch_assoc($r_nauczany_przedmiot)) array_push($nauczany_przedmiot, $row);
+// $r_nauczany_przedmiot = mysqli_query($conn, "SELECT * from nauczany_przedmiot");
+// $nauczany_przedmiot = [];
+// while ($row = mysqli_fetch_assoc($r_nauczany_przedmiot)) array_push($nauczany_przedmiot, $row);
 
 $ponLekcjeFormularzGotowy = [];//might need to give this to the url so JS can read it 
 //save the info to somevhere and read it instad of relying on post (like cookies/session/get)
@@ -36,14 +36,30 @@ $czwLekcjeFormularzGotowy = [];
 $ptLekcjeFormularzGotowy = [];
 
 function lekcjaInput($licznikLekcji, $dzien){//mabye add id's to inputs
+      global $przedmiot;
+      global $sala;
 
-      echo '<select name='.$przedmiotName.'>';//!dynamic options and defiene the variables
+      $przedmiotName = $dzien."[".$licznikLekcji."]"."[przedmiot]";
+      $nauczycielName = $dzien."[".$licznikLekcji."]"."[nauczyciel]";
+      $salaName = $dzien."[".$licznikLekcji."]"."[sala]";
 
-      echo '<option value="A">A</option>';
+      echo '<select name='.$przedmiotName.'>';
+      echo '<option value="">Wybierz przedmiot</option>';
+      foreach ($przedmiot as $el) {
+            echo '<option value="'.$el['nazwa'].'">'.$el['nazwa'].'</option>';
+      }
+  echo "</select>
+      <select name=$salaName>
+      <option value=''>Wybierz salę</option>
+      ";
+      foreach ($sala as $el) {
+            echo '<option value="'.$el['numer'].'">'.$el['numer'].'</option>';
+      }
 
+  echo "</select>";
+  
 
-  echo '</select>
-  <select name='.$nauczycielName.' class="nauczyciel"></select>';
+  echo '<select name='.$nauczycielName.' class="nauczyciel"></select>';
 };
 
 

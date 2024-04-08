@@ -22,10 +22,13 @@ foreach ($przedmiot as $el) {
           array_push($nauczany_przedmiot[$el['nazwa']], [$row['id'],$row['imie']." ".$row['nazwisko']]);
     }
 }
+
+    // $sala = [];//to jest w getAll.php
+
     ?>
     <script>
         var nauczany_przedmiot = <?php echo json_encode($nauczany_przedmiot); ?>;
-        console.log(nauczany_przedmiot);
+        console.log(nauczany_przedmiot);//!!!
     </script>
 </head>
 <body>
@@ -81,17 +84,15 @@ if ($tab == NULL) {
     </tr>
     
     <?php
-    //FORMULARZE LEKCJI
+    global $nauczany_przedmiot;
     $licznik = 0;
-    
 
     for ($i=0; $i < 9; $i++) { 
-        // global $licznik;
         echo "<tr>";
         for ($j=0; $j < 1; $j++) { //ZMIENIĆ NA 5555
 
             $dzien;
-            switch ($j) {
+            switch ($j) {//shortened?
                 case 0:
                     $dzien = "poniedziałek";
                     break;
@@ -111,7 +112,6 @@ if ($tab == NULL) {
 
             echo "<td>";
             lekcjaInput($licznik, $dzien);
-            // defAddLekcjaTd($licznik, $dzien);
             echo "</td>";
             $licznik++;
         }
@@ -122,89 +122,38 @@ if ($tab == NULL) {
 
     <tr>
     <?php
-    for ($i=0; $i < 5; $i++) { 
-        echo "<td><button id=wszystLekcje$i>Zatwierdz dzień<button></td>";
-    }
+    // for ($i=0; $i < 5; $i++) { 
+    //     echo "<td><button id=wszystLekcje$i>Zatwierdz dzień</button></td>";
+    // }
     ?>
     </tr>
 
 </table>
+        <button type='submit'>Zapisz</button>//!! add functionality
 </form>
 
 </div>
 
-
 <?php
 }
 global $przedmiotInputList;
-
-
-echo "<h1>Testy</h1>";
-echo "<pre>";
+echo "<h1>Testy</h1><pre>";
 var_dump($nauczany_przedmiot);
-
-echo "</pre>";
-
-// echo "<h1>".implode($przedmiotInputList)."</h1>";
-echo "<h1>Testy</h1>";
-
+echo "</pre><h1>Testy</h1>";
 ?>
-<!-- <script>
+<script>
+    let allSelect = document.querySelectorAll("select");
 
-    let btns = document.querySelector('button.add');
-
-    btns.forEach(el => {
-        el.addEventListener('click', ()=>{
-        
-        const tr = document.createElement("tr");
-        const td = document.createElement("td");
-        
-        const btn = document.createElement("button");
-        btn.innerText = "Dodaj lekcje";
-        btn.classList.add("add");
-        // btn.addEventListener('click', ()=>{
-        //     alert("sus")
-        // })
-    
-        td.appendChild(btn);
-        //?
-        tr.appendChild(td);
-        tr.appendChild(td);
-        tr.appendChild(td);
-        tr.appendChild(td);
-        tr.appendChild(td);
-        
-        const tableAll = document.querySelector('table.calosc');
-        tableAll.appendChild(tr);
-    
-        })
+    allSelect.forEach(el => {
+        el.addEventListener('change', ()=>{
+            console.log(el.value);
+            let form = '';
+            nauczany_przedmiot[`${el.value}`].forEach(el => {
+                form += `<option value="${el[0]}">${el[1]}</option>`;
+            });
+            el.parentElement.querySelector('.nauczyciel').innerHTML = form;
+        })        
     });
-
-    document.querySelector('button.add').addEventListener('click', ()=>{
-        
-    const tr = document.createElement("tr");
-    const td = document.createElement("td");
-    
-    const btn = document.createElement("button");
-    btn.innerText = "Dodaj lekcje";
-    btn.classList.add("add");
-    // btn.addEventListener('click', ()=>{
-    //     alert("sus")
-    // })
-
-    td.appendChild(btn);
-    //?
-    tr.appendChild(td);
-    tr.appendChild(td);
-    tr.appendChild(td);
-    tr.appendChild(td);
-    tr.appendChild(td);
-    
-    const tableAll = document.querySelector('table.calosc');
-    tableAll.appendChild(tr);
-
-    })
-</script> -->
-<!--  -->
+</script>
 </body>
 </html>

@@ -6,6 +6,11 @@
      <title>UnterrichtApp</title>
      <link rel="stylesheet" href="styl.css">
      <!-- <link rel="icon" type="image/x-icon" href="/zdj/..."> -->
+     <!-- 
+     - mobile version of this app is goin to have the timetable separated into each day pf the week under each other
+     - responsiv!
+
+      -->
 </head>
 <body>
 <header>

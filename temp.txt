@@ -62,3 +62,59 @@
     // <td></td>
     // </tr>";
     
+    <!-- <script>
+
+    let btns = document.querySelector('button.add');
+
+    btns.forEach(el => {
+        el.addEventListener('click', ()=>{
+        
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        
+        const btn = document.createElement("button");
+        btn.innerText = "Dodaj lekcje";
+        btn.classList.add("add");
+        // btn.addEventListener('click', ()=>{
+        //     alert("sus")
+        // })
+    
+        td.appendChild(btn);
+        //?
+        tr.appendChild(td);
+        tr.appendChild(td);
+        tr.appendChild(td);
+        tr.appendChild(td);
+        tr.appendChild(td);
+        
+        const tableAll = document.querySelector('table.calosc');
+        tableAll.appendChild(tr);
+    
+        })
+    });
+
+    document.querySelector('button.add').addEventListener('click', ()=>{
+        
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    
+    const btn = document.createElement("button");
+    btn.innerText = "Dodaj lekcje";
+    btn.classList.add("add");
+    // btn.addEventListener('click', ()=>{
+    //     alert("sus")
+    // })
+
+    td.appendChild(btn);
+    //?
+    tr.appendChild(td);
+    tr.appendChild(td);
+    tr.appendChild(td);
+    tr.appendChild(td);
+    tr.appendChild(td);
+    
+    const tableAll = document.querySelector('table.calosc');
+    tableAll.appendChild(tr);
+
+    })
+</script> -->
