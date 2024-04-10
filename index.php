@@ -5,7 +5,7 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>UnterrichtApp</title>
      <link rel="stylesheet" href="styl.css">
-     <!-- <link rel="icon" type="image/x-icon" href="/zdj/..."> -->
+     <link rel="icon" type="image/x-icon" href="/zdj/UnterrichtAppLOGO.png">
      <!-- 
      - mobile version of this app is goin to have the timetable separated into each day pf the week under each other
      - responsiv!
@@ -29,13 +29,6 @@
                <li><a href="dodNau.php">Dodaj nauczyciela</a></li>
                <li><a href="dodNau.php">Przełącz szkole</a></li>
           </ul>
-          <!-- <ul>
-               <li><a href=""></a></li>
-               <li><a href=""></a></li>
-               <li><a href=""></a></li>
-               <li><a href=""></a></li>
-               <li><a href=""></a></li>
-          </ul> -->
      </nav>
 </header>
 <div class="main-bg">

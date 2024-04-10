@@ -120,6 +120,7 @@ p:not(footer p) {
     margin: 0 60px 0 60px;
 }
 
+
 /* dwa czerne bloki z lewo prawo pod header */
 
 
@@ -130,15 +131,17 @@ p:not(footer p) {
     :root{
         --wielkosc-tekstu:24px
     }
-   
+
 }
 
 @media only screen and (max-width: 750px) {
-
+    .desktop {
+        display: none;
+    }
 }
 
 @media only screen and (max-width: 680px) {
-          
+    /* tabelka rozdzielon */
  
 }
 

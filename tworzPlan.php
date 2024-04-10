@@ -73,7 +73,6 @@ if ($tab == NULL) {
 <div class="tableContainer">
 <form action="#" method="post">
     <!-- whole form -->
-
 <table class="calosc">
     <tr>
         <th>Pon</th>
@@ -89,8 +88,7 @@ if ($tab == NULL) {
 
     for ($i=0; $i < 9; $i++) { 
         echo "<tr>";
-        for ($j=0; $j < 1; $j++) { //ZMIENIĆ NA 5555
-
+        for ($j=0; $j < 5; $j++) {
             $dzien;
             switch ($j) {//shortened?
                 case 0:
@@ -120,26 +118,24 @@ if ($tab == NULL) {
     }
     ?>
 
-    <tr>
-    <?php
-    // for ($i=0; $i < 5; $i++) { 
-    //     echo "<td><button id=wszystLekcje$i>Zatwierdz dzień</button></td>";
-    // }
-    ?>
-    </tr>
+<tr class="desktop">
+    <td colspan=5>
+    <button class='desktop' type='submit'>Zapisz</button>
+    </td>
+</tr>
 
 </table>
-        <button type='submit'>Zapisz</button>//!! add functionality
 </form>
 
 </div>
 
 <?php
 }
-global $przedmiotInputList;
-echo "<h1>Testy</h1><pre>";
-var_dump($nauczany_przedmiot);
-echo "</pre><h1>Testy</h1>";
+// global $przedmiotInputList;
+// echo "<h1>Testy</h1><pre>";
+// var_dump($nauczany_przedmiot);
+// echo "</pre><h1>Testy</h1>";
+
 ?>
 <script>
     let allSelect = document.querySelectorAll("select");
@@ -149,11 +145,49 @@ echo "</pre><h1>Testy</h1>";
             console.log(el.value);
             let form = '';
             nauczany_przedmiot[`${el.value}`].forEach(el => {
-                form += `<option value="${el[0]}">${el[1]}</option>`;
+                // form += `<option value="${el[0]}" >${el[1]}</option>`;
+                form += `<option value="${el[0]}" selected>${el[1]}</option>`;//DEBUG
             });
             el.parentElement.querySelector('.nauczyciel').innerHTML = form;
         })        
     });
 </script>
+<?php
+    function allSet($tab){
+        //!!!NOW HERE
+        $set = [];
+
+        foreach ($tab as $el) {
+            if (isset($_POST["$el"]) && $_POST[$el] != "") {
+                array_push($set, true);
+            } else {
+                array_push($set, false);
+            }
+        }
+
+        if (in_array(false, $set)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    global $przedmiotSelectIds;
+    global $nauczycielSelectIds;
+    global $salaSelectIds;
+    echo "<h1>".allset($przedmiotSelectIds)."</h1>";
+    echo "<h1>".allset($nauczycielSelectIds)."</h1>";
+    echo "<h1>".allset($salaSelectIds)."</h1>";
+    echo "<hr>";
+    echo "<pre>".var_dump($_POST)."</pre>";
+    echo "<hr>";
+    echo "<pre>".var_dump($_POST['poniedziałek'][0]['przedmiot'])."</pre>";//??? its checking wrong?
+
+
+    if (allset($przedmiotSelectIds) && allset($nauczycielSelectIds)&& allset($salaSelectIds)) {
+        $sql = "";//one big query!
+
+    }
+?>
 </body>
 </html>

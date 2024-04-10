@@ -28,32 +28,46 @@ while ($row = mysqli_fetch_assoc($r_przedmiot)) array_push($przedmiot, $row);
 // $nauczany_przedmiot = [];
 // while ($row = mysqli_fetch_assoc($r_nauczany_przedmiot)) array_push($nauczany_przedmiot, $row);
 
-$ponLekcjeFormularzGotowy = [];//might need to give this to the url so JS can read it 
+// $ponLekcjeFormularzGotowy = [];//might need to give this to the url so JS can read it 
 //save the info to somevhere and read it instad of relying on post (like cookies/session/get)
-$wtLekcjeFormularzGotowy = [];
-$srLekcjeFormularzGotowy = [];
-$czwLekcjeFormularzGotowy = [];
-$ptLekcjeFormularzGotowy = [];
+// $wtLekcjeFormularzGotowy = [];
+// $srLekcjeFormularzGotowy = [];
+// $czwLekcjeFormularzGotowy = [];
+// $ptLekcjeFormularzGotowy = [];
+
+$przedmiotSelectIds = [];
+$nauczycielSelectIds = [];
+$salaSelectIds = [];
 
 function lekcjaInput($licznikLekcji, $dzien){//mabye add id's to inputs
       global $przedmiot;
       global $sala;
 
+      global $przedmiotSelectIds;
+      global $nauczycielSelectIds;
+      global $salaSelectIds;
+
       $przedmiotName = $dzien."[".$licznikLekcji."]"."[przedmiot]";
       $nauczycielName = $dzien."[".$licznikLekcji."]"."[nauczyciel]";
       $salaName = $dzien."[".$licznikLekcji."]"."[sala]";
 
+      array_push($przedmiotSelectIds, $przedmiotName);
+      array_push($nauczycielSelectIds, $nauczycielName);
+      array_push($salaSelectIds, $salaName);
+
       echo '<select name='.$przedmiotName.'>';
       echo '<option value="">Wybierz przedmiot</option>';
       foreach ($przedmiot as $el) {
-            echo '<option value="'.$el['nazwa'].'">'.$el['nazwa'].'</option>';
+            // echo '<option value="'.$el['nazwa'].'">'.$el['nazwa'].'</option>';
+            echo '<option value="'.$el['nazwa'].'"selected>'.$el['nazwa'].'</option>';//DEBUG
       }
   echo "</select>
       <select name=$salaName>
       <option value=''>Wybierz salę</option>
       ";
       foreach ($sala as $el) {
-            echo '<option value="'.$el['numer'].'">'.$el['numer'].'</option>';
+            // echo '<option value="'.$el['numer'].'">'.$el['numer'].'</option>';
+            echo '<option value="'.$el['numer'].'"selected>'.$el['numer'].'</option>';//DEBUG
       }
 
   echo "</select>";
