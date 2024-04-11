@@ -156,9 +156,17 @@ if ($tab == NULL) {
     function allSet($tab){
         //!!!NOW HERE
         $set = [];
-
         foreach ($tab as $el) {
-            if (isset($_POST["$el"]) && $_POST[$el] != "") {
+            $postKey = $el;
+            $postKey = (explode("]",$postKey));
+            $postKey = (implode("",$postKey));
+            $postKey = (explode("[",$postKey));
+
+            // echo "<pre>".var_dump($postKey)."</pre>";
+
+            // => output array(4) { [0]=> string(15) "'poniedziałek'" [1]=> string(1) "0" [2]=> string(11) "'przedmiot'" [3]=> string(0) "" } 
+
+            if (isset($_POST[$postKey[0]][$postKey[1]][$postKey[2]]) && $_POST[$postKey[0]][$postKey[1]][$postKey[2]] != "") {
                 array_push($set, true);
             } else {
                 array_push($set, false);
@@ -166,9 +174,9 @@ if ($tab == NULL) {
         }
 
         if (in_array(false, $set)) {
-            return false;
+            return "false";
         } else {
-            return true;
+            return "true";
         }
     }
 
@@ -179,14 +187,30 @@ if ($tab == NULL) {
     echo "<h1>".allset($nauczycielSelectIds)."</h1>";
     echo "<h1>".allset($salaSelectIds)."</h1>";
     echo "<hr>";
-    echo "<pre>".var_dump($_POST)."</pre>";
+    // echo "<pre>".var_dump($_POST)."</pre>";
+    // echo "<pre>".allset($przedmiotSelectIds)."</pre>";
     echo "<hr>";
-    echo "<pre>".var_dump($_POST['poniedziałek'][0]['przedmiot'])."</pre>";//??? its checking wrong?
+    // echo "<pre>".var_dump($_POST['poniedziałek'][0]['przedmiot'])."</pre>";
 
 
     if (allset($przedmiotSelectIds) && allset($nauczycielSelectIds)&& allset($salaSelectIds)) {
-        $sql = "";//one big query!
 
+        $idSali;
+        $idNauczyciela;
+        $idPrzedmiotu;
+
+        $sql = "";//one big query!
+        
+        //w pętle to bedzie trza włóżyź
+        $idSali = "MASLO";//dostać to z $POST tak samo jak spr czy wszystko ustawionae 
+        $idNauczyciela ="SUS";
+        $idPrzedmiotu = "TESTY";
+        
+        $dodLekcjeSzablon = "INSERT INTO `lekcja` (`id`, `id_sali`, `id_nauczyciela`, `id_przedmiotu`) VALUES (NULL, '".$idSali."', '".$idNauczyciela."', '".$idPrzedmiotu."')";
+
+        $sql = $sql.$dodLekcjeSzablon;
+
+        echo "<pre>".var_dump($sql)."</pre>";
     }
 ?>
 </body>

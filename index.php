@@ -7,6 +7,11 @@
      <link rel="stylesheet" href="styl.css">
      <link rel="icon" type="image/x-icon" href="/zdj/UnterrichtAppLOGO.png">
      <!-- 
+          -dodawanie nau
+          -dod przedmiotu
+          -dod klasy
+          -dod szkoły
+          
      - mobile version of this app is goin to have the timetable separated into each day pf the week under each other
      - responsiv!
 
