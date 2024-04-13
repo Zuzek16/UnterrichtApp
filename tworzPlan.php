@@ -22,22 +22,17 @@ foreach ($przedmiot as $el) {
           array_push($nauczany_przedmiot[$el['nazwa']], [$row['id'],$row['imie']." ".$row['nazwisko']]);
     }
 }
-
-    // $sala = [];//to jest w getAll.php
-
     ?>
     <script>
         var nauczany_przedmiot = <?php echo json_encode($nauczany_przedmiot); ?>;
-        console.log(nauczany_przedmiot);//!!!
+        console.log(nauczany_przedmiot);
     </script>
 </head>
 <body>
 <h2>Tworzenie planu</h2>
 
 <?php
-
-
-$sql = "SELECT * from szkola";
+$sql = "SELECT * from szkola";//change thus to make an array to use
 $wynik = mysqli_query($conn, $sql);
 $tab = [];
 
@@ -72,7 +67,6 @@ if ($tab == NULL) {
 <h5>Wskazówka: Jeśli potrzebujesz mieć mniej lekcji w danym dniu ostatnie z opcji pozostaw puste</h3>
 <div class="tableContainer">
 <form action="#" method="post">
-    <!-- whole form -->
 <table class="calosc">
     <tr>
         <th>Pon</th>
@@ -131,11 +125,6 @@ if ($tab == NULL) {
 
 <?php
 }
-// global $przedmiotInputList;
-// echo "<h1>Testy</h1><pre>";
-// var_dump($nauczany_przedmiot);
-// echo "</pre><h1>Testy</h1>";
-
 ?>
 <script>
     let allSelect = document.querySelectorAll("select");
@@ -145,8 +134,8 @@ if ($tab == NULL) {
             console.log(el.value);
             let form = '';
             nauczany_przedmiot[`${el.value}`].forEach(el => {
-                // form += `<option value="${el[0]}" >${el[1]}</option>`;
-                form += `<option value="${el[0]}" selected>${el[1]}</option>`;//DEBUG
+               form += `<option value="${el[0]}" >${el[1]}</option>`;
+                // form += `<option value="${el[0]}" selected>${el[1]}</option>`;//DEBUG
             });
             el.parentElement.querySelector('.nauczyciel').innerHTML = form;
         })        
@@ -154,17 +143,12 @@ if ($tab == NULL) {
 </script>
 <?php
     function allSet($tab){
-        //!!!NOW HERE
         $set = [];
         foreach ($tab as $el) {
             $postKey = $el;
             $postKey = (explode("]",$postKey));
             $postKey = (implode("",$postKey));
             $postKey = (explode("[",$postKey));
-
-            // echo "<pre>".var_dump($postKey)."</pre>";
-
-            // => output array(4) { [0]=> string(15) "'poniedziałek'" [1]=> string(1) "0" [2]=> string(11) "'przedmiot'" [3]=> string(0) "" } 
 
             if (isset($_POST[$postKey[0]][$postKey[1]][$postKey[2]]) && $_POST[$postKey[0]][$postKey[1]][$postKey[2]] != "") {
                 array_push($set, true);
@@ -187,30 +171,70 @@ if ($tab == NULL) {
     echo "<h1>".allset($nauczycielSelectIds)."</h1>";
     echo "<h1>".allset($salaSelectIds)."</h1>";
     echo "<hr>";
-    // echo "<pre>".var_dump($_POST)."</pre>";
+    echo "<pre>".var_dump($_POST)."</pre>";
     // echo "<pre>".allset($przedmiotSelectIds)."</pre>";
     echo "<hr>";
     // echo "<pre>".var_dump($_POST['poniedziałek'][0]['przedmiot'])."</pre>";
 
 
-    if (allset($przedmiotSelectIds) && allset($nauczycielSelectIds)&& allset($salaSelectIds)) {
+    // if (allset($przedmiotSelectIds) && allset($nauczycielSelectIds)&& allset($salaSelectIds)) {
+        if (true) {
 
         $idSali;
         $idNauczyciela;
         $idPrzedmiotu;
 
-        $sql = "";//one big query!
-        
-        //w pętle to bedzie trza włóżyź
-        $idSali = "MASLO";//dostać to z $POST tak samo jak spr czy wszystko ustawionae 
-        $idNauczyciela ="SUS";
-        $idPrzedmiotu = "TESTY";
-        
-        $dodLekcjeSzablon = "INSERT INTO `lekcja` (`id`, `id_sali`, `id_nauczyciela`, `id_przedmiotu`) VALUES (NULL, '".$idSali."', '".$idNauczyciela."', '".$idPrzedmiotu."')";
+        $sqlTLekcja = "";//one big query!
+        //export db! 
 
-        $sql = $sql.$dodLekcjeSzablon;
+        //tabela 'lekcja' sql
+        foreach ($_POST as $dzienTyg => $value) {
+            foreach ($_POST[$dzienTyg] as $nrLekcji => $value){
+                foreach ($_POST[$dzienTyg][$nrLekcji] as $key => $value){
 
-        echo "<pre>".var_dump($sql)."</pre>";
+                    if ($key == "nauczyciel") {
+                        
+                        $idNauczyciela = $value;
+                    } else if ($key == "przedmiot"){
+                        foreach ($przedmiot as $val) {
+                            // echo $val['id'];
+                            if ($value == $val['nazwa']) {
+                                $idPrzedmiotu = $val['id'];
+                                //JEŚLI PRZEDMIOT NULL TO NIE DODAJEMY!
+                                //można zrobić bez spr czy jest po kolei żeby tylko przeskoczyło samo
+                            }
+                        }
+                    } else if ($key == "sala") {
+                        foreach ($sala as $val) {
+                            if ($value == $val['numer']) {
+                                $idSali = $val['id'];
+                            }
+                        }
+                    }
+                }
+                $dodLekcjeSzablonGlowny = "INSERT INTO `lekcja` (`id`, `id_sali`, `id_nauczyciela`, `id_przedmiotu`) VALUES (NULL, '".$idSali."', '".$idNauczyciela."', '".$idPrzedmiotu."')";
+
+                $dodLekcjeSzablonDrugi = ",(NULL, '".$idSali."', '".$idNauczyciela."', '".$idPrzedmiotu."')";
+
+                if ($sqlTLekcja == "") {
+                    $sqlTLekcja = $dodLekcjeSzablonGlowny;
+                } else {
+                    $sqlTLekcja = $sqlTLekcja.$dodLekcjeSzablonDrugi;
+                }
+
+        
+                echo "<pre>".var_dump($sqlTLekcja)."</pre>";
+
+            }
+
+           
+
+        }
+        
+
+        //sql do tabeli 'przyporzadkowanie_lekcji'
+        //id, nr_lekcji, id_dnia_tyg, id_lekcji
+       
     }
 ?>
 </body>

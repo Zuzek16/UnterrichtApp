@@ -11,7 +11,7 @@
           -dod przedmiotu
           -dod klasy
           -dod szkoły
-          
+          -jeśli input przedmiot jest pusty to nie dodajemy lekcji
      - mobile version of this app is goin to have the timetable separated into each day pf the week under each other
      - responsiv!
 

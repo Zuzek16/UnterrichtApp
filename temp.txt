@@ -126,3 +126,8 @@
                <li><a href=""></a></li>
                <li><a href=""></a></li>
           </ul> -->
+
+          
+            // echo "<pre>".var_dump($postKey)."</pre>";
+
+            // => output array(4) { [0]=> string(15) "'poniedziałek'" [1]=> string(1) "0" [2]=> string(11) "'przedmiot'" [3]=> string(0) "" } 
