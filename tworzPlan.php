@@ -84,7 +84,7 @@ if ($tab == NULL) {
         echo "<tr>";
         for ($j=0; $j < 5; $j++) {
             $dzien;
-            switch ($j) {//shortened?
+            switch ($j) {
                 case 0:
                     $dzien = "poniedziałek";
                     break;
@@ -120,7 +120,6 @@ if ($tab == NULL) {
 
 </table>
 </form>
-
 </div>
 
 <?php
@@ -146,7 +145,7 @@ if ($tab == NULL) {
         $set = [];
         foreach ($tab as $el) {
             $postKey = $el;
-            $postKey = (explode("]",$postKey));
+            $postKey = (explode("]",$postKey));//rozdzielanie name select
             $postKey = (implode("",$postKey));
             $postKey = (explode("[",$postKey));
 
@@ -171,22 +170,17 @@ if ($tab == NULL) {
     echo "<h1>".allset($nauczycielSelectIds)."</h1>";
     echo "<h1>".allset($salaSelectIds)."</h1>";
     echo "<hr>";
-    echo "<pre>".var_dump($_POST)."</pre>";
-    // echo "<pre>".allset($przedmiotSelectIds)."</pre>";
+    // echo "<pre>".var_dump($_POST)."</pre>";
     echo "<hr>";
-    // echo "<pre>".var_dump($_POST['poniedziałek'][0]['przedmiot'])."</pre>";
-
 
     // if (allset($przedmiotSelectIds) && allset($nauczycielSelectIds)&& allset($salaSelectIds)) {
         if (true) {
-
         $idSali;
         $idNauczyciela;
         $idPrzedmiotu;
 
         $sqlTLekcja = "";//one big query!
         //export db! 
-
         //tabela 'lekcja' sql
         foreach ($_POST as $dzienTyg => $value) {
             foreach ($_POST[$dzienTyg] as $nrLekcji => $value){
@@ -221,16 +215,45 @@ if ($tab == NULL) {
                 } else {
                     $sqlTLekcja = $sqlTLekcja.$dodLekcjeSzablonDrugi;
                 }
+                // echo "<pre>".var_dump($sqlTLekcja)."</pre>";
+            }
+        }
+        // if (msqli_query($conn, $sqlTLekcja)){
 
-        
-                echo "<pre>".var_dump($sqlTLekcja)."</pre>";
-
+        $sqlTPrzypLek = "";
+        // $sqlTPrzypLek = "INSERT INTO `przyporzadkowanie_lekcji` (`id`, `nr_lekcji`, `id_dnia_tyg`, `id_lekcji`) VALUES ";
+        foreach ($przedmiotSelectIds as $el) {
+            $selectEl = $el;
+            $selectEl = (explode("]",$selectEl));
+            $selectEl = (implode("",$selectEl));
+            $selectEl = (explode("[",$selectEl));
+            
+            // $selectEl[1] //- nr lekcji
+            // $dzien_tygodnia[0][id] - //id_dnia_tyg
+            $idOstatLek = mysqli_insert_id($conn);//go back from that number 
+            $liczbaLekcji = count($przedmiotSelectIds);
+            for ($i=0; $i < $liczbaLekcji; $i++) { 
+                $lekcjaId = $idOstatLek - $i;//???
             }
 
-           
+            $nrLekcji;
+            $idDniaTyg;
+            $idLeckcji;
+
+            $PrzypLekGlowny = "INSERT INTO `przyporzadkowanie_lekcji` (`id`, `nr_lekcji`, `id_dnia_tyg`, `id_lekcji`) VALUES (NULL, )"; 
+
+            $PrzypLekDrugi = ", (NULL, )";//!!!!DOK HERE
+
+            if ($sqlTPrzypLek == "") {
+                $sqlTPrzypLek = $PrzypLekGlowny;
+            } else {
+                $sqlTPrzypLek .= $PrzypLekDrugi;
+            }
+            // $sqlTPrzypLek .= $sqlTPrzypLekVal; 
 
         }
-        
+
+        // }
 
         //sql do tabeli 'przyporzadkowanie_lekcji'
         //id, nr_lekcji, id_dnia_tyg, id_lekcji
