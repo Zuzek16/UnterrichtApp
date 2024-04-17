@@ -64,7 +64,7 @@ if ($tab == NULL) {
     }
     ?>
 </p>
-<h5>Wskazówka: Jeśli potrzebujesz mieć mniej lekcji w danym dniu ostatnie z opcji pozostaw puste</h3>
+<h5>Wskazówka: Jeśli potrzebujesz mieć mniej lekcji w danym dniu ostatnie z opcji pozostaw puste [WIP]</h3>
 <div class="tableContainer">
 <form action="#" method="post">
 <table class="calosc">
@@ -221,43 +221,79 @@ if ($tab == NULL) {
         // if (msqli_query($conn, $sqlTLekcja)){
 
         $sqlTPrzypLek = "";
-        // $sqlTPrzypLek = "INSERT INTO `przyporzadkowanie_lekcji` (`id`, `nr_lekcji`, `id_dnia_tyg`, `id_lekcji`) VALUES ";
+        $nrLekcji;
+        $idDniaTyg;
+        $idLekcji;
         foreach ($przedmiotSelectIds as $el) {
             $selectEl = $el;
             $selectEl = (explode("]",$selectEl));
             $selectEl = (implode("",$selectEl));
             $selectEl = (explode("[",$selectEl));
             
+            global $dzien_tygodnia;
+            foreach ($dzien_tygodnia as $value) {
+                // echo "<h3>".$value['id']."</h3>";
+                // echo "<h3>".$value['nazwa']."</h3>";
+
+                if ($value['nazwa'] == $selectEl[0]) {
+                    $idDniaTyg = $value['id'];
+                    // echo "<hr>";
+                    // echo "ID DNIA TYG".$idDniaTyg;
+                    // echo "<hr>";
+                }
+            }
+            // $idDniaTyg
             // $selectEl[1] //- nr lekcji
             // $dzien_tygodnia[0][id] - //id_dnia_tyg
             $idOstatLek = mysqli_insert_id($conn);//go back from that number 
             $liczbaLekcji = count($przedmiotSelectIds);
             for ($i=0; $i < $liczbaLekcji; $i++) { 
-                $lekcjaId = $idOstatLek - $i;//???
+                $idLekcji = $idOstatLek - $i;//!!wontwork without turning on the querey
+                // echo "<p style=color:red;>$idLekcji</p>";
             }
 
-            $nrLekcji;
-            $idDniaTyg;
-            $idLeckcji;
+            $PrzypLekGlowny = "INSERT INTO `przyporzadkowanie_lekcji` (`id`, `nr_lekcji`, `id_dnia_tyg`, `id_lekcji`) VALUES (NULL, '".$nrLekcji."', '".$idDniaTyg."', '".$idLekcji."')"; 
 
-            $PrzypLekGlowny = "INSERT INTO `przyporzadkowanie_lekcji` (`id`, `nr_lekcji`, `id_dnia_tyg`, `id_lekcji`) VALUES (NULL, )"; 
-
-            $PrzypLekDrugi = ", (NULL, )";//!!!!DOK HERE
+            $PrzypLekDrugi = ", (NULL, '".$nrLekcji."', '".$idDniaTyg."', '".$idLekcji."')";//!!!!DOK HERE
 
             if ($sqlTPrzypLek == "") {
                 $sqlTPrzypLek = $PrzypLekGlowny;
             } else {
                 $sqlTPrzypLek .= $PrzypLekDrugi;
             }
-            // $sqlTPrzypLek .= $sqlTPrzypLekVal; 
-
         }
 
-        // }
+        // if(mysqli_query($conn,$sqlTPrzypLek)) {
+            
+            $sqlPlanLekcji = "INSERT INTO `plan_lekcji` (`id`) VALUES (NULL)";
 
-        //sql do tabeli 'przyporzadkowanie_lekcji'
-        //id, nr_lekcji, id_dnia_tyg, id_lekcji
+            $idPlanuLekcji = mysqli_insert_id($conn);
+
+            $idPrzyporzadkowanejLekcji;//!!To get this and the lesson ids do the first one and take its id - then the rest and since we know their number we know the rest
+
+            $sqlLekcjePlanu = "INSERT INTO `lekcje_planu` (`id`, `id_planu_lekcji`, `id_przyporzadkowanej_lekcji`) VALUES (NULL, '$idPlanuLekcji', '$idPrzyporzadkowanejLekcji')";
+
+            if (mysqli_query($conn, $sqlPlanLekcji) && mysqli_query($conn,$sqlLekcjePlanu)) {
+                echo "GOTOWE";
+                echo "Udało Ci się storzyć nowy plan lekcji!";
+                echo "Przypisać go klasie? TAK / NIE";
+                //tutaj dać dwa przyciśki jesli tak to wyświetlamy formularz a jak nie to przenosimy na index.php
+            } else {
+                echo "Wystąpił błąd w tworzeniu planu lekcji..";
+            }
+
+        // } else {
+            // echo "Wystąpił błąd w przyporządkowywaniu lekcji";
+        //}
+        // }
        
+
+
+
+        //dod nowy rekord do tabeli 'plan_leckji'(id)
+        //dod nowy rekord do tab 'lekcje_planu' (id	id_planu_lekcji	id_przyporzadkowanej_lekcji)
+
+
     }
 ?>
 </body>
