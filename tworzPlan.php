@@ -78,7 +78,6 @@ if ($tab == NULL) {
     
     <?php
     global $nauczany_przedmiot;
-    $licznik = 0;
 
     for ($i=0; $i < 9; $i++) { 
         echo "<tr>";
@@ -101,11 +100,9 @@ if ($tab == NULL) {
                     $dzien = "piątek";
                     break;
             }
-
             echo "<td>";
-            lekcjaInput($licznik, $dzien);
+            lekcjaInput($i, $dzien);
             echo "</td>";
-            $licznik++;
         }
         
        echo "</tr>";
@@ -173,8 +170,8 @@ if ($tab == NULL) {
     // echo "<pre>".var_dump($_POST)."</pre>";
     echo "<hr>";
 
-    // if (allset($przedmiotSelectIds) && allset($nauczycielSelectIds)&& allset($salaSelectIds)) {
-        if (true) {
+    if (allset($przedmiotSelectIds) && allset($nauczycielSelectIds)&& allset($salaSelectIds)) {//!!Check this and debug
+        // if (true) {
         $idSali;
         $idNauczyciela;
         $idPrzedmiotu;
@@ -218,12 +215,15 @@ if ($tab == NULL) {
                 // echo "<pre>".var_dump($sqlTLekcja)."</pre>";
             }
         }
-        // if (msqli_query($conn, $sqlTLekcja)){
+        if (msqli_query($conn, $sqlTLekcja)){//UNCOMMENT
 
         $sqlTPrzypLek = "";
         $nrLekcji;
         $idDniaTyg;
         $idLekcji;
+
+        $idsCounter = 0;
+            $idsPrzyporzadkowanejLekcji = [0];
         foreach ($przedmiotSelectIds as $el) {
             $selectEl = $el;
             $selectEl = (explode("]",$selectEl));
@@ -252,28 +252,47 @@ if ($tab == NULL) {
                 // echo "<p style=color:red;>$idLekcji</p>";
             }
 
+            
+
             $PrzypLekGlowny = "INSERT INTO `przyporzadkowanie_lekcji` (`id`, `nr_lekcji`, `id_dnia_tyg`, `id_lekcji`) VALUES (NULL, '".$nrLekcji."', '".$idDniaTyg."', '".$idLekcji."')"; 
 
-            $PrzypLekDrugi = ", (NULL, '".$nrLekcji."', '".$idDniaTyg."', '".$idLekcji."')";//!!!!DOK HERE
+            $PrzypLekDrugi = ", (NULL, '".$nrLekcji."', '".$idDniaTyg."', '".$idLekcji."')";
 
-            if ($sqlTPrzypLek == "") {
-                $sqlTPrzypLek = $PrzypLekGlowny;
+            // $idWszystPrzypLekcji = [];
+
+
+            if ($idsPrzyporzadkowanejLekcji[0] == 0) {
+                // mysqli_query($conn, $PrzypLekGlowny);//UNCOMMENT
+                // $pierwszaDodanaId = 
+                // $idsPrzyporzadkowanejLekcji[0] = mysqli_insert_id($conn);//DEBUG
+                $idsPrzyporzadkowanejLekcji[0] = 56;//DEBUG
+                // $sqlTPrzypLek = $PrzypLekGlowny;
             } else {
-                $sqlTPrzypLek .= $PrzypLekDrugi;
+                $idsPrzyporzadkowanejLekcji[$idsCounter] = ($idsPrzyporzadkowanejLekcji[$idsCounter-1])+1; 
+                $sqlTPrzypLek .= $PrzypLekDrugi;//NAPRAWIC TO
             }
+            $idsCounter ++; 
+
+            //DEBUG
+         var_dump($idsPrzyporzadkowanejLekcji);
         }
 
-        // if(mysqli_query($conn,$sqlTPrzypLek)) {
+        if(mysqli_query($conn,$sqlTPrzypLek)) {
             
             $sqlPlanLekcji = "INSERT INTO `plan_lekcji` (`id`) VALUES (NULL)";
 
             $idPlanuLekcji = mysqli_insert_id($conn);
 
-            $idPrzyporzadkowanejLekcji;//!!To get this and the lesson ids do the first one and take its id - then the rest and since we know their number we know the rest
+            global $idsPrzyporzadkowanejLekcji;
+            $sqlLekcjePlanu="";
 
-            $sqlLekcjePlanu = "INSERT INTO `lekcje_planu` (`id`, `id_planu_lekcji`, `id_przyporzadkowanej_lekcji`) VALUES (NULL, '$idPlanuLekcji', '$idPrzyporzadkowanejLekcji')";
+            foreach ($idsPrzyporzadkowanejLekcji as $el) {
+                $idPrzyporzadkowanejLekcji = $idsPrzyporzadkowanejLekcji[$count];
 
-            if (mysqli_query($conn, $sqlPlanLekcji) && mysqli_query($conn,$sqlLekcjePlanu)) {
+                $sqlLekcjePlanu .= "INSERT INTO `lekcje_planu` (`id`, `id_planu_lekcji`, `id_przyporzadkowanej_lekcji`) VALUES (NULL, '$idPlanuLekcji', '$idPrzyporzadkowanejLekcji');";
+            }
+
+            if (mysqli_query($conn, $sqlPlanLekcji) && mysqli_multi_query($conn,$sqlLekcjePlanu)) {
                 echo "GOTOWE";
                 echo "Udało Ci się storzyć nowy plan lekcji!";
                 echo "Przypisać go klasie? TAK / NIE";
@@ -282,17 +301,10 @@ if ($tab == NULL) {
                 echo "Wystąpił błąd w tworzeniu planu lekcji..";
             }
 
-        // } else {
-            // echo "Wystąpił błąd w przyporządkowywaniu lekcji";
-        //}
-        // }
-       
-
-
-
-        //dod nowy rekord do tabeli 'plan_leckji'(id)
-        //dod nowy rekord do tab 'lekcje_planu' (id	id_planu_lekcji	id_przyporzadkowanej_lekcji)
-
+        } else {
+            echo "Wystąpił błąd w przyporządkowywaniu lekcji";
+        }
+        }
 
     }
 ?>
