@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Łączenie...</title>
-</head>
-<body>
-     <?php
+<?php
      $user = "root";
      $pass = "";
      $db = "plan_lekcji";
@@ -19,6 +11,4 @@
      } else {
           echo "<p class='conn'>Błąd połączenia: ". mysqli_connect_error()."</p>";
      }
-     ?>
-</body>
-</html>
+?>

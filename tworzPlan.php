@@ -154,41 +154,41 @@ if ($tab == NULL) {
         }
 
         if (in_array(false, $set)) {
-            return "false";
+            return false;
         } else {
-            return "true";
+            return true;
         }
     }
 
     global $przedmiotSelectIds;
     global $nauczycielSelectIds;
     global $salaSelectIds;
-    echo "<h1>".allset($przedmiotSelectIds)."</h1>";
+    echo "<h1>".var_dump(allset($przedmiotSelectIds))."</h1>";
+    echo "<h1>".(allset($przedmiotSelectIds))."</h1>";
     echo "<h1>".allset($nauczycielSelectIds)."</h1>";
     echo "<h1>".allset($salaSelectIds)."</h1>";
     echo "<hr>";
-    // echo "<pre>".var_dump($_POST)."</pre>";
-    echo "<hr>";
 
     if (allset($przedmiotSelectIds) && allset($nauczycielSelectIds)&& allset($salaSelectIds)) {//!!Check this and debug
+
         // if (true) {
         $idSali;
         $idNauczyciela;
         $idPrzedmiotu;
 
-        $sqlTLekcja = "";//one big query!
+        $sqlTLekcja = "";
         //export db! 
         //tabela 'lekcja' sql
         foreach ($_POST as $dzienTyg => $value) {
             foreach ($_POST[$dzienTyg] as $nrLekcji => $value){
                 foreach ($_POST[$dzienTyg][$nrLekcji] as $key => $value){
+                echo "<pre>".var_dump($sqlTLekcja)."</pre>";
 
                     if ($key == "nauczyciel") {
                         
                         $idNauczyciela = $value;
                     } else if ($key == "przedmiot"){
                         foreach ($przedmiot as $val) {
-                            // echo $val['id'];
                             if ($value == $val['nazwa']) {
                                 $idPrzedmiotu = $val['id'];
                                 //JEŚLI PRZEDMIOT NULL TO NIE DODAJEMY!
@@ -210,12 +210,12 @@ if ($tab == NULL) {
                 if ($sqlTLekcja == "") {
                     $sqlTLekcja = $dodLekcjeSzablonGlowny;
                 } else {
-                    $sqlTLekcja = $sqlTLekcja.$dodLekcjeSzablonDrugi;
+                    $sqlTLekcja .= $dodLekcjeSzablonDrugi;
                 }
                 // echo "<pre>".var_dump($sqlTLekcja)."</pre>";
             }
         }
-        if (msqli_query($conn, $sqlTLekcja)){//UNCOMMENT
+        if (@mysqli_query($conn, $sqlTLekcja)){//UNCOMMENT
 
         $sqlTPrzypLek = "";
         $nrLekcji;
@@ -304,6 +304,8 @@ if ($tab == NULL) {
         } else {
             echo "Wystąpił błąd w przyporządkowywaniu lekcji";
         }
+        } else {
+            echo "Błąd dodawania lekcji";
         }
 
     }

@@ -6,7 +6,7 @@
      <title>UnterrichtApp</title>
      <link rel="stylesheet" href="styl.css">
      <link rel="icon" type="image/x-icon" href="/zdj/UnterrichtAppLOGO.png">
-     <!-- 
+     <!-- MINI CMS NA TEŚCIE + DATY FAV
           -dodawanie nau
           -dod przedmiotu
           -dod klasy
