@@ -25,7 +25,7 @@ foreach ($przedmiot as $el) {
     ?>
     <script>
         var nauczany_przedmiot = <?php echo json_encode($nauczany_przedmiot); ?>;
-        console.log(nauczany_przedmiot);
+        // console.log(nauczany_przedmiot);
     </script>
 </head>
 <body>
@@ -64,6 +64,35 @@ if ($tab == NULL) {
     }
     ?>
 </p>
+<!-- only if school is set -->
+<form action="" method="post">
+    <label for="klasaAktyw">Dla ktorej klasy chcesz zrobić plan?</label>
+    <select name="klasaAktyw" id="klasaAktyw">
+        <?php
+        foreach($klasaSzkoly as $szkola => $value1){
+            //TYLKO dla aktywnej szkoły!!!
+            //tak samo jak nauczycieli
+
+            foreach ($klasaSzkoly[$szkola] as $key => $value2) {
+            echo "<option value='".$value2[1]."'>".$value2[1]."</option>";
+            }
+        }
+        ?>
+    </select>
+    <button type="submit">Zatwierdź</button>
+</form>
+
+<p>
+    <?php
+    if (isset($_POST['klasaAktyw'])) {
+        echo "<p>Wybrana szkoła: ".($_POST['klasaAktyw'])."</p>";
+    } else {
+        echo "<p>Proszę wybrać szkołę</p>";
+    }
+    ?>
+</p>
+
+<!--  -->
 <h5>Wskazówka: Jeśli potrzebujesz mieć mniej lekcji w danym dniu ostatnie z opcji pozostaw puste [WIP]</h3>
 <div class="tableContainer">
 <form action="#" method="post">
@@ -130,8 +159,8 @@ if ($tab == NULL) {
             console.log(el.value);
             let form = '';
             nauczany_przedmiot[`${el.value}`].forEach(el => {
-               form += `<option value="${el[0]}" >${el[1]}</option>`;
-                // form += `<option value="${el[0]}" selected>${el[1]}</option>`;//DEBUG
+               //form += `<option value="${el[0]}" >${el[1]}</option>`;
+                form += `<option value="${el[0]}" selected>${el[1]}</option>`;//DEBUG
             });
             el.parentElement.querySelector('.nauczyciel').innerHTML = form;
         })        
@@ -164,9 +193,10 @@ if ($tab == NULL) {
     global $nauczycielSelectIds;
     global $salaSelectIds;
     echo "<h1>".var_dump(allset($przedmiotSelectIds))."</h1>";
-    echo "<h1>".(allset($przedmiotSelectIds))."</h1>";
-    echo "<h1>".allset($nauczycielSelectIds)."</h1>";
-    echo "<h1>".allset($salaSelectIds)."</h1>";
+    // echo "<h1>".(allset($przedmiotSelectIds))."</h1>";
+    // echo "<h1>".allset($nauczycielSelectIds)."</h1>";
+    // echo "<h1>".allset($salaSelectIds)."</h1>";
+    echo "<h1>".var_dump($klasaSzkoly)."</h1>";
     echo "<hr>";
 
     if (allset($przedmiotSelectIds) && allset($nauczycielSelectIds)&& allset($salaSelectIds)) {//!!Check this and debug
@@ -182,7 +212,7 @@ if ($tab == NULL) {
         foreach ($_POST as $dzienTyg => $value) {
             foreach ($_POST[$dzienTyg] as $nrLekcji => $value){
                 foreach ($_POST[$dzienTyg][$nrLekcji] as $key => $value){
-                echo "<pre>".var_dump($sqlTLekcja)."</pre>";
+                // echo "<pre>".var_dump($sqlTLekcja)."</pre>";
 
                     if ($key == "nauczyciel") {
                         
@@ -215,7 +245,7 @@ if ($tab == NULL) {
                 // echo "<pre>".var_dump($sqlTLekcja)."</pre>";
             }
         }
-        if (@mysqli_query($conn, $sqlTLekcja)){//UNCOMMENT
+        if (mysqli_query($conn, $sqlTLekcja)){//UNCOMMENT
 
         $sqlTPrzypLek = "";
         $nrLekcji;
@@ -232,19 +262,11 @@ if ($tab == NULL) {
             
             global $dzien_tygodnia;
             foreach ($dzien_tygodnia as $value) {
-                // echo "<h3>".$value['id']."</h3>";
-                // echo "<h3>".$value['nazwa']."</h3>";
-
                 if ($value['nazwa'] == $selectEl[0]) {
                     $idDniaTyg = $value['id'];
-                    // echo "<hr>";
-                    // echo "ID DNIA TYG".$idDniaTyg;
-                    // echo "<hr>";
                 }
             }
-            // $idDniaTyg
-            // $selectEl[1] //- nr lekcji
-            // $dzien_tygodnia[0][id] - //id_dnia_tyg
+           
             $idOstatLek = mysqli_insert_id($conn);//go back from that number 
             $liczbaLekcji = count($przedmiotSelectIds);
             for ($i=0; $i < $liczbaLekcji; $i++) { 
@@ -260,21 +282,16 @@ if ($tab == NULL) {
 
             // $idWszystPrzypLekcji = [];
 
-
             if ($idsPrzyporzadkowanejLekcji[0] == 0) {
-                // mysqli_query($conn, $PrzypLekGlowny);//UNCOMMENT
-                // $pierwszaDodanaId = 
-                // $idsPrzyporzadkowanejLekcji[0] = mysqli_insert_id($conn);//DEBUG
-                $idsPrzyporzadkowanejLekcji[0] = 56;//DEBUG
-                // $sqlTPrzypLek = $PrzypLekGlowny;
+                // mysqli_query($conn, $PrzypLekGlowny);//!!whereisit suppoused to be
+                $idsPrzyporzadkowanejLekcji[0] = mysqli_insert_id($conn);
+
+                $sqlTPrzypLek = $PrzypLekGlowny;
             } else {
                 $idsPrzyporzadkowanejLekcji[$idsCounter] = ($idsPrzyporzadkowanejLekcji[$idsCounter-1])+1; 
-                $sqlTPrzypLek .= $PrzypLekDrugi;//NAPRAWIC TO
+                $sqlTPrzypLek .= $PrzypLekDrugi;
             }
             $idsCounter ++; 
-
-            //DEBUG
-         var_dump($idsPrzyporzadkowanejLekcji);
         }
 
         if(mysqli_query($conn,$sqlTPrzypLek)) {
@@ -284,10 +301,10 @@ if ($tab == NULL) {
             $idPlanuLekcji = mysqli_insert_id($conn);
 
             global $idsPrzyporzadkowanejLekcji;
-            $sqlLekcjePlanu="";
+            $sqlLekcjePlanu="";//!gotta fix tihs one
 
             foreach ($idsPrzyporzadkowanejLekcji as $el) {
-                $idPrzyporzadkowanejLekcji = $idsPrzyporzadkowanejLekcji[$count];
+                $idPrzyporzadkowanejLekcji = $el;
 
                 $sqlLekcjePlanu .= "INSERT INTO `lekcje_planu` (`id`, `id_planu_lekcji`, `id_przyporzadkowanej_lekcji`) VALUES (NULL, '$idPlanuLekcji', '$idPrzyporzadkowanejLekcji');";
             }
@@ -295,7 +312,10 @@ if ($tab == NULL) {
             if (mysqli_query($conn, $sqlPlanLekcji) && mysqli_multi_query($conn,$sqlLekcjePlanu)) {
                 echo "GOTOWE";
                 echo "Udało Ci się storzyć nowy plan lekcji!";
-                echo "Przypisać go klasie? TAK / NIE";
+                echo "<p>Przypisać go klasie?</p>
+                <button class ='odpY'><a href='edycjaPlan.php'>TAK</a></button>/ 
+                <button class ='odpN'>NIE</button>
+                ";
                 //tutaj dać dwa przyciśki jesli tak to wyświetlamy formularz a jak nie to przenosimy na index.php
             } else {
                 echo "Wystąpił błąd w tworzeniu planu lekcji..";

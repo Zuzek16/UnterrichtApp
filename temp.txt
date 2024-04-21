@@ -131,3 +131,34 @@
             // echo "<pre>".var_dump($postKey)."</pre>";
 
             // => output array(4) { [0]=> string(15) "'poniedziałek'" [1]=> string(1) "0" [2]=> string(11) "'przedmiot'" [3]=> string(0) "" } 
+
+            
+// $r_nauczyciel = mysqli_query($conn, "SELECT * from nauczyciel");
+// $nauczyciel = [];
+// while ($row = mysqli_fetch_assoc($r_nauczyciel)) array_push($nauczyciel, $row);
+
+// $r_nauczany_przedmiot = mysqli_query($conn, "SELECT * from nauczany_przedmiot");
+// $nauczany_przedmiot = [];
+// while ($row = mysqli_fetch_assoc($r_nauczany_przedmiot)) array_push($nauczany_przedmiot, $row);
+
+// $ponLekcjeFormularzGotowy = [];//might need to give this to the url so JS can read it 
+//save the info to somevhere and read it instad of relying on post (like cookies/session/get)
+// $wtLekcjeFormularzGotowy = [];
+// $srLekcjeFormularzGotowy = [];
+// $czwLekcjeFormularzGotowy = [];
+// $ptLekcjeFormularzGotowy = [];
+
+function nauczycieleKtorzyUcza($przedmiot){
+//      global $conn;//!! czasami nie widzi połączenia
+//      //[przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko]
+//      // $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$_POST['przedmiot']."';";
+//      $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$przedmiot."'";
+//      $result = mysqli_query($conn, $sql);
+//      $tabN = [];
+//      while ($row = mysqli_fetch_assoc($result)) {
+//            array_push($tabN, $row['imie']." ".$row['nazwisko']);
+//      }
+//      return $tabN;
+// }
+
+SELECT szkola.id, szkola.nazwa, klasa.id, klasa.nazwa, klasa.id_szkola, klasa.id_planu_lekcji from szkola INNER JOIN klasa ON klasa.id_szkola = szkola.id;

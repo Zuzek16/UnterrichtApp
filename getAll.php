@@ -1,17 +1,4 @@
 <?php
-function nauczycieleKtorzyUcza($przedmiot){
-     global $conn;//!! czasami nie widzi połączenia
-     //[przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko]
-     // $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$_POST['przedmiot']."';";
-     $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$przedmiot."'";
-     $result = mysqli_query($conn, $sql);
-     $tabN = [];
-     while ($row = mysqli_fetch_assoc($result)) {
-           array_push($tabN, $row['imie']." ".$row['nazwisko']);
-     }
-     return $tabN;
-}
-
 $r_Sala = mysqli_query($conn, "SELECT * from sala");
 $sala = [];
 while ($row = mysqli_fetch_assoc($r_Sala)) array_push($sala, $row);
@@ -24,26 +11,25 @@ $r_dzien_tygodnia = mysqli_query($conn, "SELECT * from dzien_tygodnia");
 $dzien_tygodnia = [];
 while ($row = mysqli_fetch_assoc($r_dzien_tygodnia)) array_push($dzien_tygodnia, $row);
 
-// $r_nauczyciel = mysqli_query($conn, "SELECT * from nauczyciel");
-// $nauczyciel = [];
-// while ($row = mysqli_fetch_assoc($r_nauczyciel)) array_push($nauczyciel, $row);
+$sqlSzkola = "SELECT * FROM szkola";
+$r_szkola = mysqli_query($conn, $sqlSzkola);
 
-// $r_nauczany_przedmiot = mysqli_query($conn, "SELECT * from nauczany_przedmiot");
-// $nauczany_przedmiot = [];
-// while ($row = mysqli_fetch_assoc($r_nauczany_przedmiot)) array_push($nauczany_przedmiot, $row);
-
-// $ponLekcjeFormularzGotowy = [];//might need to give this to the url so JS can read it 
-//save the info to somevhere and read it instad of relying on post (like cookies/session/get)
-// $wtLekcjeFormularzGotowy = [];
-// $srLekcjeFormularzGotowy = [];
-// $czwLekcjeFormularzGotowy = [];
-// $ptLekcjeFormularzGotowy = [];
+$klasaSzkoly = [];//budowa - nazwa szkoly => [idklasy, nazwaklasy]
+while ($rowSz = mysqli_fetch_assoc($r_szkola)) {
+      $klasaSzkoly[$rowSz['nazwa']] = [];
+      //szkoła
+      $sqlKlasa = 'SELECT szkola.id AS "idSzkoly", szkola.nazwa AS "nazwaSzkoly", klasa.id AS "idKlasy", klasa.nazwa AS "nazwaKlasy", klasa.id_planu_lekcji from szkola INNER JOIN klasa ON klasa.id_szkola = szkola.id WHERE szkola.nazwa = "'.$rowSz['nazwa'].'";';
+      $r_klasa = mysqli_query($conn, $sqlKlasa);
+      while ($rowK = mysqli_fetch_assoc($r_klasa)) {
+            array_push($klasaSzkoly[$rowSz['nazwa']], [$rowK['idKlasy'], $rowK['nazwaKlasy']]);
+      }
+}
 
 $przedmiotSelectIds = [];
 $nauczycielSelectIds = [];
 $salaSelectIds = [];
 
-function lekcjaInput($licznikLekcji, $dzien){//mabye add id's to inputs
+function lekcjaInput($licznikLekcji, $dzien){
       global $przedmiot;
       global $sala;
 
@@ -63,8 +49,7 @@ function lekcjaInput($licznikLekcji, $dzien){//mabye add id's to inputs
       echo '<option value="">Wybierz przedmiot</option>';
       foreach ($przedmiot as $el) {
             // echo '<option value="'.$el['nazwa'].'">'.$el['nazwa'].'</option>';
-            echo '<option value="'.$el['nazwa'].'">'.$el['nazwa'].'</option>';
-            // echo '<option value="'.$el['nazwa'].'"selected>'.$el['nazwa'].'</option>';//DEBUG
+            echo '<option value="'.$el['nazwa'].'"selected>'.$el['nazwa'].'</option>';//DEBUG
       }
   echo "</select>
       <select name=$salaName>
@@ -77,11 +62,8 @@ function lekcjaInput($licznikLekcji, $dzien){//mabye add id's to inputs
 
   echo "</select>";
   
-
   echo '<select name='.$nauczycielName.' class="nauczyciel"></select>';
 };
-
-
 
 function defAddLekcjaTd($id, $dzien){
       global $przedmiot;//! add global often
