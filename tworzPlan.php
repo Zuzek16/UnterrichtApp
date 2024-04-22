@@ -305,8 +305,14 @@ if ($tab == NULL) {
 
             foreach ($idsPrzyporzadkowanejLekcji as $el) {
                 $idPrzyporzadkowanejLekcji = $el;
+                global $idPlanuLekcji;
 
-                $sqlLekcjePlanu .= "INSERT INTO `lekcje_planu` (`id`, `id_planu_lekcji`, `id_przyporzadkowanej_lekcji`) VALUES (NULL, '$idPlanuLekcji', '$idPrzyporzadkowanejLekcji');";
+                if ($sqlLekcjePlanu == "") {
+                    $sqlLekcjePlanu = "INSERT INTO `lekcje_planu` (`id`, `id_planu_lekcji`, `id_przyporzadkowanej_lekcji`) VALUES (NULL, '$idPlanuLekcji', '$idPrzyporzadkowanejLekcji')";
+                } else {
+                    $sqlLekcjePlanu .= ",(NULL, '$idPlanuLekcji', '$idPrzyporzadkowanejLekcji')";
+                }
+                
             }
 
             if (mysqli_query($conn, $sqlPlanLekcji) && mysqli_multi_query($conn,$sqlLekcjePlanu)) {
