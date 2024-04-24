@@ -253,7 +253,9 @@ if ($tab == NULL) {
         $idLekcji;
 
         $idsCounter = 0;
-            $idsPrzyporzadkowanejLekcji = [0];
+
+        // $idsPrzyporzadkowanejLekcji = [];
+        $idsPrzyporzadkowanejLekcji[0] = 0;
         foreach ($przedmiotSelectIds as $el) {
             $selectEl = $el;
             $selectEl = (explode("]",$selectEl));
@@ -267,14 +269,11 @@ if ($tab == NULL) {
                 }
             }
            
-            $idOstatLek = mysqli_insert_id($conn);//go back from that number 
+            $idOstatLek = mysqli_insert_id($conn);
             $liczbaLekcji = count($przedmiotSelectIds);
             for ($i=0; $i < $liczbaLekcji; $i++) { 
                 $idLekcji = $idOstatLek - $i;//!!wontwork without turning on the querey
-                // echo "<p style=color:red;>$idLekcji</p>";
             }
-
-            
 
             $PrzypLekGlowny = "INSERT INTO `przyporzadkowanie_lekcji` (`id`, `nr_lekcji`, `id_dnia_tyg`, `id_lekcji`) VALUES (NULL, '".$nrLekcji."', '".$idDniaTyg."', '".$idLekcji."')"; 
 
@@ -283,10 +282,16 @@ if ($tab == NULL) {
             // $idWszystPrzypLekcji = [];
 
             if ($idsPrzyporzadkowanejLekcji[0] == 0) {
-                // mysqli_query($conn, $PrzypLekGlowny);//!!whereisit suppoused to be
-                $idsPrzyporzadkowanejLekcji[0] = mysqli_insert_id($conn);
+
+                if (!(mysqli_query($conn, $PrzypLekGlowny))) {
+                    echo "Błąd przy dodawaniu przyporządkowanej lekcji.";
+                } else {
+                    $idsPrzyporzadkowanejLekcji[0] = mysqli_insert_id($conn);
+                // echo "ONCE  ????? Pierwsze id - ".var_dump($idsPrzyporzadkowanejLekcji[0]);//DEBUG
 
                 $sqlTPrzypLek = $PrzypLekGlowny;
+                }
+                
             } else {
                 $idsPrzyporzadkowanejLekcji[$idsCounter] = ($idsPrzyporzadkowanejLekcji[$idsCounter-1])+1; 
                 $sqlTPrzypLek .= $PrzypLekDrugi;
@@ -294,37 +299,47 @@ if ($tab == NULL) {
             $idsCounter ++; 
         }
 
-        if(mysqli_query($conn,$sqlTPrzypLek)) {
+        if (mysqli_query($conn, $sqlTPrzypLek)) {
             
             $sqlPlanLekcji = "INSERT INTO `plan_lekcji` (`id`) VALUES (NULL)";
-
-            $idPlanuLekcji = mysqli_insert_id($conn);
-
+            
             global $idsPrzyporzadkowanejLekcji;
-            $sqlLekcjePlanu="";//!gotta fix tihs one
+            $sqlLekcjePlanu="";
 
-            foreach ($idsPrzyporzadkowanejLekcji as $el) {
-                $idPrzyporzadkowanejLekcji = $el;
-                global $idPlanuLekcji;
+            if (mysqli_query($conn, $sqlPlanLekcji)) {
+                $idPlanuLekcji = mysqli_insert_id($conn);
 
-                if ($sqlLekcjePlanu == "") {
-                    $sqlLekcjePlanu = "INSERT INTO `lekcje_planu` (`id`, `id_planu_lekcji`, `id_przyporzadkowanej_lekcji`) VALUES (NULL, '$idPlanuLekcji', '$idPrzyporzadkowanejLekcji')";
-                } else {
-                    $sqlLekcjePlanu .= ",(NULL, '$idPlanuLekcji', '$idPrzyporzadkowanejLekcji')";
+                foreach ($idsPrzyporzadkowanejLekcji as $el) {
+                    $idPrzyporzadkowanejLekcji = $el;
+                    echo "ID przypo lekcji - ".var_dump($el);
+                    global $idPlanuLekcji;
+    
+                    if ($sqlLekcjePlanu == "") {
+                        $sqlLekcjePlanu = "INSERT INTO `lekcje_planu` (`id`, `id_planu_lekcji`, `id_przyporzadkowanej_lekcji`) VALUES (NULL, '$idPlanuLekcji', '$idPrzyporzadkowanejLekcji')";
+                    } else {
+                        $sqlLekcjePlanu .= ",(NULL, '$idPlanuLekcji', '$idPrzyporzadkowanejLekcji')";
+                    }
                 }
-                
-            }
 
-            if (mysqli_query($conn, $sqlPlanLekcji) && mysqli_multi_query($conn,$sqlLekcjePlanu)) {
-                echo "GOTOWE";
-                echo "Udało Ci się storzyć nowy plan lekcji!";
-                echo "<p>Przypisać go klasie?</p>
-                <button class ='odpY'><a href='edycjaPlan.php'>TAK</a></button>/ 
-                <button class ='odpN'>NIE</button>
-                ";
-                //tutaj dać dwa przyciśki jesli tak to wyświetlamy formularz a jak nie to przenosimy na index.php
+                if ( mysqli_multi_query($conn,$sqlLekcjePlanu)) {
+
+                    // $_POST['nowyPlan'] = $idPlanuLekcji;
+                    echo "||||||                |||||GOTOWE";
+                    echo "Udało Ci się storzyć nowy plan lekcji!";
+                    echo "<p>Przypisać go klasie?</p>
+                    <button class ='odpY'><a href='edycjaPlan.php'>TAK</a></button>/ 
+                    <button class ='odpN'>NIE</button>
+                    <br><br><a class='button' href='pokazNPlan.php?nowyPlan=".$idPlanuLekcji."' >Zobacz twój nowo stworzony plan tutaj</a>
+                    ";
+                    //tutaj dać dwa przyciśki jesli tak to wyświetlamy formularz a jak nie to przenosimy na index.php
+                } else {
+                    echo "Wystąpił błąd w tworzeniu planu lekcji..";
+                }
+
+
+
             } else {
-                echo "Wystąpił błąd w tworzeniu planu lekcji..";
+                echo "Wystąpił błąd przy tworzeniu planu lekcji";
             }
 
         } else {
@@ -333,7 +348,6 @@ if ($tab == NULL) {
         } else {
             echo "Błąd dodawania lekcji";
         }
-
     }
 ?>
 </body>
