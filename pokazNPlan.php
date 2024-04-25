@@ -1,8 +1,11 @@
 <?php
+//tu też jakikolwiek plan render i możliwość zmiany
 if (!(isset($_GET['nowyPlan']))) {
      echo '<p>Nie ma nowych planów lekcji,<a href="tworzPlan.php"> stwórz go teraz</a>!</p>';
      
-} else {?>
+} else {
+include "conn.php";
+     ?>
      
 
 <!DOCTYPE html>
@@ -13,11 +16,25 @@ if (!(isset($_GET['nowyPlan']))) {
      <title>Nowy plan lekcji</title>
 </head>
 <body>
+     <div class="tableContainer">
+          <div class="mobile">
+
+          </div>
+          <div class="desktop"></div>
+     </div>
+     <div class="test">
+
+     <?php
+     include "planRender.php";
+     var_dump(getDanePlanLekcji($_GET['nowyPlan']));
      
+     ?>
+
+     </div>
 </body>
 </html>
      
 
 <?php
-}
+}//zamknięcie głównego if'a
 ?>
