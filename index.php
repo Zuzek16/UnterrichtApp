@@ -14,6 +14,10 @@
           -jeśli input przedmiot jest pusty to nie dodajemy lekcji
      - mobile version of this app is goin to have the timetable separated into each day pf the week under each other
      - responsiv!
+     -table explode into mobile version
+     -organize $dane nicely in planRender.php
+     -render new talbe
+     -!BUG fix the double poniedziałek in przypLekcji
 
       -->
 </head>

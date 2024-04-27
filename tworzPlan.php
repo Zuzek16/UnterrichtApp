@@ -10,7 +10,7 @@
     include('getAll.php');
     global $conn;
 
-    $nauczany_przedmiot = [];
+    $nauczany_przedmiot = [];//add a message for when its empty
 
 foreach ($przedmiot as $el) {
     $nauczany_przedmiot[$el['nazwa']] = [];
@@ -192,27 +192,19 @@ if ($tab == NULL) {
     global $przedmiotSelectIds;
     global $nauczycielSelectIds;
     global $salaSelectIds;
-    echo "<h1>".var_dump(allset($przedmiotSelectIds))."</h1>";
-    // echo "<h1>".(allset($przedmiotSelectIds))."</h1>";
-    // echo "<h1>".allset($nauczycielSelectIds)."</h1>";
-    // echo "<h1>".allset($salaSelectIds)."</h1>";
-    echo "<h1>".var_dump($klasaSzkoly)."</h1>";
-    echo "<hr>";
 
-    if (allset($przedmiotSelectIds) && allset($nauczycielSelectIds)&& allset($salaSelectIds)) {//!!Check this and debug
-
-        // if (true) {
+    // var_dump($przedmiotSelectIds);
+    if (allset($przedmiotSelectIds) && allset($nauczycielSelectIds)&& allset($salaSelectIds)) {
+        // if (false) {
         $idSali;
         $idNauczyciela;
         $idPrzedmiotu;
 
         $sqlTLekcja = "";
-        //export db! 
         //tabela 'lekcja' sql
         foreach ($_POST as $dzienTyg => $value) {
             foreach ($_POST[$dzienTyg] as $nrLekcji => $value){
                 foreach ($_POST[$dzienTyg][$nrLekcji] as $key => $value){
-                // echo "<pre>".var_dump($sqlTLekcja)."</pre>";
 
                     if ($key == "nauczyciel") {
                         
@@ -242,10 +234,9 @@ if ($tab == NULL) {
                 } else {
                     $sqlTLekcja .= $dodLekcjeSzablonDrugi;
                 }
-                // echo "<pre>".var_dump($sqlTLekcja)."</pre>";
             }
         }
-        if (mysqli_query($conn, $sqlTLekcja)){//UNCOMMENT
+        if (mysqli_query($conn, $sqlTLekcja)){
 
         $sqlTPrzypLek = "";
         $nrLekcji;
@@ -254,26 +245,30 @@ if ($tab == NULL) {
 
         $idsCounter = 0;
 
-        // $idsPrzyporzadkowanejLekcji = [];
         $idsPrzyporzadkowanejLekcji[0] = 0;
         foreach ($przedmiotSelectIds as $el) {
             $selectEl = $el;
             $selectEl = (explode("]",$selectEl));
             $selectEl = (implode("",$selectEl));
             $selectEl = (explode("[",$selectEl));
+            // var_dump($selectEl);
             
             global $dzien_tygodnia;
-            foreach ($dzien_tygodnia as $value) {
-                if ($value['nazwa'] == $selectEl[0]) {
-                    $idDniaTyg = $value['id'];
+            foreach ($dzien_tygodnia as $value) {//!!
+                if ($value['nazwa'] == $selectEl[0]) {//TUTOJ COSIK ODDUPCA
+                    echo "<br>VALUE NAZWA _".var_dump($value['nazwa']);
+                    echo "<br>SELEC ID 00____".var_dump($selectEl[0]);
+                    $idDniaTyg = $value['id'];//this is funky - pon twice at start
                 }
             }
            
             $idOstatLek = mysqli_insert_id($conn);
             $liczbaLekcji = count($przedmiotSelectIds);
             for ($i=0; $i < $liczbaLekcji; $i++) { 
-                $idLekcji = $idOstatLek - $i;//!!wontwork without turning on the querey
+                $idLekcji = $idOstatLek - $i;
             }
+
+            $nrLekcji = $selectEl[1];
 
             $PrzypLekGlowny = "INSERT INTO `przyporzadkowanie_lekcji` (`id`, `nr_lekcji`, `id_dnia_tyg`, `id_lekcji`) VALUES (NULL, '".$nrLekcji."', '".$idDniaTyg."', '".$idLekcji."')"; 
 
@@ -287,7 +282,6 @@ if ($tab == NULL) {
                     echo "Błąd przy dodawaniu przyporządkowanej lekcji.";
                 } else {
                     $idsPrzyporzadkowanejLekcji[0] = mysqli_insert_id($conn);
-                // echo "ONCE  ????? Pierwsze id - ".var_dump($idsPrzyporzadkowanejLekcji[0]);//DEBUG
 
                 $sqlTPrzypLek = $PrzypLekGlowny;
                 }
@@ -311,7 +305,6 @@ if ($tab == NULL) {
 
                 foreach ($idsPrzyporzadkowanejLekcji as $el) {
                     $idPrzyporzadkowanejLekcji = $el;
-                    echo "ID przypo lekcji - ".var_dump($el);
                     global $idPlanuLekcji;
     
                     if ($sqlLekcjePlanu == "") {
@@ -320,9 +313,8 @@ if ($tab == NULL) {
                         $sqlLekcjePlanu .= ",(NULL, '$idPlanuLekcji', '$idPrzyporzadkowanejLekcji')";
                     }
                 }
-
-                if ( mysqli_multi_query($conn,$sqlLekcjePlanu)) {
-
+                // if ( mysqli_multi_query($conn,$sqlLekcjePlanu)) {
+                    if (false){
                     // $_POST['nowyPlan'] = $idPlanuLekcji;
                     echo "||||||                |||||GOTOWE";
                     echo "Udało Ci się storzyć nowy plan lekcji!";
@@ -335,8 +327,6 @@ if ($tab == NULL) {
                 } else {
                     echo "Wystąpił błąd w tworzeniu planu lekcji..";
                 }
-
-
 
             } else {
                 echo "Wystąpił błąd przy tworzeniu planu lekcji";
