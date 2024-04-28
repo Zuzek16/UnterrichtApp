@@ -7,9 +7,24 @@ $r_przedmiot = mysqli_query($conn, "SELECT * from przedmiot");
 $przedmiot = [];
 while ($row = mysqli_fetch_assoc($r_przedmiot)) array_push($przedmiot, $row);
 
+// $r_dzien_tygodnia = mysqli_query($conn, "SELECT * from dzien_tygodnia");
+// $dzien_tygodnia = [];
+// while ($row = mysqli_fetch_assoc($r_dzien_tygodnia)) array_push($dzien_tygodnia, $row);
+
 $r_dzien_tygodnia = mysqli_query($conn, "SELECT * from dzien_tygodnia");
 $dzien_tygodnia = [];
-while ($row = mysqli_fetch_assoc($r_dzien_tygodnia)) array_push($dzien_tygodnia, $row);
+while ($row = mysqli_fetch_assoc($r_dzien_tygodnia)) {
+      global $dzien_tygodnia;
+      ///
+      // if ($dzien_tygodnia == NULL) {
+      //       # code...
+      // }
+      $dzien_tygodnia[$row['nazwa']] = $row['id'];
+      // var_dump($dzien_tygodnia);
+      // array_push($dzien_tygodnia, $row['nazwa']);
+      // array_push($dzien_tygodnia[$row['nazwa']], $row['id']);
+}
+      
 
 $sqlSzkola = "SELECT * FROM szkola";
 $r_szkola = mysqli_query($conn, $sqlSzkola);

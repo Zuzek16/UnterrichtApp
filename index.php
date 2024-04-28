@@ -18,7 +18,8 @@
      -organize $dane nicely in planRender.php
      -render new talbe
      -!BUG fix the double poniedziałek in przypLekcji
-
+     -order nauczyciele, przedmioty i nr sali alfabetycznie/rosnąco
+     -change the way we pass the lesson??????????
       -->
 </head>
 <body>
