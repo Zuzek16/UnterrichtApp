@@ -108,7 +108,7 @@ if ($tab == NULL) {
     <?php
     global $nauczany_przedmiot;
 
-    for ($i=0; $i < 3; $i++) {//liczba lekcji
+    for ($i=0; $i < 2; $i++) {//liczba lekcji
         echo "<tr>";
         for ($j=0; $j < 5; $j++) {//dni tyg
             $dzien;
@@ -225,7 +225,7 @@ if ($tab == NULL) {
                         }
                     }
                 }
-                $dodLekcjeSzablonGlowny = "INSERT INTO `lekcja` (`id`, `id_sali`, `id_nauczyciela`, `id_przedmiotu`) VALUES (NULL, '".$idSali."', '".$idNauczyciela."', '".$idPrzedmiotu."')";//
+                $dodLekcjeSzablonGlowny = "INSERT INTO `lekcja` (`id`, `id_sali`, `id_nauczyciela`, `id_przedmiotu`) VALUES (NULL, '".$idSali."', '".$idNauczyciela."', '".$idPrzedmiotu."')";
 
                 $dodLekcjeSzablonDrugi = ",(NULL, '".$idSali."', '".$idNauczyciela."', '".$idPrzedmiotu."')";
 
@@ -253,27 +253,31 @@ if ($tab == NULL) {
                 } else {
                     $idsLekcji[$i]=$idsLekcji[$i+1]-1;
                 }
-                // $idLekcji = $idOstatLek - $i;
-            }//get this out of it
+            }
             echo "<pre>IDS LEKCJI".var_dump($idsLekcji)."</pre>";
         $idLekcjiCounter = 0;
         $idsCounter = 0;
 
         $idsPrzyporzadkowanejLekcji[0] = 0;//!!change it to the same mechanic as lesson?
 
-
+        $lastAddedDay = -1;
 
         foreach ($przedmiotSelectIds as $el) {
+
+            global $lastAddedDay;
+
             $selectEl = $el;
             $selectEl = (explode("]",$selectEl));
             $selectEl = (implode("",$selectEl));
             $selectEl = (explode("[",$selectEl));
             
             global $dzien_tygodnia;
+            
             // var_dump($dzien_tygodnia);
             //$dzien_tygodnia['poniedziałek']
             $idDniaTyg = $dzien_tygodnia[$selectEl[0]];
-
+            
+           //
             // foreach ($dzien_tygodnia as $value) {//!!
             //     if ($value['nazwa'] == $selectEl[0]) {
             //         $idDniaTyg = $value['id'];//this is funky - pon twice at start
@@ -282,6 +286,14 @@ if ($tab == NULL) {
            
             $nrLekcji = $selectEl[1];
             $idLekcji = $idsLekcji[$idLekcjiCounter];
+
+            //
+
+            if ($lastAddedDay == $idDniaTyg) {//didnt change
+                echo "<p>Znowu to samo </p>";
+            } 
+
+            //
 
             $PrzypLekGlowny = "INSERT INTO `przyporzadkowanie_lekcji` (`id`, `nr_lekcji`, `id_dnia_tyg`, `id_lekcji`) VALUES (NULL, '".$nrLekcji."', '".$idDniaTyg."', '".$idLekcji."')"; 
 
@@ -292,21 +304,7 @@ if ($tab == NULL) {
             } else {
                 $sqlTPrzypLek .= $PrzypLekDrugi;
             }
-            // if ($idsPrzyporzadkowanejLekcji[0] == 0) {
-
-            //     if (!(mysqli_query($conn, $PrzypLekGlowny))) {
-            //         echo "Błąd przy dodawaniu przyporządkowanej lekcji.";
-            //     } else {
-            //         $idsPrzyporzadkowanejLekcji[0] = mysqli_insert_id($conn);
-
-            //     $sqlTPrzypLek .= $PrzypLekGlowny;
-            //     }
-                
-            // } else {
-            //     $idsPrzyporzadkowanejLekcji[$idsCounter] = ($idsPrzyporzadkowanejLekcji[$idsCounter-1])+1; 
-            //     $sqlTPrzypLek .= $PrzypLekDrugi;
-            //     //what if here is a problem
-            // }
+            $lastAddedDay = (int)$idDniaTyg;
             $idLekcjiCounter ++;
             $idsCounter ++; 
         }
@@ -318,15 +316,16 @@ if ($tab == NULL) {
             global $idsPrzyporzadkowanejLekcji;
             global $liczbaLekcji;
             $idOstatPrzypLekcji = mysqli_insert_id($conn);
+
+
             for ($i=$liczbaLekcji; $i >= 0; $i--) { 
 
                 if ($i == $liczbaLekcji) {
-                    $idsLekcji[$i]=$idOstatLek;
+                    $idsPrzyporzadkowanejLekcji[$i]=$idOstatPrzypLekcji;
                 } else {
-                    $idsLekcji[$i]=$idsLekcji[$i+1]-1;
+                    $idsPrzyporzadkowanejLekcji[$i]=$idsPrzyporzadkowanejLekcji[$i+1]-1;
                 }
-                // $idLekcji = $idOstatLek - $i;
-            }//!PRZEKZSTAŁCIC dla przplekcji
+            }
 
             
             $sqlPlanLekcji = "INSERT INTO `plan_lekcji` (`id`) VALUES (NULL)";
@@ -337,13 +336,13 @@ if ($tab == NULL) {
                 $idPlanuLekcji = mysqli_insert_id($conn);
 
                 foreach ($idsPrzyporzadkowanejLekcji as $el) {
-                    $idPrzyporzadkowanejLekcji = $el;
+                    // $idPrzyporzadkowanejLekcji = $el;
                     global $idPlanuLekcji;
     
                     if ($sqlLekcjePlanu == "") {
-                        $sqlLekcjePlanu = "INSERT INTO `lekcje_planu` (`id`, `id_planu_lekcji`, `id_przyporzadkowanej_lekcji`) VALUES (NULL, '$idPlanuLekcji', '$idPrzyporzadkowanejLekcji')";
+                        $sqlLekcjePlanu = "INSERT INTO `lekcje_planu` (`id`, `id_planu_lekcji`, `id_przyporzadkowanej_lekcji`) VALUES (NULL, '$idPlanuLekcji', '$el')";
                     } else {
-                        $sqlLekcjePlanu .= ",(NULL, '$idPlanuLekcji', '$idPrzyporzadkowanejLekcji')";
+                        $sqlLekcjePlanu .= ",(NULL, '$idPlanuLekcji', '$el')";
                     }
                 }
                 if ( mysqli_multi_query($conn,$sqlLekcjePlanu)) {
