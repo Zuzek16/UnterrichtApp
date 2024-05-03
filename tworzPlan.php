@@ -26,30 +26,26 @@ foreach ($przedmiot as $el) {
     <script>
         var nauczany_przedmiot = <?php echo json_encode($nauczany_przedmiot); ?>;
 
-        //make a get global variable here that php can read and add an if inside the form so that it stays the same
-        //css query
 let x = window.matchMedia("(max-width: 700px)");
-let desktop;
+let desktopMode;
 let y = 1;
 let n = 0;
 
-// Call listener function at run time
-if (!x.matches) { // If media query matches
-    desktop = y;
-    // document.getElementById('calosc').className = "desktop";
+if (!x.matches) {
+    desktopMode = y;
   } else {
-    desktop = n;
-
-    // document.body.style.backgroundColor = "pink";
+    desktopMode = n;
   }
 
-// Attach listener function on state changes
+  document.cookie=`desktopMode=${desktopMode}; expires=Thu, 18 Dec 2090 12:00:00 UTC`;
+
 x.addEventListener("change", function() {
-    if (!x.matches) { // If media query matches
-        desktop = y;
+    if (!x.matches) {
+        desktopMode = y;
   } else {
-    desktop = n;
+    desktopMode = n;
   }
+  document.cookie=`desktopMode=${desktopMode}; expires=Thu, 18 Dec 2090 12:00:00 UTC`;
 
 }); 
 
@@ -57,17 +53,10 @@ x.addEventListener("change", function() {
 </head>
 <body>
 <?php
-ob_start();
-echo "<script>document.writeln(desktop);</script>";
-$desktopMode = ob_get_clean();//cant check it - no proper type fix this for line 148 to work
-// echo $desktopMode;
-var_dump(substr($desktopMode, 8));
+$desktopMode = $_COOKIE['desktopMode'];//WORKS
 var_dump(($desktopMode));
-var_dump(((string)$desktopMode));
-var_dump(((bool)$desktopMode));
-var_dump(((int)$desktopMode));
 var_dump(str_contains($desktopMode, "0"));
-var_dump(str_contains($desktopMode, "1 "));
+var_dump(str_contains($desktopMode, "1"));
 
 include_once ("func.php");
 addheader();
@@ -145,7 +134,7 @@ if ($tab == NULL) {
 <form action="#" method="post">
     <table class="calosc" id="calosc">
     <?php
-    if (str_contains($desktopMode, "true")) {//problem here
+    if (str_contains($desktopMode, "true")) {//!! change it to the numbers the cookie is returning
         echo "<tr>
         <th>Pon</th>
         <th>Wt</th>
