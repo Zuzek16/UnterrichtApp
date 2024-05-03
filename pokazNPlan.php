@@ -18,6 +18,10 @@ include "planRender.php";
      <link rel="stylesheet" href="styl.css">
 </head>
 <body>
+<?php
+include_once ("func.php");
+addheader();
+?>
      <div class="tableContainer">
           <div class="mobile">
           <?php

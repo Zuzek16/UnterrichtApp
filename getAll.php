@@ -51,16 +51,16 @@ function lekcjaInput($licznikLekcji, $dzien){
       echo '<select name='.$przedmiotName.'>';
       echo '<option value="">Wybierz przedmiot</option>';
       foreach ($przedmiot as $el) {
-            // echo '<option value="'.$el['nazwa'].'">'.$el['nazwa'].'</option>';
-            echo '<option value="'.$el['nazwa'].'"selected>'.$el['nazwa'].'</option>';//DEBUG
+            echo '<option value="'.$el['nazwa'].'">'.$el['nazwa'].'</option>';
+            // echo '<option value="'.$el['nazwa'].'"selected>'.$el['nazwa'].'</option>';//DEBUG
       }
   echo "</select>
       <select name=$salaName>
       <option value=''>Wybierz salę</option>
       ";
       foreach ($sala as $el) {
-            // echo '<option value="'.$el['numer'].'">'.$el['numer'].'</option>';
-            echo '<option value="'.$el['numer'].'"selected>'.$el['numer'].'</option>';//DEBUG
+            echo '<option value="'.$el['numer'].'">'.$el['numer'].'</option>';
+            // echo '<option value="'.$el['numer'].'"selected>'.$el['numer'].'</option>';//DEBUG
       }
 
   echo "</select>";

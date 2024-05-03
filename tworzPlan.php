@@ -25,14 +25,58 @@ foreach ($przedmiot as $el) {
     ?>
     <script>
         var nauczany_przedmiot = <?php echo json_encode($nauczany_przedmiot); ?>;
-        // console.log(nauczany_przedmiot);
+
+        //make a get global variable here that php can read and add an if inside the form so that it stays the same
+        //css query
+let x = window.matchMedia("(max-width: 700px)");
+let desktop;
+let y = 1;
+let n = 0;
+
+// Call listener function at run time
+if (!x.matches) { // If media query matches
+    desktop = y;
+    // document.getElementById('calosc').className = "desktop";
+  } else {
+    desktop = n;
+
+    // document.body.style.backgroundColor = "pink";
+  }
+
+// Attach listener function on state changes
+x.addEventListener("change", function() {
+    if (!x.matches) { // If media query matches
+        desktop = y;
+  } else {
+    desktop = n;
+  }
+
+}); 
+
     </script>
 </head>
 <body>
+<?php
+ob_start();
+echo "<script>document.writeln(desktop);</script>";
+$desktopMode = ob_get_clean();//cant check it - no proper type fix this for line 148 to work
+// echo $desktopMode;
+var_dump(substr($desktopMode, 8));
+var_dump(($desktopMode));
+var_dump(((string)$desktopMode));
+var_dump(((bool)$desktopMode));
+var_dump(((int)$desktopMode));
+var_dump(str_contains($desktopMode, "0"));
+var_dump(str_contains($desktopMode, "1 "));
+
+include_once ("func.php");
+addheader();
+?>
+
 <h2>Tworzenie planu</h2>
 
 <?php
-$sql = "SELECT * from szkola";//change thus to make an array to use
+$sql = "SELECT * from szkola";
 $wynik = mysqli_query($conn, $sql);
 $tab = [];
 
@@ -89,25 +133,27 @@ if ($tab == NULL) {
     } else {
         echo "<p>Proszę wybrać szkołę</p>";
     }
+    var_dump($desktopMode);
     ?>
 </p>
-
-<!--  -->
 <h5>Wskazówka: Jeśli potrzebujesz mieć mniej lekcji w danym dniu ostatnie z opcji pozostaw puste [WIP]</h3>
 <div class="tableContainer">
+    <div class="mobile">
+
+    </div>
+    
 <form action="#" method="post">
-<table class="calosc">
-    <tr>
+    <table class="calosc" id="calosc">
+    <?php
+    if (str_contains($desktopMode, "true")) {//problem here
+        echo "<tr>
         <th>Pon</th>
         <th>Wt</th>
         <th>Śr</th>
         <th>Czw</th>
         <th>Pt</th>
-    </tr>
-    
-    <?php
+    </tr>";
     global $nauczany_przedmiot;
-
     for ($i=0; $i < 2; $i++) {//liczba lekcji
         echo "<tr>";
         for ($j=0; $j < 5; $j++) {//dni tyg
@@ -133,16 +179,62 @@ if ($tab == NULL) {
             lekcjaInput($i, $dzien);
             echo "</td>";
         }
-        
        echo "</tr>";
     }
-    ?>
-
-<tr class="desktop">
+    echo "<tr class='desktop'>
     <td colspan=5>
     <button class='desktop' type='submit'>Zapisz</button>
     </td>
-</tr>
+</tr>";
+
+
+    } else {
+    global $nauczany_przedmiot;
+    for ($i=0; $i < 2; $i++) {//liczba lekcji
+        echo "<tr>";
+        for ($j=0; $j < 5; $j++) {//dni tyg
+            $dzien;
+            switch ($j) {
+                case 0:
+                    $dzien = "poniedziałek";
+                    break;
+                case 1:
+                    $dzien = "wtorek";
+                    break;
+                case 2:
+                    $dzien = "środa";
+                    break;
+                case 3:
+                    $dzien = "czwartek";
+                    break;
+                case 4:
+                    $dzien = "piątek";
+                    break;
+            }
+            echo "<tr>
+            <th>$dzien</th>
+            </tr>";
+            for ($i=0; $i < 6; $i++) { 
+                # code...
+                echo "<tr>";
+                echo "<td>";
+                lekcjaInput($i, $dzien);
+                echo "</td>";
+                echo "</tr>";
+
+            }
+        }
+       echo "</tr>";
+    }//liczba lekcji
+    echo "<tr class='mobile'>
+    <td>
+    <button class='mobile' type='submit'>Zapisz</button>
+    </td>
+</tr>";
+
+    }
+    ?>
+
 
 </table>
 </form>
@@ -159,8 +251,8 @@ if ($tab == NULL) {
             console.log(el.value);
             let form = '';
             nauczany_przedmiot[`${el.value}`].forEach(el => {
-               //form += `<option value="${el[0]}" >${el[1]}</option>`;
-                form += `<option value="${el[0]}" selected>${el[1]}</option>`;//DEBUG
+               form += `<option value="${el[0]}" >${el[1]}</option>`;
+                // form += `<option value="${el[0]}" selected>${el[1]}</option>`;//DEBUG
             });
             el.parentElement.querySelector('.nauczyciel').innerHTML = form;
         })        
