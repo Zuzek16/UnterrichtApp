@@ -136,19 +136,38 @@ p:not(footer p) {
         --wielkosc-tekstu:24px
     }
 
+    .desktop {
+        display: block;
+    }
+    .mobile {
+        display: none;
+    }
+
 }
 
 @media only screen and (max-width: 750px) {
     .desktop {
+        display: block;
+    }
+    .mobile {
         display: none;
     }
 }
 
 @media only screen and (max-width: 680px) {
-    /* tabelka rozdzielon */
- 
+    .desktop {
+        display: none;
+    }
+    .mobile {
+        display: block;
+    }
 }
 
 @media only screen and (max-width: 480px) {
-    
+    .desktop {
+        display: none;
+    }
+    .mobile {
+        display: block;
+    }
 }

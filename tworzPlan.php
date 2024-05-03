@@ -254,11 +254,11 @@ if ($tab == NULL) {
                     $idsLekcji[$i]=$idsLekcji[$i+1]-1;
                 }
             }
-            echo "<pre>IDS LEKCJI".var_dump($idsLekcji)."</pre>";
+            // echo "<pre>IDS LEKCJI".var_dump($idsLekcji)."</pre>";
         $idLekcjiCounter = 0;
         $idsCounter = 0;
 
-        $idsPrzyporzadkowanejLekcji[0] = 0;//!!change it to the same mechanic as lesson?
+        $idsPrzyporzadkowanejLekcji[0] = 0;
 
         $lastAddedDay = -1;
 
@@ -309,7 +309,7 @@ if ($tab == NULL) {
             $idsCounter ++; 
         }
 
-        var_dump($sqlTPrzypLek);
+        // var_dump($sqlTPrzypLek);
 
         if (mysqli_query($conn, $sqlTPrzypLek)){
         // if (false){

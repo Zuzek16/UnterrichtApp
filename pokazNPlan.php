@@ -5,30 +5,38 @@ if (!(isset($_GET['nowyPlan']))) {
      
 } else {
 include "conn.php";
-     ?>
-     
+include "getAll.php";
+include "planRender.php";
 
+     ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Nowy plan lekcji</title>
+     <link rel="stylesheet" href="styl.css">
 </head>
 <body>
      <div class="tableContainer">
           <div class="mobile">
+          <?php
+     global $dzien_tygodnia;
+     foreach ($dzien_tygodnia as $key => $value) {
+          mobilePlanShow($_GET['nowyPlan'], $key);
+     }
+
+     ?>
+          </div>
+          <div class="desktop">
+               <?php
+               desktopPlanShow($_GET['nowyPlan']);
+               ?>
 
           </div>
-          <div class="desktop"></div>
      </div>
      <div class="test">
-
-     <?php
-     include "planRender.php";
-     var_dump(getDanePlanLekcji($_GET['nowyPlan']));
      
-     ?>
 
      </div>
 </body>
