@@ -5,7 +5,23 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>UnterrichtApp</title>
      <link rel="stylesheet" href="styl.css">
-     <!-- <link rel="icon" type="image/x-icon" href="/zdj/..."> -->
+     <link rel="icon" type="image/x-icon" href="/zdj/UnterrichtAppLOGO.png">
+     <!-- MINI CMS NA TEŚCIE + DATY FAV
+          -dodawanie nau
+          -dod przedmiotu
+          -dod klasy
+          -dod szkoły
+          -jeśli input przedmiot jest pusty to nie dodajemy lekcji
+     - mobile version of this app is goin to have the timetable separated into each day pf the week under each other
+     - responsiv!
+     -table explode into mobile version
+     -organize $dane nicely in planRender.php
+     -render new talbe
+     -!BUG fix the double poniedziałek in przypLekcji
+     -order nauczyciele, przedmioty i nr sali alfabetycznie/rosnąco
+     -change the way we pass the lesson??????????
+     -wider button for mobile
+      -->
 </head>
 <body>
 <header>
@@ -24,13 +40,6 @@
                <li><a href="dodNau.php">Dodaj nauczyciela</a></li>
                <li><a href="dodNau.php">Przełącz szkole</a></li>
           </ul>
-          <!-- <ul>
-               <li><a href=""></a></li>
-               <li><a href=""></a></li>
-               <li><a href=""></a></li>
-               <li><a href=""></a></li>
-               <li><a href=""></a></li>
-          </ul> -->
      </nav>
 </header>
 <div class="main-bg">
@@ -45,7 +54,6 @@
 </div>
      
      <footer>
-
 
      <?php
      include("conn.php");

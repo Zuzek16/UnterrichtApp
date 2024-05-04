@@ -1,0 +1,164 @@
+     // $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$_POST['przedmiot']."';";
+     // $result = mysqli_query($conn, $sql);
+     // $tabN = [];
+     // while ($row = mysqli_fetch_assoc($result)) {
+     //      echo $row['imie']." ".$row['nazwisko'];
+     //      }
+     ^kod łączenie nauczyant przedmiot
+     szkoła.php ma JS!
+
+
+
+     ###usuniety kod
+<tr>
+        
+        <td>
+        <?php
+        if (isset($_GET['ponL'])) {
+            echo "lekcja pierwsza";
+
+        } else {
+            echo '<a href="lekcjeDnia.php?dzien=pon">wybierz lekcje</a>';
+            
+        }
+        
+        ?>
+        <!-- TESTOWY FORMULARZ -->
+        <hr>
+        <form action="" method="get">
+          <label for="przedmiot">Przedmiot</label>
+          <select name="przedmiot" id="przedmiot">
+          <?php
+          include('getAll.php');
+          foreach($przedmiot as $el){echo "<option value='".$el['nazwa']."'>".$el['nazwa']."</option>";}
+          ?>
+          </select>
+          <button type="submit">Zatwierdź</button>
+     </form>
+        <?php
+        
+        echo "";//lekcje dnia notatka - spróbować na jednej stronie zrobić dodawanie, można pobawić się w include'owanie plików jako funcjie oddzielne żeby było czytlenie
+        ?>
+        </td>
+            
+        <td>
+          
+        <!-- <a href="lekcjeDnia.php?dzien=wt">wybierz lekcje</a>-->
+    </td> 
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+
+
+    //za każdym jak dodajemy żeby miało to
+    // echo "<tr><td><button class='add'>Dodaj lekcje</button></td>
+    // <td></td>
+    // <td></td>
+    // <td></td>
+    // <td></td>
+    // </tr>";
+    
+    <!-- <script>
+
+    let btns = document.querySelector('button.add');
+
+    btns.forEach(el => {
+        el.addEventListener('click', ()=>{
+        
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        
+        const btn = document.createElement("button");
+        btn.innerText = "Dodaj lekcje";
+        btn.classList.add("add");
+        // btn.addEventListener('click', ()=>{
+        //     alert("sus")
+        // })
+    
+        td.appendChild(btn);
+        //?
+        tr.appendChild(td);
+        tr.appendChild(td);
+        tr.appendChild(td);
+        tr.appendChild(td);
+        tr.appendChild(td);
+        
+        const tableAll = document.querySelector('table.calosc');
+        tableAll.appendChild(tr);
+    
+        })
+    });
+
+    document.querySelector('button.add').addEventListener('click', ()=>{
+        
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    
+    const btn = document.createElement("button");
+    btn.innerText = "Dodaj lekcje";
+    btn.classList.add("add");
+    // btn.addEventListener('click', ()=>{
+    //     alert("sus")
+    // })
+
+    td.appendChild(btn);
+    //?
+    tr.appendChild(td);
+    tr.appendChild(td);
+    tr.appendChild(td);
+    tr.appendChild(td);
+    tr.appendChild(td);
+    
+    const tableAll = document.querySelector('table.calosc');
+    tableAll.appendChild(tr);
+
+    })
+</script> -->
+
+<!-- <ul>
+               <li><a href=""></a></li>
+               <li><a href=""></a></li>
+               <li><a href=""></a></li>
+               <li><a href=""></a></li>
+               <li><a href=""></a></li>
+          </ul> -->
+
+          
+            // echo "<pre>".var_dump($postKey)."</pre>";
+
+            // => output array(4) { [0]=> string(15) "'poniedziałek'" [1]=> string(1) "0" [2]=> string(11) "'przedmiot'" [3]=> string(0) "" } 
+
+            
+// $r_nauczyciel = mysqli_query($conn, "SELECT * from nauczyciel");
+// $nauczyciel = [];
+// while ($row = mysqli_fetch_assoc($r_nauczyciel)) array_push($nauczyciel, $row);
+
+// $r_nauczany_przedmiot = mysqli_query($conn, "SELECT * from nauczany_przedmiot");
+// $nauczany_przedmiot = [];
+// while ($row = mysqli_fetch_assoc($r_nauczany_przedmiot)) array_push($nauczany_przedmiot, $row);
+
+// $ponLekcjeFormularzGotowy = [];//might need to give this to the url so JS can read it 
+//save the info to somevhere and read it instad of relying on post (like cookies/session/get)
+// $wtLekcjeFormularzGotowy = [];
+// $srLekcjeFormularzGotowy = [];
+// $czwLekcjeFormularzGotowy = [];
+// $ptLekcjeFormularzGotowy = [];
+
+function nauczycieleKtorzyUcza($przedmiot){
+//      global $conn;//!! czasami nie widzi połączenia
+//      //[przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko]
+//      // $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$_POST['przedmiot']."';";
+//      $sql = "SELECT przedmiot.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$przedmiot."'";
+//      $result = mysqli_query($conn, $sql);
+//      $tabN = [];
+//      while ($row = mysqli_fetch_assoc($result)) {
+//            array_push($tabN, $row['imie']." ".$row['nazwisko']);
+//      }
+//      return $tabN;
+// }
+
+SELECT szkola.id, szkola.nazwa, klasa.id, klasa.nazwa, klasa.id_szkola, klasa.id_planu_lekcji from szkola INNER JOIN klasa ON klasa.id_szkola = szkola.id;

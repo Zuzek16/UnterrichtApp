@@ -8,6 +8,7 @@
     --zdj-banner: url("zdj/zielone-liscie-tlo.jpg");
     --wielkosc-tekstu: 16px;
 }
+/* each table element in its own 'row' - new line */
 
 body{
     height: 100vh;
@@ -64,12 +65,23 @@ table, tr, td, th {
 
 td, th{
     text-align: center;
-    padding: 2px;
+    padding: 5px;
+    justify-content: center;
+    /* padding-left: 100px; */
+}
+
+tr:nth-of-type(odd) *{
+    background-color: var(--kolor-akcent-ciemny);
 }
 
 table {
     margin: 20px;
     /* or center this */
+}
+
+.tableContainer{
+    display:flex;
+    justify-content: center;
 }
 
 .main {
@@ -106,7 +118,59 @@ footer, footer * {
 header, header * {
     background-color: var(--kolor-akcent-ciemny-szary);
 }
+
+p:not(footer p) {
+    margin: 0 60px 0 60px;
+}
+
+.button {
+    background-color: var(--kolor-akcent-jasny);
+}
+
+
 /* dwa czerne bloki z lewo prawo pod header */
 
 
-/* responsywność? */
+/* responsywność ma być wowowo */
+
+@media only screen and (max-width: 2600px) {
+
+    :root{
+        --wielkosc-tekstu:24px
+    }
+
+    .desktop {
+        display: block;
+    }
+    .mobile {
+        display: none;
+    }
+
+}
+
+@media only screen and (max-width: 750px) {
+    .desktop {
+        display: block;
+    }
+    .mobile {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 680px) {
+    .desktop {
+        display: none;
+    }
+    .mobile {
+        display: block;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .desktop {
+        display: none;
+    }
+    .mobile {
+        display: block;
+    }
+}
