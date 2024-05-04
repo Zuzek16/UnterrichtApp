@@ -8,6 +8,7 @@
     --zdj-banner: url("zdj/zielone-liscie-tlo.jpg");
     --wielkosc-tekstu: 16px;
 }
+/* each table element in its own 'row' - new line */
 
 body{
     height: 100vh;
@@ -65,6 +66,8 @@ table, tr, td, th {
 td, th{
     text-align: center;
     padding: 5px;
+    justify-content: center;
+    /* padding-left: 100px; */
 }
 
 tr:nth-of-type(odd) *{

@@ -29,24 +29,17 @@ addheader();
      foreach ($dzien_tygodnia as $key => $value) {
           mobilePlanShow($_GET['nowyPlan'], $key);
      }
-
      ?>
           </div>
           <div class="desktop">
                <?php
                desktopPlanShow($_GET['nowyPlan']);
                ?>
-
           </div>
-     </div>
-     <div class="test">
-     
-
      </div>
 </body>
 </html>
      
-
 <?php
 }//zamknięcie głównego if'a
 ?>

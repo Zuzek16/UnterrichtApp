@@ -20,6 +20,7 @@
      -!BUG fix the double poniedziałek in przypLekcji
      -order nauczyciele, przedmioty i nr sali alfabetycznie/rosnąco
      -change the way we pass the lesson??????????
+     -wider button for mobile
       -->
 </head>
 <body>

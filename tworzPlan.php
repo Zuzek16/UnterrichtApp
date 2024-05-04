@@ -26,7 +26,7 @@ foreach ($przedmiot as $el) {
     <script>
         var nauczany_przedmiot = <?php echo json_encode($nauczany_przedmiot); ?>;
 
-let x = window.matchMedia("(max-width: 700px)");
+let x = window.matchMedia("(max-width: 870px)");
 let desktopMode;
 let y = 1;
 let n = 0;
@@ -46,29 +46,21 @@ x.addEventListener("change", function() {
     desktopMode = n;
   }
   document.cookie=`desktopMode=${desktopMode}; expires=Thu, 18 Dec 2090 12:00:00 UTC`;
-
 }); 
 
     </script>
 </head>
 <body>
 <?php
-$desktopMode = $_COOKIE['desktopMode'];//WORKS
-var_dump(($desktopMode));
-var_dump(str_contains($desktopMode, "0"));
-var_dump(str_contains($desktopMode, "1"));
 
 include_once ("func.php");
 addheader();
 ?>
-
 <h2>Tworzenie planu</h2>
-
 <?php
 $sql = "SELECT * from szkola";
 $wynik = mysqli_query($conn, $sql);
 $tab = [];
-
 while ($row = mysqli_fetch_assoc($wynik)) {
     array_push($tab, $row);
 }
@@ -122,20 +114,16 @@ if ($tab == NULL) {
     } else {
         echo "<p>Proszę wybrać szkołę</p>";
     }
-    var_dump($desktopMode);
     ?>
 </p>
 <h5>Wskazówka: Jeśli potrzebujesz mieć mniej lekcji w danym dniu ostatnie z opcji pozostaw puste [WIP]</h3>
 <div class="tableContainer">
-    <div class="mobile">
-
-    </div>
-    
 <form action="#" method="post">
     <table class="calosc" id="calosc">
     <?php
-    if (str_contains($desktopMode, "true")) {//!! change it to the numbers the cookie is returning
+    if (str_contains($_COOKIE['desktopMode'], "1")) {
         echo "<tr>
+        <th>nr</th>
         <th>Pon</th>
         <th>Wt</th>
         <th>Śr</th>
@@ -145,6 +133,9 @@ if ($tab == NULL) {
     global $nauczany_przedmiot;
     for ($i=0; $i < 2; $i++) {//liczba lekcji
         echo "<tr>";
+        echo "<td>";
+        echo $i+1;
+        echo"</td>";
         for ($j=0; $j < 5; $j++) {//dni tyg
             $dzien;
             switch ($j) {
@@ -170,17 +161,17 @@ if ($tab == NULL) {
         }
        echo "</tr>";
     }
-    echo "<tr class='desktop'>
-    <td colspan=5>
-    <button class='desktop' type='submit'>Zapisz</button>
+    echo "<tr>
+    <td colspan=6>
+    <button class='desktopbtn' type='submit'>Zapisz</button>
     </td>
 </tr>";
-
 
     } else {
     global $nauczany_przedmiot;
     for ($i=0; $i < 2; $i++) {//liczba lekcji
         echo "<tr>";
+        
         for ($j=0; $j < 5; $j++) {//dni tyg
             $dzien;
             switch ($j) {
@@ -201,11 +192,17 @@ if ($tab == NULL) {
                     break;
             }
             echo "<tr>
+
+            <th></th>
             <th>$dzien</th>
             </tr>";
             for ($i=0; $i < 6; $i++) { 
-                # code...
                 echo "<tr>";
+                echo "<td>";
+                echo $i + 1;
+                echo "</td>";
+                
+
                 echo "<td>";
                 lekcjaInput($i, $dzien);
                 echo "</td>";
@@ -215,11 +212,11 @@ if ($tab == NULL) {
         }
        echo "</tr>";
     }//liczba lekcji
-    echo "<tr class='mobile'>
-    <td>
-    <button class='mobile' type='submit'>Zapisz</button>
+    echo "<tr>
+    <td colspan=2>
+    <button class='mobilebtn' type='submit'>Zapisz</button>
     </td>
-</tr>";
+</tr>";//this button wider MAEK TODO
 
     }
     ?>
