@@ -7,6 +7,9 @@
     --kolor-akcent-ciemny: #0b3d1c;
     --zdj-banner: url("zdj/zielone-liscie-tlo.jpg");
     --wielkosc-tekstu: 16px;
+    --wielkosc-h1: calc(var(--wielkosc-tekstu) * 1.5);
+    --wielkosc-h2: calc(var(--wielkosc-tekstu) * 2);
+    --wielkosc-h3: calc(var(--wielkosc-tekstu) * 3);
 }
 /* each table element in its own 'row' - new line */
 
@@ -18,17 +21,16 @@ body{
 * {
     margin: 0;
     padding: 0;  
+    font-size: var(--wielkosc-tekstu);
     background-color: var(--kolor-tla);
     color: var(--kolor-tekstu);
     box-sizing: border-box;
-    /* font-size: var(--wielkosc-tekstu); */
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;sans-serif
 }
 
 header, nav {
     background-color: var(--kolor-akcent-ciemny-szary);
     width: 100vw;
-    /* zmienic heigh t */
     height: 150px;
 }
 
@@ -58,6 +60,7 @@ header p {
     text-align: center;
 }
 
+/* tabelka */
 table, tr, td, th {
     border: 2.5px solid var(--kolor-tekstu);
     border-collapse: collapse;
@@ -67,7 +70,6 @@ td, th{
     text-align: center;
     padding: 5px;
     justify-content: center;
-    /* padding-left: 100px; */
 }
 
 tr:nth-of-type(odd) *{
@@ -76,7 +78,6 @@ tr:nth-of-type(odd) *{
 
 table {
     margin: 20px;
-    /* or center this */
 }
 
 .tableContainer{
@@ -84,9 +85,32 @@ table {
     justify-content: center;
 }
 
+td select {
+    display: inline-block;
+}
+
+
+/*  */
+h1 {
+    font-size: var(--wielkosc-h1);
+}
+
+h2 {
+    font-size: var(--wielkosc-h2);
+}
+
+h3 {
+    font-size: var(--wielkosc-h3);
+}
+
+.title {
+    color: var(--kolor-akcent-jasny);
+    text-shadow: var(--kolor-akcent-ciemny) 2.5px 2.5px ;
+}
+
 .main {
     text-align: center;
-    /* opacity: 0.5; */
+    /* padding left and rhigyt */
 }
 
 .danger {
@@ -127,16 +151,12 @@ p:not(footer p) {
     background-color: var(--kolor-akcent-jasny);
 }
 
-
 /* dwa czerne bloki z lewo prawo pod header */
-
-
-/* responsywność ma być wowowo */
 
 @media only screen and (max-width: 2600px) {
 
     :root{
-        --wielkosc-tekstu:24px
+        --wielkosc-tekstu:18px
     }
 
     .desktop {
@@ -172,5 +192,9 @@ p:not(footer p) {
     }
     .mobile {
         display: block;
+    }
+
+    :root {
+        --wielkosc-tekstu: 22px;
     }
 }

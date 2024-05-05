@@ -55,6 +55,7 @@ function lekcjaInput($licznikLekcji, $dzien){
             // echo '<option value="'.$el['nazwa'].'"selected>'.$el['nazwa'].'</option>';//DEBUG
       }
   echo "</select>
+      <br>
       <select name=$salaName>
       <option value=''>Wybierz salę</option>
       ";
@@ -63,7 +64,7 @@ function lekcjaInput($licznikLekcji, $dzien){
             // echo '<option value="'.$el['numer'].'"selected>'.$el['numer'].'</option>';//DEBUG
       }
 
-  echo "</select>";
+  echo "</select><br    >";
   
   echo '<select name='.$nauczycielName.' class="nauczyciel"></select>';
 };

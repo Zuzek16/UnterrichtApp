@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -116,12 +116,13 @@ if ($tab == NULL) {
     }
     ?>
 </p>
-<h5>Wskazówka: Jeśli potrzebujesz mieć mniej lekcji w danym dniu ostatnie z opcji pozostaw puste [WIP]</h3>
+<!-- <h3>Wskazówka: Jeśli potrzebujesz mieć mniej lekcji w danym dniu ostatnie z opcji pozostaw puste [WIP]</h3> -->
 <div class="tableContainer">
 <form action="#" method="post">
     <table class="calosc" id="calosc">
     <?php
     if (str_contains($_COOKIE['desktopMode'], "1")) {
+        //another way i can think of doing this is to set some <td>, <br> and <tr> etc. tags with classes so that i can make them dissapear
         echo "<tr>
         <th>nr</th>
         <th>Pon</th>
@@ -131,7 +132,7 @@ if ($tab == NULL) {
         <th>Pt</th>
     </tr>";
     global $nauczany_przedmiot;
-    for ($i=0; $i < 2; $i++) {//liczba lekcji
+    for ($i=0; $i < 8; $i++) {//liczba lekcji
         echo "<tr>";
         echo "<td>";
         echo $i+1;
