@@ -39,13 +39,15 @@ if (!x.matches) {
 
   document.cookie=`desktopMode=${desktopMode}; expires=Thu, 18 Dec 2090 12:00:00 UTC`;
 
-x.addEventListener("change", function() {
+window.addEventListener("resize", function() {
     if (!x.matches) {
         desktopMode = y;
   } else {
     desktopMode = n;
   }
   document.cookie=`desktopMode=${desktopMode}; expires=Thu, 18 Dec 2090 12:00:00 UTC`;
+
+  reload();
 }); 
 
     </script>
@@ -56,7 +58,7 @@ x.addEventListener("change", function() {
 include_once ("func.php");
 addheader();
 ?>
-<h2>Tworzenie planu</h2>
+<h2 class="pageFunc">Tworzenie planu</h2>
 <?php
 $sql = "SELECT * from szkola";
 $wynik = mysqli_query($conn, $sql);
@@ -121,6 +123,7 @@ if ($tab == NULL) {
 <form action="#" method="post">
     <table class="calosc" id="calosc">
     <?php
+    
     if (str_contains($_COOKIE['desktopMode'], "1")) {
         //another way i can think of doing this is to set some <td>, <br> and <tr> etc. tags with classes so that i can make them dissapear
         echo "<tr>

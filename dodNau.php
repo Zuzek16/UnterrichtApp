@@ -17,6 +17,28 @@ addheader();
 
         // $sql = "INSERT INTO `comment` (`id`, `content`, `user_id`) VALUES ('', '".htmlentities($_POST['tresc'])."', '".htmlentities($_POST['autor'])."');";
 ?>
+<h2 class="pageFunc">Dodawanie nauczyciela</h2>
+
+<form action="" method="POST">
+    <label for="imie">Imię:</label>
+    <input type="text" name="imie" id="imie">
+
+    <label for="nazwisko">Nazwisko:</label>
+    <input type="text" name="nazwisko" id="nazwisko">
+    
+    <label for="nauPrzed">Nauczane przedmioty:</label>
+    <select multiple>
+        <?php
+        
+        ?>
+    </select>
+    <!-- or checkboxes? -->
+
+
+
+</form>
+
+
 
 </body>
 </html>
