@@ -10,11 +10,11 @@ function addheader ($includeIndexLink = true) {
 
           if ($includeIndexLink) {
                echo "<ul>
-               <li><a href='index.php'><img src='zdj/bialy_dom.png' alt=''></a></li>
+               <li><a href='index.php'><img class='icon'  src='zdj/bialy_dom.png' alt='ikona białego domu'></a></li>
           </ul>";
           } else {
                echo "<ul>
-               <li><a href='tworzPlan.php'><img src='zdj/plus.png' alt=''></a></li>
+               <li><a href='tworzPlan.php'><img class='icon' src='zdj/plus.png' alt='plus'></a></li>
           </ul>";
           }
          

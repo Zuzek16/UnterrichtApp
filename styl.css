@@ -117,7 +117,18 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .pageFunc {
+    text-shadow: var(--kolor-akcent-ciemny) 3px 3px 4px ;
+}
 
+.dodNau {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dodNau * {
+    max-width: 100%;
 }
 
 .main {
@@ -163,10 +174,38 @@ p:not(footer p) {
     margin: 0 60px 0 60px;
 }
 
-.button {
+button {
+    background-color: var(--kolor-akcent-ciemny);
+    padding: 2px 5px;
+}
+
+button:active {
     background-color: var(--kolor-akcent-jasny);
 }
 
+select[name="szkolaAktyw"] {
+    max-width: 50%;
+}
+
+:focus {
+    outline: var(--kolor-akcent-jasny) 5px solid;
+}
+
+.skip-link{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background-color: var(--kolor-tla);
+    color: var(--kolor-tekstu);
+    padding: 0.5rem;
+    translate:0 -150%;
+}
+
+.skip-link:focus {
+    translate: 0;
+}
 /* dwa czerne bloki z lewo prawo pod header */
 
 @media only screen and (max-width: 2600px) {
@@ -212,5 +251,9 @@ p:not(footer p) {
 
     :root {
         --wielkosc-tekstu: 22px;
+    }
+
+    .icon {
+        display: none;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+global $conn;
 $r_Sala = mysqli_query($conn, "SELECT * from sala");
 $sala = [];
 while ($row = mysqli_fetch_assoc($r_Sala)) array_push($sala, $row);
@@ -76,15 +77,9 @@ function defAddLekcjaTd($id, $dzien){
       $selectPrzedmiotId = "przedmiot".$dzien.$id;
       $przedmiotInputList[$licznikPIL] = $selectPrzedmiotId;
       $licznikPIL++;
-      // if ($przedmiotInputList == NULL) {
-            
-      // }
-      // // $przedmiotInputList[] += $selectPrzedmiotId;
-      // array_push($przedmiotInputList, $selectPrzedmiotId);
 
       $selectSalaId = "sala".$dzien.$id;
       $selectNauId = "nauczyciel".$dzien.$id;
-      // $postPrzedmiot
 
       echo '<form action="" method="post">
       <label for="'.$selectPrzedmiotId.'">Przedmiot</label>
@@ -103,25 +98,18 @@ function defAddLekcjaTd($id, $dzien){
       foreach($przedmiot as $el){
             echo "<option value='".$el['nazwa']."'>".$el['nazwa']."</option>";
       }
-
     }    
-
       if (isset($_POST[$selectPrzedmiotId]) ) {
-            //if this ends up not working as intended then scrap this and make the user input everyting without hints
-            // echo "<p>Wybrany przedmiot - ".$_POST['przedmiot']."</p>";
             if ($_POST[$selectPrzedmiotId] != "") {
                   echo "<p>Wybrany przedmiot - ".$_POST[$selectPrzedmiotId]."</p>";
-
                   echo  '<form action="" method="post">
                   <label for="'.$selectNauId.'">Nauczyciel: </label>
                   <select name="'.$selectNauId.'" id="'.$selectNauId.'">';
-      
                   //! add an empty option to each
       
                   foreach (nauczycieleKtorzyUcza($_POST[$selectPrzedmiotId]) as $nau) {
                         echo "<option value='$nau'>".$nau."</option>";
                         }
-      
                   echo '</select>
                   <label for="'.$selectSalaId.'">Sala</label>
                      <select name="'.$selectSalaId.'" id="'.$selectSalaId.'">';
@@ -129,16 +117,11 @@ function defAddLekcjaTd($id, $dzien){
                      foreach ($sala as $elSala) {
                         echo "<option value='".$elSala['numer']."'>".$elSala['numer']."</option>";
                         }
-      
                   echo '</select>
-      
                   <button type="submit">Zapisz lekcję</button>
                   </form>';
             } else {
-            //?do we need anythung here?
             }
-           
-
       }
 
       if (isset($_POST[$selectSalaId]) && isset($_POST[$selectNauId]) ) {
@@ -146,12 +129,8 @@ function defAddLekcjaTd($id, $dzien){
             ($_POST[$selectNauId]) == "") {
                   # code...
             } else {
-                  
                   //normalnie, czyli dodajemy do tablicy że to jest już gotowe i jak wszytkie sa gotowe to finish (puste lekcje moga byc tylko na koncu a nie w środku)
-
             }
-
-
       }
 };
 ?>

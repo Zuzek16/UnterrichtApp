@@ -73,7 +73,7 @@ if ($tab == NULL) {
 } else {
 ?>
 <form action="" method="post">
-    <label for="szkolaAktyw">Dla ktorej szkoły chcesz zrobić plan?</label>
+    <label for="szkolaAktyw">Dla której szkoły chcesz zrobić plan?</label>
     <select name="szkolaAktyw" id="szkolaAktyw">
         <?php
         foreach($tab as $szkola){echo "<option value='".$szkola['nazwa']."'>".$szkola['nazwa']."</option>";}
