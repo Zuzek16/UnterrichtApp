@@ -147,10 +147,15 @@ div.main>p {
 
 .prawy{
     float: right;
+    text-align: right;
 }
 
 .lewy {
     float:left;
+}
+
+.prawy, .lewy {
+    width: 50%;
 }
 
 footer {

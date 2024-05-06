@@ -6,10 +6,10 @@
      <title>UnterrichtApp</title>
      <link rel="stylesheet" href="styl.css">
      <link rel="icon" type="image/x-icon" href="/zdj/UnterrichtAppLOGO.png">
-     <!-- -dodawanie nau NOW
-          -dod przedmiotu
-          -dod klasy
-          -dod szkoły
+     <!-- -dod przedmiotu
+     -dod klasy
+     -dod szkoły
+          -toggling school pages or everyting on one with anchors
           -jeśli input przedmiot jest pusty to nie dodajemy lekcji
           -plan lekcji dodaje się do aktywnej szkoły! + przedłączanie skzoły
      - responsiv!

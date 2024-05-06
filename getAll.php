@@ -21,7 +21,7 @@ $r_szkola = mysqli_query($conn, $sqlSzkola);
 $klasaSzkoly = [];//budowa - nazwa szkoly => [idklasy, nazwaklasy]
 while ($rowSz = mysqli_fetch_assoc($r_szkola)) {
       $klasaSzkoly[$rowSz['nazwa']] = [];
-      //szkoła
+      $klasaSzkoly[$rowSz['nazwa']]['idSzkoly'] = $rowSz['id']; 
       $sqlKlasa = 'SELECT szkola.id AS "idSzkoly", szkola.nazwa AS "nazwaSzkoly", klasa.id AS "idKlasy", klasa.nazwa AS "nazwaKlasy", klasa.id_planu_lekcji from szkola INNER JOIN klasa ON klasa.id_szkola = szkola.id WHERE szkola.nazwa = "'.$rowSz['nazwa'].'";';
       $r_klasa = mysqli_query($conn, $sqlKlasa);
       while ($rowK = mysqli_fetch_assoc($r_klasa)) {
@@ -36,7 +36,6 @@ $salaSelectIds = [];
 function lekcjaInput($licznikLekcji, $dzien){
       global $przedmiot;
       global $sala;
-
       global $przedmiotSelectIds;
       global $nauczycielSelectIds;
       global $salaSelectIds;
@@ -105,22 +104,18 @@ function defAddLekcjaTd($id, $dzien){
                   echo  '<form action="" method="post">
                   <label for="'.$selectNauId.'">Nauczyciel: </label>
                   <select name="'.$selectNauId.'" id="'.$selectNauId.'">';
-                  //! add an empty option to each
-      
                   foreach (nauczycieleKtorzyUcza($_POST[$selectPrzedmiotId]) as $nau) {
                         echo "<option value='$nau'>".$nau."</option>";
                         }
                   echo '</select>
                   <label for="'.$selectSalaId.'">Sala</label>
                      <select name="'.$selectSalaId.'" id="'.$selectSalaId.'">';
-      
                      foreach ($sala as $elSala) {
                         echo "<option value='".$elSala['numer']."'>".$elSala['numer']."</option>";
                         }
                   echo '</select>
                   <button type="submit">Zapisz lekcję</button>
                   </form>';
-            } else {
             }
       }
 

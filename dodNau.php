@@ -13,9 +13,6 @@
 <?php
 include_once ("func.php");
 addheader();
-//wraz z nauczyanym przedmiotem
-
-        // $sql = "INSERT INTO `comment` (`id`, `content`, `user_id`) VALUES ('', '".htmlentities($_POST['tresc'])."', '".htmlentities($_POST['autor'])."');";
 ?>
 <h2 class="pageFunc">Dodawanie nauczyciela</h2>
 
