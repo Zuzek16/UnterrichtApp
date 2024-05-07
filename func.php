@@ -3,11 +3,10 @@ function addheader ($includeIndexLink = true) {
    echo "<header>
      <nav>
           <ul>
-               <li><a href='szkola.php?edit=true'>Szkoły</a></li>
+               <li><a href='szkola.php?edit=false'>Szkoły</a></li>
                <li><a href='ucz.php?szuk=nauczyciele'>Nauczyciele</a></li>
                <li><a href='ucz.php?szuk=klasy'>Klasy</a></li>
           </ul>";
-
           if ($includeIndexLink) {
                echo "<ul>
                <li><a href='index.php'><img class='icon'  src='zdj/bialy_dom.png' alt='ikona białego domu'></a></li>
@@ -17,8 +16,6 @@ function addheader ($includeIndexLink = true) {
                <li><a href='tworzPlan.php'><img class='icon' src='zdj/plus.png' alt='plus'></a></li>
           </ul>";
           }
-         
-          
           echo "<ul>
                <li><a href='edycjaPlan.php'>Edytuj plan</a></li>
                <li><a href='dodNau.php'>Dodaj nauczyciela</a></li>

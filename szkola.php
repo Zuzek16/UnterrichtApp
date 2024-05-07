@@ -7,7 +7,22 @@
      <link rel="stylesheet" href="styl.css">
 </head>
 <body>
-     <div id="editON" class="lewy">
+     <?php
+     include_once "func.php";
+     addheader();
+
+     if (!isset($_GET['edit'])) {
+          echo"<a class='toggle' href='szkola.php?edit=true'>Zarządzaj szkołami</a>";
+     } else if ($_GET['edit'] == "true") {
+          echo"<a class='toggle' href='szkola.php?edit=false'>Zobacz szkoły</a>";
+     } else {
+          echo"<a class='toggle' href='szkola.php?edit=true'>Zarządzaj szkołami</a>";
+     }
+     ?>
+
+     <div id="editON">
+          <div class="lewy">
+
      <h3>Dodawanie szkoły</h3>
      <form action="#" method="post">
      <label for="nowSzk">Pełna nazwa szkoły:</label>
@@ -30,10 +45,12 @@
           }
      }
           ?>
-          <div class="prawo">
+          </div>
+          <div class="prawy">
           <h3>Usuwanie szkoły</h3>
           <h4 class="danger">Tej decyzji nie można cofnąć! Zastanow się dobrze.</h2>
-          <form action="#" method="post">
+          <h4>Czynność da usuwa również wszystkie dane powiązane ze szkołą</h4>
+          <form action="#" method="POST">
                <label for="usuSz">Wybierz szkołę do usunięcia:</label>
                <select name="usuSz" id="usuSz">
                     <?php
@@ -43,9 +60,78 @@
                     }
                     ?>
                </select>
+               <button type="submit">Usuń</button>
           </form>
+
+          <?php
+     if (isset($_POST['usuSz'])) {
+          $nazwaSzkoly = "";
+          foreach ($klasaSzkoly as $key => $value) {
+               if ($_POST['usuSz'] == $value['idSzkoly']) {
+                   $nazwaSzkoly = $key;
+               }
+          }
+
+          $sqlDelNauSz = "DELETE FROM nauczyciele_szkoly WHERE nauczyciele_szkoly.id_szkoly =".$_POST['usuSz'];
+          $sqlDelKl = "DELETE FROM klasa WHERE `klasa`.`id_szkola` =".$_POST['usuSz'];
+          $sqlDelSz = "DELETE FROM szkola WHERE `szkola`.`id` =".$_POST['usuSz'];
+
+          if (mysqli_query($conn, $sqlDelNauSz)) {
+               if (mysqli_query($conn, $sqlDelKl)) {
+                    if (mysqli_query($conn, $sqlDelSz)) {
+                         echo "<p>Usunięto wybraną szkołę.</p>";
+                    } else {
+                         echo "<p>Wystąpił błąd.</p>";
+                    }
+               } else {
+                    echo "<p>Wystąpił błąd.</p>";
+               }
+          } else {
+               echo "<p>Wystąpił błąd.</p>";
+          }
+
+
+     //      echo "<form action='#' method='post'>
+     //      <p>Czy na pewno chcesz usunąć dane powiązane ze szkołą $nazwaSzkoly? Tej czynności nie da się cofnąć!</p>
+     //      <label for='potwierdzenie'>Wiem co robie</label>
+     //      <input type='checkbox' name='potwierdzenie' id='potwierdzenie'>
+     //      <button type='submit'>Potwierdzam</button>
+     // </form>"; 
+}
+
+     if (isset($_POST['potwierdzenie'])) {
+          global $_POST;
+          if ($_POST['potwierdzenie'] != "on") {
+               echo "<p>Anulowano usuwanie szkoły.</p>";
+          } else {
+               // $sqlDelNauSz = "DELETE FROM nauczyciele_szkoly WHERE nauczyciele_szkoly.id_szkoly =".$_GET['usuSz'];
+               // $sqlDelKl = "DELETE FROM klasa WHERE `klasa`.`id_szkola` =".$_GET['usuSz'];
+               // $sqlDelSz = "DELETE FROM szkola WHERE `szkola`.`id` =".$_GET['usuSz'];
+
+               // if (mysqli_query($conn, $sqlDelNauSz)) {
+               //      if (mysqli_query($conn, $sqlDelKl)) {
+               //           if (mysqli_query($conn, $sqlDelSz)) {
+               //                echo "<p>Usunięto wybraną szkołę.</p>";
+               //           } else {
+               //                echo "<p>Wystąpił błąd.</p>";
+               //           }
+               //      } else {
+               //           echo "<p>Wystąpił błąd.</p>";
+               //      }
+               // } else {
+               //      echo "<p>Wystąpił błąd.</p>";
+               // }
+          }
+     }
+
+         
+
+    
+     ?>
      </div>
      </div>
+
+    
      
      <div id="editOFF">
           <div class="lewy">
@@ -60,8 +146,27 @@ $result = mysqli_query($conn, "SELECT * from szkola");
 while ($row = mysqli_fetch_assoc($result)) {
      echo "<tr>" ;   
      foreach($row as $el){
+     // echo "<tr>" ;   
+     // echo "<td>".$el."</td>";
+
+     // echo "</tr>" ;   
+     // echo "<tr>" ;   
+     // echo "<td>".$el."</td>";
+
+     // echo "</tr>" ;   
+     // echo "<tr>" ;   
+     // echo "<td>".$el."</td>";
+
+     // echo "</tr>" ;   
+     // echo "<tr>" ;   
+     // echo "<td>".$el."</td>";
+
+     // echo "</tr>" ;//   DEBUG
+
           echo "<td>".$el."</td>";
      }
+     echo "</tr>" ; 
+
 }
 ?>
 </table>
@@ -87,14 +192,6 @@ while ($row = mysqli_fetch_assoc($result)) {
      
      urlParams.set("edit", edit);
      </script>
-     <?php
-     echo "<pre>".var_dump($klasaSzkoly)."</pre>";
-     include "func.php";
-     if ($_GET['edit'] == "true") {
-          addFooter("<a href='szkola.php?edit=false'>Zobacz szkoły</a>");
-     } else {
-          addFooter("<a href='szkola.php?edit=true'>Zarządzaj szkołami</a>");
-     }
-     ?>
+     <?php addFooter();?>
 </body>
 </html>

@@ -6,10 +6,8 @@
      <title>UnterrichtApp</title>
      <link rel="stylesheet" href="styl.css">
      <link rel="icon" type="image/x-icon" href="/zdj/UnterrichtAppLOGO.png">
-     <!-- -dod przedmiotu
+     <!-- -dod przedmiot
      -dod klasy
-     -dod szkoły
-          -toggling school pages or everyting on one with anchors
           -jeśli input przedmiot jest pusty to nie dodajemy lekcji
           -plan lekcji dodaje się do aktywnej szkoły! + przedłączanie skzoły
      - responsiv!
@@ -19,7 +17,11 @@
       
 </head>
 <body>
-<header>
+     <?php
+     include_once ("func.php");
+     addheader(false);
+     ?>
+<!-- <header>
      <nav>
           <ul>
                <li><a href="szkola.php?edit=true">Szkoły</a></li>
@@ -35,7 +37,7 @@
                <li><a href="dodNau.php">Przełącz szkole</a></li>
           </ul>
      </nav>
-</header>
+</header> -->
 <div class="main-bg">
 
      <div class="main">
@@ -62,7 +64,6 @@
 </div>
 
 <?php
-include("func.php");
 addFooter();
 ?>
      

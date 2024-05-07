@@ -24,7 +24,7 @@ foreach ($przedmiot as $el) {
 }
     ?>
     <script>
-        var nauczany_przedmiot = <?php echo json_encode($nauczany_przedmiot); ?>;
+        var nauczany_przedmiot = <?php json_encode($nauczany_przedmiot); ?>;
 
 let x = window.matchMedia("(max-width: 870px)");
 let desktopMode;
@@ -69,12 +69,13 @@ while ($row = mysqli_fetch_assoc($wynik)) {
 
 if ($tab == NULL) {
     echo "<p>Nie ma żadnej szkoły!</p>
-    <p><a href=szkola.php>Dodaj ją</a></p>";
+    <p><a href=szkola.php?edit=true>Dodaj ją</a></p>";
 } else {
 ?>
 <form action="" method="post">
     <label for="szkolaAktyw">Dla której szkoły chcesz zrobić plan?</label>
     <select name="szkolaAktyw" id="szkolaAktyw">
+        <option value="">Wybierz szkołę</option>
         <?php
         foreach($tab as $szkola){echo "<option value='".$szkola['nazwa']."'>".$szkola['nazwa']."</option>";}
         ?>
@@ -92,30 +93,29 @@ if ($tab == NULL) {
     ?>
 </p>
 <!-- only if school is set -->
-<form action="" method="post">
+<!-- <form action="" method="post">
     <label for="klasaAktyw">Dla ktorej klasy chcesz zrobić plan?</label>
-    <select name="klasaAktyw" id="klasaAktyw">
+    <select name="klasaAktyw" id="klasaAktyw"> -->
         <?php
-        foreach($klasaSzkoly as $szkola => $value1){
-            //TYLKO dla aktywnej szkoły!!!
-            //tak samo jak nauczycieli
-
-            foreach ($klasaSzkoly[$szkola] as $key => $value2) {
-            echo "<option value='".$value2[1]."'>".$value2[1]."</option>";
-            }
-        }
+        // foreach($klasaSzkoly as $szkola => $value1){
+        //     foreach ($klasaSzkoly[$szkola] as $key => $value2) {
+        //          if ($key != "idSzkoly") {
+        //             echo "<option value='".$value2[1]."'>".$value2[1]."</option>";
+        //          }
+        //     }
+        // }
         ?>
-    </select>
-    <button type="submit">Zatwierdź</button>
-</form>
+    <!-- </select> -->
+    <!-- <button type="submit">Zatwierdź</button> -->
+<!-- </form> -->
 
 <p>
     <?php
-    if (isset($_POST['klasaAktyw'])) {
-        echo "<p>Wybrana szkoła: ".($_POST['klasaAktyw'])."</p>";
-    } else {
-        echo "<p>Proszę wybrać szkołę</p>";
-    }
+    // if (isset($_POST['klasaAktyw'])) {
+    //     echo "<p>Wybrana szkoła: ".($_POST['klasaAktyw'])."</p>";
+    // } else {
+    //     echo "<p>Proszę wybrać klase</p>";
+    // }
     ?>
 </p>
 <!-- <h3>Wskazówka: Jeśli potrzebujesz mieć mniej lekcji w danym dniu ostatnie z opcji pozostaw puste [WIP]</h3> -->
