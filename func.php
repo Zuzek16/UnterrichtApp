@@ -19,7 +19,7 @@ function addheader ($includeIndexLink = true) {
           echo "<ul>
                <li><a href='edycjaPlan.php'>Edytuj plan</a></li>
                <li><a href='dodNau.php'>Dodaj nauczyciela</a></li>
-               <li><a href='dodNau.php'>Przełącz szkole</a></li>
+               <li><a href='dodPrzed.php'>Dodaj przedmiot</a></li>
           </ul>
      </nav>
 </header>    ";

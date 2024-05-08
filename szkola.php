@@ -7,16 +7,17 @@
      <link rel="stylesheet" href="styl.css">
 </head>
 <body>
+     <a class="skip-link" href="#toggle">Przejdź do głównej treści</a>
      <?php
      include_once "func.php";
      addheader();
 
      if (!isset($_GET['edit'])) {
-          echo"<a class='toggle' href='szkola.php?edit=true'>Zarządzaj szkołami</a>";
+          echo"<a id='toggle' class='toggle' href='szkola.php?edit=true'>Zarządzaj szkołami</a>";
      } else if ($_GET['edit'] == "true") {
-          echo"<a class='toggle' href='szkola.php?edit=false'>Zobacz szkoły</a>";
+          echo"<a id='toggle' class='toggle' href='szkola.php?edit=false'>Zobacz szkoły</a>";
      } else {
-          echo"<a class='toggle' href='szkola.php?edit=true'>Zarządzaj szkołami</a>";
+          echo"<a id='toggle' class='toggle' href='szkola.php?edit=true'>Zarządzaj szkołami</a>";
      }
      ?>
 

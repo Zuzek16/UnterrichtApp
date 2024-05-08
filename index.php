@@ -6,17 +6,21 @@
      <title>UnterrichtApp</title>
      <link rel="stylesheet" href="styl.css">
      <link rel="icon" type="image/x-icon" href="/zdj/UnterrichtAppLOGO.png">
-     <!-- -dod przedmiot
+     <!--     -change nau page to work simmilar to the przedmiot where you have a button
+     -dod przedmiot
      -dod klasy
+     -przypisywanie planu lekji do klasy
+     -skip-link on other pages
           -jeśli input przedmiot jest pusty to nie dodajemy lekcji
           -plan lekcji dodaje się do aktywnej szkoły! + przedłączanie skzoły
      - responsiv!
+     -fix favicon
      -order nauczyciele, przedmioty i nr sali alfabetycznie/rosnąco (when creating talbes)
      -wider button for mobile [and higher]
       -->
       
-</head>
-<body>
+     </head>
+     <body>
      <?php
      include_once ("func.php");
      addheader(false);
