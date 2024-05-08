@@ -29,6 +29,25 @@ while ($rowSz = mysqli_fetch_assoc($r_szkola)) {
       }
 }
 
+$nauczany_przedmiot = [];
+foreach ($przedmiot as $el) {
+    $nauczany_przedmiot[$el['nazwa']] = [];
+
+    //nauczyciel
+    $sql = "SELECT przedmiot.nazwa, nauczyciel.id, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$el['nazwa']."'";
+    $result = mysqli_query($conn, $sql);
+    while ($row = mysqli_fetch_assoc($result)) {
+          array_push($nauczany_przedmiot[$el['nazwa']], [$row['id'],$row['imie']." ".$row['nazwisko']]);
+    }
+}
+
+$nauczyciele = [];
+$sql = "SELECT * from nauczyciel";
+$r = mysqli_query($conn, $sql);
+while ($row = mysqli_fetch_assoc($r)) {
+      array_push($nauczyciele, $row);
+}
+
 $przedmiotSelectIds = [];
 $nauczycielSelectIds = [];
 $salaSelectIds = [];

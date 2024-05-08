@@ -4,7 +4,7 @@ function addheader ($includeIndexLink = true) {
      <nav>
           <ul>
                <li><a href='szkola.php?edit=false'>Szkoły</a></li>
-               <li><a href='ucz.php?szuk=nauczyciele'>Nauczyciele</a></li>
+               <li><a href='nau.php?edit=false'>Nauczyciele</a></li>
                <li><a href='ucz.php?szuk=klasy'>Klasy</a></li>
           </ul>";
           if ($includeIndexLink) {
@@ -18,7 +18,7 @@ function addheader ($includeIndexLink = true) {
           }
           echo "<ul>
                <li><a href='edycjaPlan.php'>Edytuj plan</a></li>
-               <li><a href='dodNau.php'>Dodaj nauczyciela</a></li>
+               <li><a href='nau.php?edit=true'>Dodaj nauczyciela</a></li>
                <li><a href='dodPrzed.php'>Dodaj przedmiot</a></li>
           </ul>
      </nav>
@@ -32,6 +32,14 @@ function addFooter($startC = "", $endC = "") {
      echo "<p>Autor: Zuzanna Zych 2024</p>";
      echo $endC;
      echo "</footer>";
+
+}
+
+function renderKlasy(){
+     echo "klasu";
+}
+function renderNau(){
+     echo "NAU";
 
 }
 ?>

@@ -9,19 +9,6 @@
     include "conn.php";
     include('getAll.php');
     global $conn;
-
-    $nauczany_przedmiot = [];//add a message for when its empty
-
-foreach ($przedmiot as $el) {
-    $nauczany_przedmiot[$el['nazwa']] = [];
-
-    //nauczyciel
-    $sql = "SELECT przedmiot.nazwa, nauczyciel.id, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$el['nazwa']."'";
-    $result = mysqli_query($conn, $sql);
-    while ($row = mysqli_fetch_assoc($result)) {
-          array_push($nauczany_przedmiot[$el['nazwa']], [$row['id'],$row['imie']." ".$row['nazwisko']]);
-    }
-}
     ?>
     <script>
         var nauczany_przedmiot = <?php json_encode($nauczany_przedmiot); ?>;

@@ -13,10 +13,20 @@
 <?php
 include_once ("func.php");
 addheader();
-?>
-<h2 class="pageFunc">Dodawanie nauczyciela</h2>
 
-<form action="" method="POST">
+// if (!isset($_GET['edit'])) {
+//     echo"<a id='toggle' class='toggle' href='nau.php?edit=true'>Zarządzaj nauczycielami</a>";
+// } else if ($_GET['edit'] == "true") {
+//     echo"<a id='toggle' class='toggle' href='nau.php?edit=false'>Zobacz listę nauczycieli</a>";
+// } else {
+//     echo"<a id='toggle' class='toggle' href='nau.php?edit=true'>Zarządzaj nauczycielami</a>";
+// }
+?>
+<div class="lewy">
+
+    <h2 class="pageFunc">Dodawanie nauczyciela</h2>
+    
+    <form action="" method="POST">
     <div class="dodNau">
 
     <label for="imie">Imię:</label>
@@ -26,17 +36,20 @@ addheader();
     <input type="text" name="nazwisko" id="nazwisko" required>
     
     <label for="przedmioty">Nauczane przedmioty:</label>
-    <?php
+    <div class="checkboxes">
+
+        <?php
         include "conn.php"; include "getAll.php";
         global $przedmiot;
-
-    foreach ($przedmiot as $el) {
-        echo "<label for='".$el['id']."'>".$el['nazwa']."</label>";
-        echo "<input type='checkbox' name='".$el['id']."' id='".$el['id']."' value='".$el['id']."'>";
-    }
-?>
+        
+        foreach ($przedmiot as $el) {
+            echo "<input type='checkbox' name='".$el['id']."' id='".$el['id']."' value='".$el['id']."'>";
+            echo "<label for='".$el['id']."'>".$el['nazwa']."</label><br>";
+        }
+        ?>
+</div>
     <button type="submit">Dodaj nauczyciela</button>
-    </div>
+</div>
 </form>
 
 <?php
@@ -75,6 +88,40 @@ addheader();
             echo "<p class='infZwrotna'>Wystąpił błąd podczas dodawnia nauczanych przedmiotów.</p>";
         }
     }
+?>
+</div>
+
+<div class="prawy">
+<table>
+     <tr>
+          <th>ID</th>
+          <th>imię</th>
+          <th>nazwisko</th>
+          <th>nauczane przedmioty</th>
+          <th>nazwa szkoły w której uczy</th>
+     </tr>
+     <?php
+     include_once "getAll.php";
+     foreach ($nauczyciele as $key => $nauczyciel) {
+      
+            echo "<tr>";
+            echo "<td>".$nauczyciel['id']."</td>";
+            echo "<td>".$nauczyciel['imie']."</td>";
+            echo "<td>".$nauczyciel['nazwisko']."</td>";
+
+            //!! now here nauczne przedmitou włożyć
+            echo "<td></td>";
+            // echo "<td>".$nazwaSzkoly/szkół."</td>";
+            // echo "<td> <a class='btn' href='usuPrzed.php?id=".$value['id']."'>usuń</a></td>";
+            echo "</tr>";
+        
+     }
+     ?>
+</table>
+</div>
+
+<?php
+addFooter();
 ?>
 </body>
 </html>
