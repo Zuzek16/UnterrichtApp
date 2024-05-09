@@ -6,9 +6,8 @@
      <title>UnterrichtApp</title>
      <link rel="stylesheet" href="styl.css">
      <link rel="icon" type="image/x-icon" href="/zdj/UnterrichtAppLOGO.png">
-     <!--     -change nau page to work 
-     simmilar to the przedmiot where you have a button
-     -dod przedmiot
+     <!--     -change every adding form to redicrect!?
+     -dod (ogl managment) klasy i przypisywanie planu lekcji
      -!failsafe so that someone doesnt add a timetable for a school with teachers that dont teach there
      -dod klasy
      -przypisywanie planu lekji do klasy

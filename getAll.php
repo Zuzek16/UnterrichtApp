@@ -1,6 +1,6 @@
 <?php
 global $conn;
-$r_Sala = mysqli_query($conn, "SELECT * from sala");
+$r_Sala = mysqli_query($conn, "SELECT * from sala");//ORDER Y
 $sala = [];
 while ($row = mysqli_fetch_assoc($r_Sala)) array_push($sala, $row);
 
@@ -18,7 +18,7 @@ while ($row = mysqli_fetch_assoc($r_dzien_tygodnia)) {
 $sqlSzkola = "SELECT * FROM szkola";
 $r_szkola = mysqli_query($conn, $sqlSzkola);
 
-$klasaSzkoly = [];//budowa - nazwa szkoly => [idklasy, nazwaklasy]
+$klasaSzkoly = [];//budowa - nazwa szkoly => [id szkoly, idklasy, nazwaklasy]
 while ($rowSz = mysqli_fetch_assoc($r_szkola)) {
       $klasaSzkoly[$rowSz['nazwa']] = [];
       $klasaSzkoly[$rowSz['nazwa']]['idSzkoly'] = $rowSz['id']; 
@@ -27,6 +27,13 @@ while ($rowSz = mysqli_fetch_assoc($r_szkola)) {
       while ($rowK = mysqli_fetch_assoc($r_klasa)) {
             array_push($klasaSzkoly[$rowSz['nazwa']], [$rowK['idKlasy'], $rowK['nazwaKlasy']]);
       }
+}
+
+$nauSzkoly = [];
+$sqlnauSzkoly = "SELECT nauczyciele_szkoly.id, nauczyciele_szkoly.id_nauczyciela, nauczyciele_szkoly.id_szkoly, szkola.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczyciele_szkoly INNER JOIN nauczyciel ON nauczyciel.id = nauczyciele_szkoly.id_nauczyciela INNER JOIN szkola ON szkola.id = nauczyciele_szkoly.id_szkoly;";
+$r=mysqli_query($conn, $sqlnauSzkoly);
+while ($row = mysqli_fetch_assoc($r)) {
+      array_push($nauSzkoly, $row);
 }
 
 $nauczany_przedmiot = [];

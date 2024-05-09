@@ -7,23 +7,12 @@
     <link rel="stylesheet" href="styl.css">
 </head>
 <body>
-
 <a class="skip-link" href="#imie">Przejdź do głównej treści</a>
-
 <?php
 include_once ("func.php");
 addheader();
-
-// if (!isset($_GET['edit'])) {
-//     echo"<a id='toggle' class='toggle' href='nau.php?edit=true'>Zarządzaj nauczycielami</a>";
-// } else if ($_GET['edit'] == "true") {
-//     echo"<a id='toggle' class='toggle' href='nau.php?edit=false'>Zobacz listę nauczycieli</a>";
-// } else {
-//     echo"<a id='toggle' class='toggle' href='nau.php?edit=true'>Zarządzaj nauczycielami</a>";
-// }
 ?>
 <div class="lewy">
-
     <h2 class="pageFunc">Dodawanie nauczyciela</h2>
     
     <form action="" method="POST">
@@ -35,13 +24,22 @@ addheader();
     <label for="nazwisko">Nazwisko:</label>
     <input type="text" name="nazwisko" id="nazwisko" required>
     
+    <label for="szkola">Do której szkoły dodać?</label>
+    <select name="szkola" id="szkola">
+        <?php
+        include_once "conn.php";
+        include_once "getAll.php";
+        foreach ($klasaSzkoly as $key => $value) {
+            echo "<option value='".$value['idSzkoly']."'>".$key."</option>";
+        }
+        ?>
+    </select>
+
     <label for="przedmioty">Nauczane przedmioty:</label>
     <div class="checkboxes">
 
         <?php
-        include "conn.php"; include "getAll.php";
         global $przedmiot;
-        
         foreach ($przedmiot as $el) {
             echo "<input type='checkbox' name='".$el['id']."' id='".$el['id']."' value='".$el['id']."'>";
             echo "<label for='".$el['id']."'>".$el['nazwa']."</label><br>";
@@ -51,7 +49,6 @@ addheader();
     <button type="submit">Dodaj nauczyciela</button>
 </div>
 </form>
-
 <?php
     if (isset($_POST['imie']) && trim($_POST['imie']) != "" && isset($_POST['nazwisko']) && trim($_POST['nazwisko']) != "") {
         $setPrzed = [];
@@ -87,6 +84,9 @@ addheader();
         } else {
             echo "<p class='infZwrotna'>Wystąpił błąd podczas dodawnia nauczanych przedmiotów.</p>";
         }
+
+        $_POST['imie'] = "";
+        $_POST['nazwisko'] = "";
     }
 ?>
 </div>
@@ -108,11 +108,27 @@ addheader();
             echo "<td>".$nauczyciel['id']."</td>";
             echo "<td>".$nauczyciel['imie']."</td>";
             echo "<td>".$nauczyciel['nazwisko']."</td>";
+        $czegoUczy;
+    echo "<td>";
+    foreach ($nauczany_przedmiot as $key => $value) {
+        foreach ($value as $key2 => $value2) {
+            if ($nauczyciel['imie']." ".$nauczyciel['nazwisko'] == $value2[1] && $nauczyciel['id'] == $value2[0]) {
+                echo "<p>$key</p>";
+            }
+        }
+    }
+    echo "</td>";
 
-            //!! now here nauczne przedmitou włożyć
-            echo "<td></td>";
-            // echo "<td>".$nazwaSzkoly/szkół."</td>";
-            // echo "<td> <a class='btn' href='usuPrzed.php?id=".$value['id']."'>usuń</a></td>";
+    echo "<td>";//szkola w której uczy
+    foreach ($nauSzkoly as $row => $value) {
+        if ($nauczyciel['id'] == $value['id_nauczyciela']) {
+            echo $value['nazwa'];
+        }
+    }
+     echo"</td>";
+
+
+            echo "<td> <a class='btn' href='usuNau.php?id=".$nauczyciel['id']."'>usuń</a></td>";
             echo "</tr>";
         
      }
