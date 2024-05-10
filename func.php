@@ -5,7 +5,7 @@ function addheader ($includeIndexLink = true) {
           <ul>
                <li><a href='szkola.php?edit=false'>Szkoły</a></li>
                <li><a href='nau.php?edit=false'>Nauczyciele</a></li>
-               <li><a href='ucz.php?szuk=klasy'>Klasy</a></li>
+               <li><a href='klasy.php'>Klasy</a></li>
           </ul>";
           if ($includeIndexLink) {
                echo "<ul>

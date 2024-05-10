@@ -26,6 +26,7 @@ addheader();
     
     <label for="szkola">Do której szkoły dodać?</label>
     <select name="szkola" id="szkola">
+        <option value="">Wybierz</option>
         <?php
         include_once "conn.php";
         include_once "getAll.php";
@@ -50,7 +51,7 @@ addheader();
 </div>
 </form>
 <?php
-    if (isset($_POST['imie']) && trim($_POST['imie']) != "" && isset($_POST['nazwisko']) && trim($_POST['nazwisko']) != "") {
+    if (isset($_POST['imie']) && trim($_POST['imie']) != "" && isset($_POST['nazwisko']) && trim($_POST['nazwisko']) != "" && isset($_POST['szkola']) && trim($_POST['szkola']) != "") {
         $setPrzed = [];
         foreach ($przedmiot as $el) {
                 if (isset($_POST[$el['id']])) {
@@ -65,10 +66,8 @@ addheader();
 
         if (mysqli_query($conn, $sqlN)) {
             echo "<p class='infZwrotna'>Pomyślnie dodano nowego nauczyciela do szkoły... Dodawanie nauczanych przedmiotów</p>";
-        } else {
-            echo "<p class='infZwrotna'>Nie udało się dodać nauczyciela.</p>";
-        }
-        $idNau = mysqli_insert_id($conn);
+
+            $idNau = mysqli_insert_id($conn);
         $sqlP = "";
         foreach ($setPrzed as $idPrzed) {
             $sqlPGlowny = "INSERT INTO `nauczany_przedmiot` (`id`, `id_przedmiotu`, `id_nauczyciela`) VALUES (NULL, '$idPrzed', '$idNau')";
@@ -79,12 +78,32 @@ addheader();
                 $sqlP .= $sqlPDrugi;
             }
         }
+
+
+
         if (mysqli_query($conn, $sqlP)) {
             echo "<p class='infZwrotna'>Pomyślnie dodano nauczane przedmioty.</p>";
+
+            $idSzkoly = $_POST['szkola'];
+
+            $sqlNSz = "INSERT INTO `nauczyciele_szkoly` (`id`, `id_nauczyciela`, `id_szkoly`) VALUES (NULL, '$idNau', '$idSzkoly');";
+
+            if (mysqli_query($conn, $sqlNSz)) {
+                echo "<p class='infZwrotna'>Pomyślnie dodano nauczyciela do szkoły.</p>";
+
+                echo "<p><a class='infZwrotna' href='nau.php'>Załaduj nowe dane</a></p>";
+            } else {
+                echo "<p class='infZwrotna'>Wystąpił błąd podczas dodawnia nauczyciela do szkoły.</p>";
+            }
+
         } else {
             echo "<p class='infZwrotna'>Wystąpił błąd podczas dodawnia nauczanych przedmiotów.</p>";
         }
 
+        } else {
+            echo "<p class='infZwrotna'>Nie udało się dodać nauczyciela.</p>";
+        }
+        
         $_POST['imie'] = "";
         $_POST['nazwisko'] = "";
     }

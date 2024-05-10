@@ -13,7 +13,7 @@
           $sqlN = "DELETE FROM nauczyciel WHERE `nauczyciel`.`id` = ".$_GET['id'];
 
           $sqlP = "DELETE FROM nauczany_przedmiot WHERE nauczany_przedmiot.id_nauczyciela =".$_GET['id'];
-
+//! FIX - del form nauczyciele szkoły
           if (mysqli_query($conn, $sqlP)) {
                
           if (mysqli_query($conn, $sqlN)) {
