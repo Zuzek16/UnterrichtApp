@@ -52,13 +52,16 @@ addheader();
 </form>
 <?php
     if (isset($_POST['imie']) && trim($_POST['imie']) != "" && isset($_POST['nazwisko']) && trim($_POST['nazwisko']) != "" && isset($_POST['szkola']) && trim($_POST['szkola']) != "") {
+
+        if (maCyfre($_POST['imie']) || maCyfre($_POST['nazwisko'])) {
+            echo "<p class='infZwrotna'>Imie oraz nazwisko nie może zawierać cyfr</p>";            
+        } else {
         $setPrzed = [];
         foreach ($przedmiot as $el) {
                 if (isset($_POST[$el['id']])) {
                     array_push($setPrzed, $el['id']);
                 }
         }
-
         $imie = mysqli_real_escape_string($conn, trim($_POST['imie']));
         $nazwisko = mysqli_real_escape_string($conn, trim($_POST['nazwisko']));
 
@@ -68,8 +71,8 @@ addheader();
             echo "<p class='infZwrotna'>Pomyślnie dodano nowego nauczyciela do szkoły... Dodawanie nauczanych przedmiotów</p>";
 
             $idNau = mysqli_insert_id($conn);
-        $sqlP = "";
-        foreach ($setPrzed as $idPrzed) {
+            $sqlP = "";
+            foreach ($setPrzed as $idPrzed) {
             $sqlPGlowny = "INSERT INTO `nauczany_przedmiot` (`id`, `id_przedmiotu`, `id_nauczyciela`) VALUES (NULL, '$idPrzed', '$idNau')";
             $sqlPDrugi = ", (NULL, '$idPrzed', '$idNau')";
             if ($sqlP == "") {
@@ -78,19 +81,12 @@ addheader();
                 $sqlP .= $sqlPDrugi;
             }
         }
-
-
-
         if (mysqli_query($conn, $sqlP)) {
             echo "<p class='infZwrotna'>Pomyślnie dodano nauczane przedmioty.</p>";
-
             $idSzkoly = $_POST['szkola'];
-
             $sqlNSz = "INSERT INTO `nauczyciele_szkoly` (`id`, `id_nauczyciela`, `id_szkoly`) VALUES (NULL, '$idNau', '$idSzkoly');";
-
             if (mysqli_query($conn, $sqlNSz)) {
                 echo "<p class='infZwrotna'>Pomyślnie dodano nauczyciela do szkoły.</p>";
-
                 echo "<p><a class='infZwrotna' href='nau.php'>Załaduj nowe dane</a></p>";
             } else {
                 echo "<p class='infZwrotna'>Wystąpił błąd podczas dodawnia nauczyciela do szkoły.</p>";
@@ -106,6 +102,7 @@ addheader();
         
         $_POST['imie'] = "";
         $_POST['nazwisko'] = "";
+        }//end of else for digit check
     }
 ?>
 </div>
@@ -122,7 +119,6 @@ addheader();
      <?php
      include_once "getAll.php";
      foreach ($nauczyciele as $key => $nauczyciel) {
-      
             echo "<tr>";
             echo "<td>".$nauczyciel['id']."</td>";
             echo "<td>".$nauczyciel['imie']."</td>";
@@ -137,26 +133,23 @@ addheader();
         }
     }
     echo "</td>";
-
     echo "<td>";//szkola w której uczy
     foreach ($nauSzkoly as $row => $value) {
         if ($nauczyciel['id'] == $value['id_nauczyciela']) {
-            echo $value['nazwa'];
+            if (trim($value['nazwa']) == "") {
+                echo "<a href='nauSzZmien.php'>Brak szkoły - zmień</a>";
+            } else {
+                echo $value['nazwa'];
+            }
         }
     }
-     echo"</td>";
-
-
-            echo "<td> <a class='btn' href='usuNau.php?id=".$nauczyciel['id']."'>usuń</a></td>";
-            echo "</tr>";
-        
+    echo"</td>";
+    echo "<td> <a class='btn' href='usuNau.php?id=".$nauczyciel['id']."'>usuń</a></td>";
+    echo "</tr>";
      }
      ?>
 </table>
 </div>
-
-<?php
-addFooter();
-?>
+<?php addFooter();?>
 </body>
 </html>

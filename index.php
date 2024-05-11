@@ -7,7 +7,8 @@
      <link rel="stylesheet" href="styl.css">
      <link rel="icon" type="image/x-icon" href="/zdj/UnterrichtAppLOGO.png">
      <!--
-          - ! fix usu nau
+          -commit mess = "teacher del fix & class managment"
+          - order by name ! in talbes and cration of timetable
      -dod (ogl managment) klasy i przypisywanie planu lekcji
      -!failsafe so that someone doesnt add a timetable for a school with teachers that dont teach there
      -dod klasy

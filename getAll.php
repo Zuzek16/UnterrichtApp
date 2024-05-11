@@ -29,6 +29,7 @@ while ($rowSz = mysqli_fetch_assoc($r_szkola)) {
       }
 }
 
+
 $nauSzkoly = [];
 $sqlnauSzkoly = "SELECT nauczyciele_szkoly.id, nauczyciele_szkoly.id_nauczyciela, nauczyciele_szkoly.id_szkoly, szkola.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczyciele_szkoly INNER JOIN nauczyciel ON nauczyciel.id = nauczyciele_szkoly.id_nauczyciela INNER JOIN szkola ON szkola.id = nauczyciele_szkoly.id_szkoly;";
 $r=mysqli_query($conn, $sqlnauSzkoly);
@@ -55,9 +56,68 @@ while ($row = mysqli_fetch_assoc($r)) {
       array_push($nauczyciele, $row);
 }
 
+$planyLekcji = [];
+$sql = "SELECT * from plan_lekcji";
+$r = mysqli_query($conn, $sql);
+while ($row = mysqli_fetch_assoc($r)) {
+      array_push($planyLekcji, $row);
+}
+
+$planLekcjiKlasy = [];
+$sql = "SELECT klasa.id, klasa.nazwa, klasa.id_szkola, szkola.nazwa AS 'nazwaSzkoly', klasa.id_planu_lekcji FROM klasa INNER JOIN szkola ON szkola.id = klasa.id_szkola ORDER BY `nazwaSzkoly` ASC";
+$r = mysqli_query($conn, $sql);
+while ($row = mysqli_fetch_assoc($r)) {
+}
+
 $przedmiotSelectIds = [];
 $nauczycielSelectIds = [];
 $salaSelectIds = [];
+
+function maCyfre($string) {//:bool
+      foreach (str_split($string) as $litera) {
+            if (is_numeric($litera)) {
+                  return true;
+            }
+      }
+      return false;
+}
+
+function renderKlasy($szkola) {
+      global $klasaSzkoly;
+      global $planLekcjiKlasy;
+echo "<table> <tr> <th colspan=3>$szkola</th> </tr> <tr>
+     <th>ID</th>
+     <th>nazwa</th>
+     <th>plan lekcji</th>
+</tr>";
+        $i = 0;
+        if (isset($klasaSzkoly[$szkola][0][0]) && isset($klasaSzkoly[$szkola][0][1])) {
+            while (isset($klasaSzkoly[$szkola][$i][0])) {
+                  echo "<tr>";
+                  echo "<td>".$klasaSzkoly[$szkola][$i][0]."</td>";//ID
+                  echo "<td>".$klasaSzkoly[$szkola][$i][1]."</td>";//nazwa
+                  foreach ($planLekcjiKlasy as $key => $value) {
+                        //$value['id_planu_lekji']
+                  }
+                  if ($szkola ) {
+                        # code...
+                  }
+                  echo "<td>".$klasaSzkoly[$szkola][$i][0]."</td>";
+                  
+                  echo "</tr>";
+                  $i ++;
+            }
+    
+      } else {
+            echo "<tr>";
+            echo "<td>"."Brak"."</td>";//ID
+            echo "<td>"."Brak"."</td>";//nazwa
+            echo "<td>"."Brak"."</td>";//planLEkjci
+            echo "</tr>";
+        }
+        
+echo "</table>";
+}
 
 function lekcjaInput($licznikLekcji, $dzien){
       global $przedmiot;
@@ -78,7 +138,6 @@ function lekcjaInput($licznikLekcji, $dzien){
       echo '<option value="">Wybierz przedmiot</option>';
       foreach ($przedmiot as $el) {
             echo '<option value="'.$el['nazwa'].'">'.$el['nazwa'].'</option>';
-            // echo '<option value="'.$el['nazwa'].'"selected>'.$el['nazwa'].'</option>';//DEBUG
       }
   echo "</select>
       <br>
@@ -87,16 +146,15 @@ function lekcjaInput($licznikLekcji, $dzien){
       ";
       foreach ($sala as $el) {
             echo '<option value="'.$el['numer'].'">'.$el['numer'].'</option>';
-            // echo '<option value="'.$el['numer'].'"selected>'.$el['numer'].'</option>';//DEBUG
       }
 
-  echo "</select><br    >";
+  echo "</select><br>";
   
   echo '<select name='.$nauczycielName.' class="nauczyciel"></select>';
 };
 
 function defAddLekcjaTd($id, $dzien){
-      global $przedmiot;//! add global often
+      global $przedmiot;
       global $sala;
       global $licznikPIL;
       $selectPrzedmiotId = "przedmiot".$dzien.$id;

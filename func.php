@@ -34,12 +34,4 @@ function addFooter($startC = "", $endC = "") {
      echo "</footer>";
 
 }
-
-function renderKlasy(){
-     echo "klasu";
-}
-function renderNau(){
-     echo "NAU";
-
-}
 ?>

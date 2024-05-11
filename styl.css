@@ -137,6 +137,18 @@ h1,h2,h3,h4,h5,h6 {
     max-width: 100%;
 }
 
+
+.dodKlase {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dodKlase * {
+    max-width: 100%;
+}
+
 .main {
     text-align: center;
     padding-bottom: 50px;
