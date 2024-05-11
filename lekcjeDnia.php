@@ -7,6 +7,7 @@
      <link rel="stylesheet" href="styl.css">
 </head>
 <body>
+     <!-- TOBEROMOVED -->
      <!-- <a href="gotoweLekcje.php">Wybierz z poprzednich lekcji</a> -->
      <header>
      <?php include "conn.php";?>

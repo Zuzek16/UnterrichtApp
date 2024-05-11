@@ -7,10 +7,23 @@
      <link rel="stylesheet" href="styl.css">
 </head>
 <body>
+     <a class="skip-link" href="#toggle">Przejdź do głównej treści</a>
      <?php
-     include "conn.php";
+     include_once "func.php";
+     addheader();
+
+     if (!isset($_GET['edit'])) {
+          echo"<a id='toggle' class='toggle' href='szkola.php?edit=true'>Zarządzaj szkołami</a>";
+     } else if ($_GET['edit'] == "true") {
+          echo"<a id='toggle' class='toggle' href='szkola.php?edit=false'>Zobacz szkoły</a>";
+     } else {
+          echo"<a id='toggle' class='toggle' href='szkola.php?edit=true'>Zarządzaj szkołami</a>";
+     }
      ?>
+
      <div id="editON">
+          <div class="lewy">
+
      <h3>Dodawanie szkoły</h3>
      <form action="#" method="post">
      <label for="nowSzk">Pełna nazwa szkoły:</label>
@@ -18,63 +31,150 @@
      <button type="submit">Zapisz</button>
      </form>
      <?php
-     //check if isnt only numbers
+     include "conn.php";
      if (isset($_POST['nowSzk']) && trim($_POST['nowSzk']) != "") {
-          $_POST['nowSzk'] = mysqli_real_escape_string($conn, $_POST['nowSzk']);
-          $sql = "INSERT INTO `szkola` (`id`, `nazwa`) VALUES (NULL, '".htmlentities($_POST['nowSzk'])."')";
-
-          if(mysqli_query($conn, $sql)){
-               echo "<p>Dodawanie szkoły do bazy danych...</p>";
-           }
+          if (!is_numeric($_POST['nowSzk'])) {    
+               $_POST['nowSzk'] = mysqli_real_escape_string($conn, $_POST['nowSzk']);
+               $sql = "INSERT INTO `szkola` (`id`, `nazwa`) VALUES (NULL, '".htmlentities($_POST['nowSzk'])."')";  
+               if(mysqli_query($conn, $sql)){
+                    echo "<p>Udało dodać się nową szkołę.</p>";
+               } else {
+                    echo "<p>Nie udało się dodać szkoły. Spróbuj ponownie</p>";
+               }
+          } else {
+               echo "<p>Nie można nazwać szkoły tylko cyframi.</p>";
+          }
      }
-     // herer now
-     ?>
-     <!--  -->
-     <!--  -->
-     <!--  -->
-     <!--  -->
-
-     <div class="prawy">
+          ?>
+          </div>
+          <div class="prawy">
           <h3>Usuwanie szkoły</h3>
           <h4 class="danger">Tej decyzji nie można cofnąć! Zastanow się dobrze.</h2>
+          <h4>Czynność da usuwa również wszystkie dane powiązane ze szkołą</h4>
+          <form action="#" method="POST">
+               <label for="usuSz">Wybierz szkołę do usunięcia:</label>
+               <select name="usuSz" id="usuSz">
+                    <?php
+                    include "getAll.php";
+                    foreach ($klasaSzkoly as $key => $value) {
+                         echo "<option value='".$value['idSzkoly']."'>".$key."</option>";
+                    }
+                    ?>
+               </select>
+               <button type="submit">Usuń</button>
+          </form>
+
+          <?php
+     if (isset($_POST['usuSz'])) {
+          $nazwaSzkoly = "";
+          foreach ($klasaSzkoly as $key => $value) {
+               if ($_POST['usuSz'] == $value['idSzkoly']) {
+                   $nazwaSzkoly = $key;
+               }
+          }
+
+          $sqlDelNauSz = "DELETE FROM nauczyciele_szkoly WHERE nauczyciele_szkoly.id_szkoly =".$_POST['usuSz'];
+          $sqlDelKl = "DELETE FROM klasa WHERE `klasa`.`id_szkola` =".$_POST['usuSz'];
+          $sqlDelSz = "DELETE FROM szkola WHERE `szkola`.`id` =".$_POST['usuSz'];
+
+          if (mysqli_query($conn, $sqlDelNauSz)) {
+               if (mysqli_query($conn, $sqlDelKl)) {
+                    if (mysqli_query($conn, $sqlDelSz)) {
+                         echo "<p>Usunięto wybraną szkołę.</p>";
+                    } else {
+                         echo "<p>Wystąpił błąd.</p>";
+                    }
+               } else {
+                    echo "<p>Wystąpił błąd.</p>";
+               }
+          } else {
+               echo "<p>Wystąpił błąd.</p>";
+          }
+
+
+     //      echo "<form action='#' method='post'>
+     //      <p>Czy na pewno chcesz usunąć dane powiązane ze szkołą $nazwaSzkoly? Tej czynności nie da się cofnąć!</p>
+     //      <label for='potwierdzenie'>Wiem co robie</label>
+     //      <input type='checkbox' name='potwierdzenie' id='potwierdzenie'>
+     //      <button type='submit'>Potwierdzam</button>
+     // </form>"; 
+}
+
+     if (isset($_POST['potwierdzenie'])) {
+          global $_POST;
+          if ($_POST['potwierdzenie'] != "on") {
+               echo "<p>Anulowano usuwanie szkoły.</p>";
+          } else {
+               // $sqlDelNauSz = "DELETE FROM nauczyciele_szkoly WHERE nauczyciele_szkoly.id_szkoly =".$_GET['usuSz'];
+               // $sqlDelKl = "DELETE FROM klasa WHERE `klasa`.`id_szkola` =".$_GET['usuSz'];
+               // $sqlDelSz = "DELETE FROM szkola WHERE `szkola`.`id` =".$_GET['usuSz'];
+
+               // if (mysqli_query($conn, $sqlDelNauSz)) {
+               //      if (mysqli_query($conn, $sqlDelKl)) {
+               //           if (mysqli_query($conn, $sqlDelSz)) {
+               //                echo "<p>Usunięto wybraną szkołę.</p>";
+               //           } else {
+               //                echo "<p>Wystąpił błąd.</p>";
+               //           }
+               //      } else {
+               //           echo "<p>Wystąpił błąd.</p>";
+               //      }
+               // } else {
+               //      echo "<p>Wystąpił błąd.</p>";
+               // }
+          }
+     }
+
+         
+
+    
+     ?>
      </div>
      </div>
+
+    
+     
      <div id="editOFF">
           <div class="lewy">
-
                <h3>Lista szkół</h3>
-               
                <table>
                     <tr>
                          <th>ID</th>
                          <th>Nazwa</th>
                     </tr>
-                    
                     <?php
-
-
 $result = mysqli_query($conn, "SELECT * from szkola");
-
 while ($row = mysqli_fetch_assoc($result)) {
      echo "<tr>" ;   
      foreach($row as $el){
+     // echo "<tr>" ;   
+     // echo "<td>".$el."</td>";
+
+     // echo "</tr>" ;   
+     // echo "<tr>" ;   
+     // echo "<td>".$el."</td>";
+
+     // echo "</tr>" ;   
+     // echo "<tr>" ;   
+     // echo "<td>".$el."</td>";
+
+     // echo "</tr>" ;   
+     // echo "<tr>" ;   
+     // echo "<td>".$el."</td>";
+
+     // echo "</tr>" ;//   DEBUG
+
           echo "<td>".$el."</td>";
      }
+     echo "</tr>" ; 
+
 }
 ?>
-
 </table>
 </div>
-
-          <div class="prawy">
-               <h3 class="editToggle"><a href="szkola.php?edit=true">Zarządzaj szkołami</a></h3>
-          </div>
-          
-
+</div>
      </div>
-     
      <script>
-     
           const queryString = window.location.search;
           const urlParams = new URLSearchParams(queryString);
           let edit;
@@ -83,43 +183,16 @@ while ($row = mysqli_fetch_assoc($result)) {
           } else {
                edit = "false";
           }
-
-          
-
-          if (edit == "true") {//włączamy odd i usuwanie szkoly/edit szkoy
-               document.getElementById("editOFF").style.display = "none";//could also do an class of displaing and toggle it on and off
+          if (edit == "true") {
+               document.getElementById("editOFF").style.display = "none";
                document.getElementById("editON").style.display = "block";
-
           } else {
                document.getElementById("editOFF").style.display = "block";
                document.getElementById("editON").style.display = "none";
           }
-
-          const btns = document.querySelectorAll(".editToggle");//nie dizala
-
-          btns.forEach(element => {
-               element.addEventListener("click", ()=>{
-               if (edit == "true") {
-                    edit = "false"
-               } else if (edit == "false") {
-                    edit = "true"
-               }})     
-          });
-
-          for (let i = 0; i < btns.length; i++) {
-btns[i].addEventListener("click", ()=>{
-     if (edit == "true") {
-                    edit = "false"
-               } else if (edit == "false") {
-                    edit = "true"
-               }
      
-})
-}
-          
-
-          urlParams.set("edit", edit);
-
+     urlParams.set("edit", edit);
      </script>
+     <?php addFooter();?>
 </body>
 </html>

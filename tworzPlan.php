@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,22 +9,9 @@
     include "conn.php";
     include('getAll.php');
     global $conn;
-
-    $nauczany_przedmiot = [];//add a message for when its empty
-
-foreach ($przedmiot as $el) {
-    $nauczany_przedmiot[$el['nazwa']] = [];
-
-    //nauczyciel
-    $sql = "SELECT przedmiot.nazwa, nauczyciel.id, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$el['nazwa']."'";
-    $result = mysqli_query($conn, $sql);
-    while ($row = mysqli_fetch_assoc($result)) {
-          array_push($nauczany_przedmiot[$el['nazwa']], [$row['id'],$row['imie']." ".$row['nazwisko']]);
-    }
-}
     ?>
     <script>
-        var nauczany_przedmiot = <?php echo json_encode($nauczany_przedmiot); ?>;
+        var nauczany_przedmiot = <?php json_encode($nauczany_przedmiot); ?>;
 
 let x = window.matchMedia("(max-width: 870px)");
 let desktopMode;
@@ -39,13 +26,15 @@ if (!x.matches) {
 
   document.cookie=`desktopMode=${desktopMode}; expires=Thu, 18 Dec 2090 12:00:00 UTC`;
 
-x.addEventListener("change", function() {
+window.addEventListener("resize", function() {
     if (!x.matches) {
         desktopMode = y;
   } else {
     desktopMode = n;
   }
   document.cookie=`desktopMode=${desktopMode}; expires=Thu, 18 Dec 2090 12:00:00 UTC`;
+
+  reload();
 }); 
 
     </script>
@@ -56,7 +45,7 @@ x.addEventListener("change", function() {
 include_once ("func.php");
 addheader();
 ?>
-<h2>Tworzenie planu</h2>
+<h2 class="pageFunc">Tworzenie planu</h2>
 <?php
 $sql = "SELECT * from szkola";
 $wynik = mysqli_query($conn, $sql);
@@ -67,12 +56,13 @@ while ($row = mysqli_fetch_assoc($wynik)) {
 
 if ($tab == NULL) {
     echo "<p>Nie ma żadnej szkoły!</p>
-    <p><a href=szkola.php>Dodaj ją</a></p>";
+    <p><a href=szkola.php?edit=true>Dodaj ją</a></p>";
 } else {
 ?>
 <form action="" method="post">
-    <label for="szkolaAktyw">Dla ktorej szkoły chcesz zrobić plan?</label>
+    <label for="szkolaAktyw">Dla której szkoły chcesz zrobić plan?</label>
     <select name="szkolaAktyw" id="szkolaAktyw">
+        <option value="">Wybierz szkołę</option>
         <?php
         foreach($tab as $szkola){echo "<option value='".$szkola['nazwa']."'>".$szkola['nazwa']."</option>";}
         ?>
@@ -90,38 +80,39 @@ if ($tab == NULL) {
     ?>
 </p>
 <!-- only if school is set -->
-<form action="" method="post">
+<!-- <form action="" method="post">
     <label for="klasaAktyw">Dla ktorej klasy chcesz zrobić plan?</label>
-    <select name="klasaAktyw" id="klasaAktyw">
+    <select name="klasaAktyw" id="klasaAktyw"> -->
         <?php
-        foreach($klasaSzkoly as $szkola => $value1){
-            //TYLKO dla aktywnej szkoły!!!
-            //tak samo jak nauczycieli
-
-            foreach ($klasaSzkoly[$szkola] as $key => $value2) {
-            echo "<option value='".$value2[1]."'>".$value2[1]."</option>";
-            }
-        }
+        // foreach($klasaSzkoly as $szkola => $value1){
+        //     foreach ($klasaSzkoly[$szkola] as $key => $value2) {
+        //          if ($key != "idSzkoly") {
+        //             echo "<option value='".$value2[1]."'>".$value2[1]."</option>";
+        //          }
+        //     }
+        // }
         ?>
-    </select>
-    <button type="submit">Zatwierdź</button>
-</form>
+    <!-- </select> -->
+    <!-- <button type="submit">Zatwierdź</button> -->
+<!-- </form> -->
 
 <p>
     <?php
-    if (isset($_POST['klasaAktyw'])) {
-        echo "<p>Wybrana szkoła: ".($_POST['klasaAktyw'])."</p>";
-    } else {
-        echo "<p>Proszę wybrać szkołę</p>";
-    }
+    // if (isset($_POST['klasaAktyw'])) {
+    //     echo "<p>Wybrana szkoła: ".($_POST['klasaAktyw'])."</p>";
+    // } else {
+    //     echo "<p>Proszę wybrać klase</p>";
+    // }
     ?>
 </p>
-<h5>Wskazówka: Jeśli potrzebujesz mieć mniej lekcji w danym dniu ostatnie z opcji pozostaw puste [WIP]</h3>
+<!-- <h3>Wskazówka: Jeśli potrzebujesz mieć mniej lekcji w danym dniu ostatnie z opcji pozostaw puste [WIP]</h3> -->
 <div class="tableContainer">
 <form action="#" method="post">
     <table class="calosc" id="calosc">
     <?php
+    
     if (str_contains($_COOKIE['desktopMode'], "1")) {
+        //another way i can think of doing this is to set some <td>, <br> and <tr> etc. tags with classes so that i can make them dissapear
         echo "<tr>
         <th>nr</th>
         <th>Pon</th>
@@ -131,7 +122,7 @@ if ($tab == NULL) {
         <th>Pt</th>
     </tr>";
     global $nauczany_przedmiot;
-    for ($i=0; $i < 2; $i++) {//liczba lekcji
+    for ($i=0; $i < 8; $i++) {//liczba lekcji
         echo "<tr>";
         echo "<td>";
         echo $i+1;

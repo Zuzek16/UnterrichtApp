@@ -162,3 +162,22 @@ function nauczycieleKtorzyUcza($przedmiot){
 // }
 
 SELECT szkola.id, szkola.nazwa, klasa.id, klasa.nazwa, klasa.id_szkola, klasa.id_planu_lekcji from szkola INNER JOIN klasa ON klasa.id_szkola = szkola.id;
+
+//      const btns = document.querySelectorAll(".editToggle");
+     //      btns.forEach(element => {
+     //           element.addEventListener("click", ()=>{
+     //           if (edit == "true") {
+     //                edit = "false"
+     //           } else if (edit == "false") {
+     //                edit = "true"
+     //           }})     
+     //      });
+     //      for (let i = 0; i < btns.length; i++) {
+     //           btns[i].addEventListener("click", ()=>{
+     //           if (edit == "true") {
+     //                edit = "false"
+     //           } else if (edit == "false") {
+     //                edit = "true"
+     //           }
+     //      })
+     // }

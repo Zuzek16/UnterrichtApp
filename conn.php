@@ -6,9 +6,16 @@
      
      $conn = mysqli_connect($host, $user, $pass, $db);
 
+     $connInfo;
+     $connected;
+
      if ($conn) {
-          echo "<p class='conn'>Połączenie z bazą danych powiodło się\n</p>";
+          $connected = true;
+          $connInfo = "<p class='conn'>Połączenie z bazą danych powiodło się\n</p>";
+          // echo "<p class='conn'>Połączenie z bazą danych powiodło się\n</p>";
      } else {
-          echo "<p class='conn'>Błąd połączenia: ". mysqli_connect_error()."</p>";
+          $connected = false;
+          $connInfo = "<p class='conn'>Błąd połączenia: ". mysqli_connect_error()."</p>";
+          // echo "<p class='conn'>Błąd połączenia: ". mysqli_connect_error()."</p>";
      }
 ?>

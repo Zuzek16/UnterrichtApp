@@ -1,5 +1,5 @@
 <?php
-//tu też jakikolwiek plan render i możliwość zmiany
+//tu też jakikolwiek plan render i możliwość zmiany function
 if (!(isset($_GET['nowyPlan']))) {
      echo '<p>Nie ma nowych planów lekcji,<a href="tworzPlan.php"> stwórz go teraz</a>!</p>';
      
@@ -10,7 +10,7 @@ include "planRender.php";
 
      ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
