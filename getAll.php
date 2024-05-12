@@ -67,6 +67,7 @@ $planLekcjiKlasy = [];
 $sql = "SELECT klasa.id, klasa.nazwa, klasa.id_szkola, szkola.nazwa AS 'nazwaSzkoly', klasa.id_planu_lekcji FROM klasa INNER JOIN szkola ON szkola.id = klasa.id_szkola ORDER BY `nazwaSzkoly` ASC";
 $r = mysqli_query($conn, $sql);
 while ($row = mysqli_fetch_assoc($r)) {
+      array_push($planLekcjiKlasy, $row);
 }
 
 $przedmiotSelectIds = [];
@@ -93,17 +94,27 @@ echo "<table> <tr> <th colspan=3>$szkola</th> </tr> <tr>
         $i = 0;
         if (isset($klasaSzkoly[$szkola][0][0]) && isset($klasaSzkoly[$szkola][0][1])) {
             while (isset($klasaSzkoly[$szkola][$i][0])) {
+
                   echo "<tr>";
                   echo "<td>".$klasaSzkoly[$szkola][$i][0]."</td>";//ID
-                  echo "<td>".$klasaSzkoly[$szkola][$i][1]."</td>";//nazwa
-                  foreach ($planLekcjiKlasy as $key => $value) {
-                        //$value['id_planu_lekji']
+                  echo "<td>".$klasaSzkoly[$szkola][$i][1]."</td>";//nazwa klasy
+                  $idPlanuWritten = 0;
+
+                  foreach ($planLekcjiKlasy as $key => $value) {//plan lekci
+                       global $idPlanuWritten;
+                        if ($klasaSzkoly[$szkola][$i][0] == $value['id']) {
+                              if (isset($value['id_planu_lekcji'])&& trim($value['id_planu_lekcji'])!= "") {
+                                    echo "<td>".$value['id_planu_lekcji']."</td>";
+                                    $idPlanuWritten = 1;
+                              }
+                        }
                   }
-                  if ($szkola ) {
-                        # code...
-                  }
-                  echo "<td>".$klasaSzkoly[$szkola][$i][0]."</td>";
+                  if ($idPlanuWritten == 0) {echo "<td><a href='editKlasa.php?id=".$klasaSzkoly[$szkola][$i][0]."'>dodaj</a></td>";}
                   
+                  $idPlanuWritten = 0;
+
+                  echo "<td><a href='editKlasa.php?id=".$klasaSzkoly[$szkola][$i][0]."'>edytuj</a>/<a href='usuKl.php?id=".$klasaSzkoly[$szkola][$i][0]."'>usuń</a></td>";//edit/del
+
                   echo "</tr>";
                   $i ++;
             }

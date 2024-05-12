@@ -3,7 +3,7 @@
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Nauczyciele i klasy</title>
+     <title>Klasy</title>
      <link rel="stylesheet" href="styl.css">
 </head>
 <body>
@@ -12,14 +12,6 @@
      include_once "conn.php";
      include_once "getAll.php";
      addheader();
-     ?>
-
-     <?php
-     echo "<pre>".var_dump($klasaSzkoly)."</pre>";
-    //  foreach ($klasaSzkoly as $nazwaSz => $value) {
-    //       echo $nazwaSz;
-    //       var_dump($value);
-    //  }
      ?>
      <!-- dodawanie -->
      <div class="lewy">
@@ -50,7 +42,6 @@
         foreach ($planyLekcji as $key => $value) {
             echo "<option value='".$value['id']."'>nr ".$value['id']."</option>";
         }
-        
         ?>
     </select>
 
@@ -73,6 +64,7 @@
 </div>
 <!-- widok + zmiana planu i ususwanie -->
 <div class="prawy">
+    <h2 class="pageFunc">Lista klas według szkół</h2>
     <?php
     foreach ($klasaSzkoly as $szkola => $value) {
         echo "<div class='showSzKlasy'>";

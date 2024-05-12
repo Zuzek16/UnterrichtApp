@@ -7,7 +7,14 @@
      <link rel="stylesheet" href="styl.css">
      <link rel="icon" type="image/x-icon" href="/zdj/UnterrichtAppLOGO.png">
      <!--
+          -see any plan leckji you want
+          -add footers everywhere / and maybe headers
+          get to responsivity 
+          try to make createing the timetable responsive
+          ##
+          To push the branch to the remote server, run git push –u origin <branch name>. In my case, the name of that branch is bug-fixes. So, I have to run git push -u origin bug-fixes
           -commit mess = "teacher del fix & class managment"
+          ##
           - order by name ! in talbes and cration of timetable
      -dod (ogl managment) klasy i przypisywanie planu lekcji
      -!failsafe so that someone doesnt add a timetable for a school with teachers that dont teach there
