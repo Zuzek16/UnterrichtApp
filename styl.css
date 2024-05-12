@@ -137,7 +137,6 @@ h1,h2,h3,h4,h5,h6 {
     max-width: 100%;
 }
 
-
 .dodKlase {
     display: flex;
     flex-direction: column;
@@ -147,6 +146,20 @@ h1,h2,h3,h4,h5,h6 {
 
 .dodKlase * {
     max-width: 100%;
+}
+
+.showSzKlasy {
+    /* display: inline-block; */
+    display: flex;
+    justify-content: center;
+    float:right;
+    width: 100%;
+    /* text-align: center; */
+
+}
+
+.center {
+    text-align: center;
 }
 
 .main {

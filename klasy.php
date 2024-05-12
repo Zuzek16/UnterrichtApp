@@ -36,6 +36,7 @@
 
 
     <label for="planL">Przypisz plan lekcji dla tworzonej klasy(opcjonalne):</label>
+    <!-- !!NOT WORKING -->
     <select name="planL" id="planL">
         <option value="">Wybierz</option>
         <?php
@@ -52,10 +53,15 @@
     if (isset($_POST['nazwa']) && trim($_POST['nazwa']) != "" && isset($_POST['szkola']) && trim($_POST['szkola']) != "") {
         $nazwa = mysqli_real_escape_string($conn, trim($_POST['nazwa']));
 
-        $sqlK = "";
+        if (isset($_POST['planL']) && trim($_POST['planL']) != "") {
+            $sqlK = "INSERT INTO `klasa` (`id`, `nazwa`, `id_szkola`, `id_planu_lekcji`) VALUES (NULL, '".$_POST['nazwa']."', '".$_POST['szkola']."', '".$_POST['planL']."')";
+        } else {
+            $sqlK = "INSERT INTO `klasa` (`id`, `nazwa`, `id_szkola`, `id_planu_lekcji`) VALUES (NULL, '".$_POST['nazwa']."', '".$_POST['szkola']."', 'NULL')";
+        }
 
         if (mysqli_query($conn, $sqlK)) {
-            echo "<p class='infZwrotna'>Pomyślnie dodano nową klasę do szkoły:".$_POST['szkola']."</p>";
+            echo "<p class='infZwrotna'>Pomyślnie dodano nową klasę do szkoły.</p>
+            <a href ='klasy.php'>Odświerz</a>";
         } else {
             echo "<p class='infZwrotna'>Nie udało się dodać klasy.</p>";
         }
@@ -64,7 +70,7 @@
 </div>
 <!-- widok + zmiana planu i ususwanie -->
 <div class="prawy">
-    <h2 class="pageFunc">Lista klas według szkół</h2>
+    <h2 class="pageFunc center">Lista klas według szkół</h2>
     <?php
     foreach ($klasaSzkoly as $szkola => $value) {
         echo "<div class='showSzKlasy'>";

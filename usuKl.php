@@ -12,7 +12,7 @@
      include_once "conn.php";
      include_once "getAll.php";
      addheader();?>
-<h2 class="pageFunc">Usuwanie klasy</h2>
+<h2 class="pageFunc center">Usuwanie klasy</h2>
 <div class="dodKlase">
 
 <?php

@@ -1,10 +1,10 @@
 <?php
 global $conn;
-$r_Sala = mysqli_query($conn, "SELECT * from sala");//ORDER Y
+$r_Sala = mysqli_query($conn, "SELECT * from sala ORDER BY sala.numer ASC");
 $sala = [];
 while ($row = mysqli_fetch_assoc($r_Sala)) array_push($sala, $row);
 
-$r_przedmiot = mysqli_query($conn, "SELECT * from przedmiot");
+$r_przedmiot = mysqli_query($conn, "SELECT * from przedmiot ORDER BY przedmiot.nazwa ASC");
 $przedmiot = [];
 while ($row = mysqli_fetch_assoc($r_przedmiot)) array_push($przedmiot, $row);
 
@@ -42,7 +42,7 @@ foreach ($przedmiot as $el) {
     $nauczany_przedmiot[$el['nazwa']] = [];
 
     //nauczyciel
-    $sql = "SELECT przedmiot.nazwa, nauczyciel.id, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$el['nazwa']."'";
+    $sql = "SELECT przedmiot.nazwa, nauczyciel.id, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$el['nazwa']."' ORDER BY nauczyciel.nazwisko, nauczyciel.imie ASC";
     $result = mysqli_query($conn, $sql);
     while ($row = mysqli_fetch_assoc($result)) {
           array_push($nauczany_przedmiot[$el['nazwa']], [$row['id'],$row['imie']." ".$row['nazwisko']]);
@@ -162,65 +162,5 @@ function lekcjaInput($licznikLekcji, $dzien){
   echo "</select><br>";
   
   echo '<select name='.$nauczycielName.' class="nauczyciel"></select>';
-};
-
-function defAddLekcjaTd($id, $dzien){
-      global $przedmiot;
-      global $sala;
-      global $licznikPIL;
-      $selectPrzedmiotId = "przedmiot".$dzien.$id;
-      $przedmiotInputList[$licznikPIL] = $selectPrzedmiotId;
-      $licznikPIL++;
-
-      $selectSalaId = "sala".$dzien.$id;
-      $selectNauId = "nauczyciel".$dzien.$id;
-
-      echo '<form action="" method="post">
-      <label for="'.$selectPrzedmiotId.'">Przedmiot</label>
-      <select name="'.$selectPrzedmiotId.'" id="'.$selectPrzedmiotId.'">';
-      echo "<option value=''>Wybierz</option>"; 
-      if (isset($_POST[$selectPrzedmiotId])) {
-            foreach($przedmiot as $el){
-                  if ($_POST[$selectPrzedmiotId] == $el['nazwa']) {
-                        echo "<option value='".$el['nazwa']."'selected>".$el['nazwa']."</option>";
-                  } else {
-                        echo "<option value='".$el['nazwa']."'>".$el['nazwa']."</option>";
-                  }
-            }
-      
-    } else {
-      foreach($przedmiot as $el){
-            echo "<option value='".$el['nazwa']."'>".$el['nazwa']."</option>";
-      }
-    }    
-      if (isset($_POST[$selectPrzedmiotId]) ) {
-            if ($_POST[$selectPrzedmiotId] != "") {
-                  echo "<p>Wybrany przedmiot - ".$_POST[$selectPrzedmiotId]."</p>";
-                  echo  '<form action="" method="post">
-                  <label for="'.$selectNauId.'">Nauczyciel: </label>
-                  <select name="'.$selectNauId.'" id="'.$selectNauId.'">';
-                  foreach (nauczycieleKtorzyUcza($_POST[$selectPrzedmiotId]) as $nau) {
-                        echo "<option value='$nau'>".$nau."</option>";
-                        }
-                  echo '</select>
-                  <label for="'.$selectSalaId.'">Sala</label>
-                     <select name="'.$selectSalaId.'" id="'.$selectSalaId.'">';
-                     foreach ($sala as $elSala) {
-                        echo "<option value='".$elSala['numer']."'>".$elSala['numer']."</option>";
-                        }
-                  echo '</select>
-                  <button type="submit">Zapisz lekcję</button>
-                  </form>';
-            }
-      }
-
-      if (isset($_POST[$selectSalaId]) && isset($_POST[$selectNauId]) ) {
-            if (($_POST[$selectSalaId] == "") &&
-            ($_POST[$selectNauId]) == "") {
-                  # code...
-            } else {
-                  //normalnie, czyli dodajemy do tablicy że to jest już gotowe i jak wszytkie sa gotowe to finish (puste lekcje moga byc tylko na koncu a nie w środku)
-            }
-      }
 };
 ?>

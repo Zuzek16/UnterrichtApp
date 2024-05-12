@@ -181,3 +181,63 @@ SELECT szkola.id, szkola.nazwa, klasa.id, klasa.nazwa, klasa.id_szkola, klasa.id
      //           }
      //      })
      // }
+
+     function defAddLekcjaTd($id, $dzien){
+      global $przedmiot;
+      global $sala;
+      global $licznikPIL;
+      $selectPrzedmiotId = "przedmiot".$dzien.$id;
+      $przedmiotInputList[$licznikPIL] = $selectPrzedmiotId;
+      $licznikPIL++;
+
+      $selectSalaId = "sala".$dzien.$id;
+      $selectNauId = "nauczyciel".$dzien.$id;
+
+      echo '<form action="" method="post">
+      <label for="'.$selectPrzedmiotId.'">Przedmiot</label>
+      <select name="'.$selectPrzedmiotId.'" id="'.$selectPrzedmiotId.'">';
+      echo "<option value=''>Wybierz</option>"; 
+      if (isset($_POST[$selectPrzedmiotId])) {
+            foreach($przedmiot as $el){
+                  if ($_POST[$selectPrzedmiotId] == $el['nazwa']) {
+                        echo "<option value='".$el['nazwa']."'selected>".$el['nazwa']."</option>";
+                  } else {
+                        echo "<option value='".$el['nazwa']."'>".$el['nazwa']."</option>";
+                  }
+            }
+      
+    } else {
+      foreach($przedmiot as $el){
+            echo "<option value='".$el['nazwa']."'>".$el['nazwa']."</option>";
+      }
+    }    
+      if (isset($_POST[$selectPrzedmiotId]) ) {
+            if ($_POST[$selectPrzedmiotId] != "") {
+                  echo "<p>Wybrany przedmiot - ".$_POST[$selectPrzedmiotId]."</p>";
+                  echo  '<form action="" method="post">
+                  <label for="'.$selectNauId.'">Nauczyciel: </label>
+                  <select name="'.$selectNauId.'" id="'.$selectNauId.'">';
+                  foreach (nauczycieleKtorzyUcza($_POST[$selectPrzedmiotId]) as $nau) {
+                        echo "<option value='$nau'>".$nau."</option>";
+                        }
+                  echo '</select>
+                  <label for="'.$selectSalaId.'">Sala</label>
+                     <select name="'.$selectSalaId.'" id="'.$selectSalaId.'">';
+                     foreach ($sala as $elSala) {
+                        echo "<option value='".$elSala['numer']."'>".$elSala['numer']."</option>";
+                        }
+                  echo '</select>
+                  <button type="submit">Zapisz lekcję</button>
+                  </form>';
+            }
+      }
+
+      if (isset($_POST[$selectSalaId]) && isset($_POST[$selectNauId]) ) {
+            if (($_POST[$selectSalaId] == "") &&
+            ($_POST[$selectNauId]) == "") {
+                  # code...
+            } else {
+                  //normalnie, czyli dodajemy do tablicy że to jest już gotowe i jak wszytkie sa gotowe to finish (puste lekcje moga byc tylko na koncu a nie w środku)
+            }
+      }
+};

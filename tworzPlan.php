@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="styl.css">
     <?php
     include "conn.php";
-    include('getAll.php');
+    include_once "getAll.php";
     global $conn;
+    global $nauczany_przedmiot;
+    $jsonNP = json_encode($nauczany_przedmiot);
+    echo "<script>var nauczany_przedmiot = $jsonNP;</script>";
     ?>
     <script>
-        var nauczany_przedmiot = <?php json_encode($nauczany_przedmiot); ?>;
-
 let x = window.matchMedia("(max-width: 870px)");
 let desktopMode;
 let y = 1;
@@ -77,32 +78,6 @@ if ($tab == NULL) {
     } else {
         echo "<p>Proszę wybrać szkołę</p>";
     }
-    ?>
-</p>
-<!-- only if school is set -->
-<!-- <form action="" method="post">
-    <label for="klasaAktyw">Dla ktorej klasy chcesz zrobić plan?</label>
-    <select name="klasaAktyw" id="klasaAktyw"> -->
-        <?php
-        // foreach($klasaSzkoly as $szkola => $value1){
-        //     foreach ($klasaSzkoly[$szkola] as $key => $value2) {
-        //          if ($key != "idSzkoly") {
-        //             echo "<option value='".$value2[1]."'>".$value2[1]."</option>";
-        //          }
-        //     }
-        // }
-        ?>
-    <!-- </select> -->
-    <!-- <button type="submit">Zatwierdź</button> -->
-<!-- </form> -->
-
-<p>
-    <?php
-    // if (isset($_POST['klasaAktyw'])) {
-    //     echo "<p>Wybrana szkoła: ".($_POST['klasaAktyw'])."</p>";
-    // } else {
-    //     echo "<p>Proszę wybrać klase</p>";
-    // }
     ?>
 </p>
 <!-- <h3>Wskazówka: Jeśli potrzebujesz mieć mniej lekcji w danym dniu ostatnie z opcji pozostaw puste [WIP]</h3> -->
@@ -192,8 +167,6 @@ if ($tab == NULL) {
                 echo "<td>";
                 echo $i + 1;
                 echo "</td>";
-                
-
                 echo "<td>";
                 lekcjaInput($i, $dzien);
                 echo "</td>";
@@ -207,16 +180,12 @@ if ($tab == NULL) {
     <td colspan=2>
     <button class='mobilebtn' type='submit'>Zapisz</button>
     </td>
-</tr>";//this button wider MAEK TODO
-
-    }
+</tr>";
+}
     ?>
-
-
 </table>
 </form>
 </div>
-
 <?php
 }
 ?>
@@ -356,18 +325,11 @@ if ($tab == NULL) {
             $nrLekcji = $selectEl[1];
             $idLekcji = $idsLekcji[$idLekcjiCounter];
 
-            //
-
             if ($lastAddedDay == $idDniaTyg) {//didnt change
                 echo "<p>Znowu to samo </p>";
             } 
-
-            //
-
             $PrzypLekGlowny = "INSERT INTO `przyporzadkowanie_lekcji` (`id`, `nr_lekcji`, `id_dnia_tyg`, `id_lekcji`) VALUES (NULL, '".$nrLekcji."', '".$idDniaTyg."', '".$idLekcji."')"; 
-
             $PrzypLekDrugi = ", (NULL, '".$nrLekcji."', '".$idDniaTyg."', '".$idLekcji."')";
-
             if ($sqlTPrzypLek == "") {
                 $sqlTPrzypLek .= $PrzypLekGlowny;
             } else {
@@ -378,14 +340,11 @@ if ($tab == NULL) {
             $idsCounter ++; 
         }
 
-        // var_dump($sqlTPrzypLek);
-
         if (mysqli_query($conn, $sqlTPrzypLek)){
         // if (false){
             global $idsPrzyporzadkowanejLekcji;
             global $liczbaLekcji;
             $idOstatPrzypLekcji = mysqli_insert_id($conn);
-
 
             for ($i=$liczbaLekcji; $i >= 0; $i--) { 
 
@@ -396,18 +355,12 @@ if ($tab == NULL) {
                 }
             }
 
-            
             $sqlPlanLekcji = "INSERT INTO `plan_lekcji` (`id`) VALUES (NULL)";
-            
             $sqlLekcjePlanu="";
-
             if (mysqli_query($conn, $sqlPlanLekcji)) {
                 $idPlanuLekcji = mysqli_insert_id($conn);
-
                 foreach ($idsPrzyporzadkowanejLekcji as $el) {
-                    // $idPrzyporzadkowanejLekcji = $el;
                     global $idPlanuLekcji;
-    
                     if ($sqlLekcjePlanu == "") {
                         $sqlLekcjePlanu = "INSERT INTO `lekcje_planu` (`id`, `id_planu_lekcji`, `id_przyporzadkowanej_lekcji`) VALUES (NULL, '$idPlanuLekcji', '$el')";
                     } else {
@@ -416,8 +369,8 @@ if ($tab == NULL) {
                 }
                 if ( mysqli_multi_query($conn,$sqlLekcjePlanu)) {
                     // if (false){
-                    echo "||||||                |||||GOTOWE";
-                    echo "Udało Ci się storzyć nowy plan lekcji!";
+                    echo "<p>GOTOWE</p>";
+                    echo "<p>Udało Ci się storzyć nowy plan lekcji!</p>";
                     echo "<p>Przypisać go klasie?</p>
                     <button class ='odpY'><a href='edycjaPlan.php'>TAK</a></button>/ 
                     <button class ='odpN'>NIE</button>

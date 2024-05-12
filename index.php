@@ -7,6 +7,7 @@
      <link rel="stylesheet" href="styl.css">
      <link rel="icon" type="image/x-icon" href="/zdj/UnterrichtAppLOGO.png">
      <!--
+          -add edit to teachers
           -see any plan leckji you want
           -add footers everywhere / and maybe headers
           get to responsivity 
