@@ -35,7 +35,18 @@ addheader();
           </div>
      </div>
 
-     <a href="choosePlan.php"> powrót do wyboru</a>
+     <?php
+     if (isset($_GET['src'])) {
+          if ($_GET['src'] == "edit") {
+               echo '<a href="chooseEditPlan.php"> powrót do wyboru</a>';
+          } else{
+               echo '<a href="choosePlan.php"> powrót do wyboru</a>';
+          }
+     } else {
+          echo '<a href="choosePlan.php"> powrót do wyboru</a>';
+     }
+     ?>
+     <!-- <a href="choosePlan.php"> powrót do wyboru</a> -->
 
 <?php addFooter();?>
 

@@ -7,6 +7,7 @@
      <link rel="stylesheet" href="styl.css">
      <link rel="icon" type="image/x-icon" href="/zdj/UnterrichtAppLOGO.png">
      <!--
+          -? plan lekcji przpisanie? how to handle and so on
           -add edit to teachers and plan leckji
           get to responsivity 
           try to make createing the timetable responsive

@@ -23,7 +23,7 @@
           if (($i-1)%10 == 0) {
                echo "<div class='breakup'>";
           }
-            echo "<li><a href='pokazPlan.php?id=".$value['id']."'>nr ".$value['id']."</a> -- <a href='editPlan.php?id=".$value['id']."'>edytuj</a></li>";
+            echo "<li><a href='pokazPlan.php?id=".$value['id']."&src=edit'>nr ".$value['id']."</a> -- <a href='editPlan.php?id=".$value['id']."'>edytuj</a></li>";
 
             if ($i%10 == 0) {
                echo "</div>";

@@ -60,24 +60,24 @@ if ($tab == NULL) {
     <p><a href=szkola.php?edit=true>Dodaj ją</a></p>";
 } else {
 ?>
-<form action="" method="post">
+<!-- <form action="" method="post">
     <label for="szkolaAktyw">Dla której szkoły chcesz zrobić plan?</label>
     <select name="szkolaAktyw" id="szkolaAktyw">
         <option value="">Wybierz szkołę</option>
         <?php
-        foreach($tab as $szkola){echo "<option value='".$szkola['nazwa']."'>".$szkola['nazwa']."</option>";}
+        // foreach($tab as $szkola){echo "<option value='".$szkola['nazwa']."'>".$szkola['nazwa']."</option>";}
         ?>
     </select>
     <button type="submit">Zatwierdź</button>
-</form>
+</form> -->
 
 <p>
     <?php
-    if (isset($_POST['szkolaAktyw'])) {
-        echo "<p>Wybrana szkoła: ".($_POST['szkolaAktyw'])."</p>";
-    } else {
-        echo "<p>Proszę wybrać szkołę</p>";
-    }
+    // if (isset($_POST['szkolaAktyw'])) {
+    //     echo "<p>Wybrana szkoła: ".($_POST['szkolaAktyw'])."</p>";
+    // } else {
+    //     echo "<p>Proszę wybrać szkołę</p>";
+    // }
     ?>
 </p>
 <!-- <h3>Wskazówka: Jeśli potrzebujesz mieć mniej lekcji w danym dniu ostatnie z opcji pozostaw puste [WIP]</h3> -->
@@ -87,7 +87,6 @@ if ($tab == NULL) {
     <?php
     
     if (str_contains($_COOKIE['desktopMode'], "1")) {
-        //another way i can think of doing this is to set some <td>, <br> and <tr> etc. tags with classes so that i can make them dissapear
         echo "<tr>
         <th>nr</th>
         <th>Pon</th>
@@ -198,7 +197,6 @@ if ($tab == NULL) {
             let form = '';
             nauczany_przedmiot[`${el.value}`].forEach(el => {
                form += `<option value="${el[0]}" >${el[1]}</option>`;
-                // form += `<option value="${el[0]}" selected>${el[1]}</option>`;//DEBUG
             });
             el.parentElement.querySelector('.nauczyciel').innerHTML = form;
         })        

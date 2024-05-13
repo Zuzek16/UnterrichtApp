@@ -45,7 +45,6 @@ function mobilePlanShow($idPlanuLekcji, $dzienTyg) {//każdy dzień we własnej 
           if ($v['dzienTyg'] == $dzienTyg) {
                echo "<td>".$v['nr_lekcji']."</td>";
                echo "<td>".$v['nazwa']."<br>".$v['imie']." ".$v['nazwisko']."<br>"."sala ".$v['nr_sali']."</td>";
-               // $counter ++;
                echo "</tr><tr>";
           }
      }
