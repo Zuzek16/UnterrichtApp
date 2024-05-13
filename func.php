@@ -17,7 +17,7 @@ function addheader ($includeIndexLink = true) {
           </ul>";
           }
           echo "<ul>
-               <li><a href='edycjaPlan.php'>Edytuj plan</a></li>
+               <li><a href='chooseEditPlan.php'>Edytuj plan</a></li>
                <li><a href='choosePlan.php'>Podgląd planów lekcji</a></li>
                <li><a href='dodPrzed.php'>Dodaj przedmiot</a></li>
           </ul>
@@ -29,7 +29,7 @@ function addFooter($startC = "", $endC = "") {
 
      echo "<footer>";
      echo $startC;
-     echo "<p>Autor: Zuzanna Zych 2024</p>";
+     echo "<p>UnterrichtApp - Autor: Zuzanna Zych 2024</p>";
      echo $endC;
      echo "</footer>";
 

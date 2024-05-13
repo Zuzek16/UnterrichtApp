@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,9 @@
 <body>
 <?php
      include "conn.php";
+     include_once "func.php";
+     addheader();
+
      if (isset($_GET['id'])) {
           $sqlN = "DELETE FROM nauczyciel WHERE `nauczyciel`.`id` = ".$_GET['id'];
 
@@ -29,5 +32,8 @@
      }
 ?>
      <a href="nau.php">Powrót</a>
+     <?php
+     addFooter();
+     ?>
 </body>
 </html>

@@ -7,31 +7,17 @@
      <link rel="stylesheet" href="styl.css">
      <link rel="icon" type="image/x-icon" href="/zdj/UnterrichtAppLOGO.png">
      <!--
-          -add edit to teachers
-          -see any plan leckji you want
-          -add footers everywhere / and maybe headers
+          -add edit to teachers and plan leckji
           get to responsivity 
           try to make createing the timetable responsive
-          ##
-          To push the branch to the remote server, run git push –u origin <branch name>. In my case, the name of that branch is bug-fixes. So, I have to run git push -u origin bug-fixes
-          -commit mess = "teacher del fix & class managment"
-          ##
-          - order by name ! in talbes and cration of timetable
-     -dod (ogl managment) klasy i przypisywanie planu lekcji
      -!failsafe so that someone doesnt add a timetable for a school with teachers that dont teach there
-     -dod klasy
-     -przypisywanie planu lekji do klasy
      -skip-link on other pages
           -jeśli input przedmiot jest pusty to nie dodajemy lekcji
-          -plan lekcji dodaje się do aktywnej szkoły! + przedłączanie skzoły
-     - responsiv!
-     -fix favicon
-     -order nauczyciele, przedmioty i nr sali alfabetycznie/rosnąco (when creating talbes)
-     -wider button for mobile [and higher]
+          -plan lekcji dodaje się do szkoły!
       -->
-      
      </head>
      <body>
+          <!-- NO SKIP-LINK -->
      <?php
      include_once ("func.php");
      addheader(false);
@@ -52,14 +38,8 @@
      </div>
 </div>
 <?php
-addFooter();
+include "conn.php";
+addFooter($connInfo, "zzych22@zs1.nowotarski.edu.pl");
 ?>
-     <footer>
-     <?php
-     include("conn.php");
-     echo $connInfo;
-     ?>
-     <p>Autor: Zuzanna Zych 2024</p>
-     </footer>
 </body>
 </html>

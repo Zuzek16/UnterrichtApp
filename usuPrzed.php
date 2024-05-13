@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,7 @@
 <body>
 <?php
      include "conn.php";
+     include_once "func.php";
      if (isset($_GET['id'])) {
           $sql = "DELETE FROM przedmiot WHERE `przedmiot`.`id` = ".$_GET['id'];
 
@@ -20,5 +21,7 @@
      }
 ?>
      <a href="dodPrzed.php">Powrót do podglądu przedmiotów</a>
+
+     <?php addFooter();?>
 </body>
 </html>

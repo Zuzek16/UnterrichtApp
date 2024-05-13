@@ -47,5 +47,6 @@
      ?>
 </table>
 </div>
+<?php addFooter();?>
 </body>
 </html>

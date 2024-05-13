@@ -14,27 +14,25 @@
      addheader();
      ?>
     <h2 class="pageFunc center">Podgląd planu leckji</h2>
-
-    <!-- <form action="#" method="post" class='center'>
-
-    <label for="planL">Wybierz plan lekcji który chcesz zobaczyć</label>
-    <select name="planL" id="planL">
-        <option value="">Wybierz</option> -->
-
-        <!-- display it in row of a few -->
-
+    <div class="main longList">
         <ul>
         <?php
+        $i = 1;
         foreach ($planyLekcji as $key => $value) {
-            echo "<li><a href='pokazPlan.php?id=".$value['id']."'>nr ".$value['id']."</a></li>";
+          if (($i-1)%10 == 0) {
+               echo "<div class='breakup'>";
+          }
+            echo "<li><a href='pokazPlan.php?id=".$value['id']."'>nr ".$value['id']."</a> -- <a href='usuPlan.php?id=".$value['id']."'>usuń</a></li>";
+
+            if ($i%10 == 0) {
+               echo "</div>";
+          }
+
+            $i++;
         }
         ?>
         </ul>
-    <!-- </select>
-
-    <button type="submit">Zobacz plan</button>
-     </form> -->
-
+     </div>
 <?php addFooter();?>
 </body>
 </html>

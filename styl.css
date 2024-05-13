@@ -84,12 +84,12 @@ table {
 .tableContainer {
     display:flex;
     justify-content: center;
+    margin-bottom: 50px;
 }
 
 td select {
     display: inline-block;
 }
-
 
 /*  */
 h1{
@@ -100,7 +100,7 @@ h2 {
     font-size: var(--wielkosc-h2);
 }
 
-h3{
+h3 {
     font-size: var(--wielkosc-h3);
 }
 
@@ -108,7 +108,7 @@ h1,h2,h3,h4,h5,h6 {
     margin: 10px 0px 10px 0px;
 }
 
-.title{
+.title {
     color: var(--kolor-akcent-jasny);
     text-shadow: var(--kolor-akcent-ciemny) 2.5px 2.5px;
     margin: 20px 0px 20px 0px;
@@ -118,7 +118,7 @@ h1,h2,h3,h4,h5,h6 {
     text-shadow: var(--kolor-akcent-ciemny) 3px 3px 4px ;
 }
 
-.toggle{
+.toggle {
     display: inline-block;
     width: 100vw;
     text-align: center;
@@ -149,13 +149,10 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .showSzKlasy {
-    /* display: inline-block; */
     display: flex;
     justify-content: center;
     float:right;
     width: 100%;
-    /* text-align: center; */
-
 }
 
 .center {
@@ -250,10 +247,24 @@ select[name="szkolaAktyw"] {
     translate:0 -150%;
 }
 
+.longList li::marker {
+    content: none;
+}
+
+.breakup {
+display: flex;
+justify-content: space-around;
+}
+
 .skip-link:focus {
     translate: 0;
 }
-/* dwa czerne bloki z lewo prawo pod header */
+
+/* a {} */
+
+a:visited {
+    text-decoration: underline solid var(--kolor-akcent-ciemny);
+}
 
 @media only screen and (max-width: 2600px) {
 

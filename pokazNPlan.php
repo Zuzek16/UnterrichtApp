@@ -34,6 +34,7 @@ addheader();
                ?>
           </div>
      </div>
+     <?php addFooter();?>
 </body>
 </html>
      

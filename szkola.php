@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,7 +51,7 @@
           <h3>Usuwanie szkoły</h3>
           <h4 class="danger">Tej decyzji nie można cofnąć! Zastanow się dobrze.</h2>
           <h4>Czynność da usuwa również wszystkie dane powiązane ze szkołą</h4>
-          <form action="#" method="POST">
+          <form action="usuSz.php" method="GET">
                <label for="usuSz">Wybierz szkołę do usunięcia:</label>
                <select name="usuSz" id="usuSz">
                     <?php
@@ -63,76 +63,8 @@
                </select>
                <button type="submit">Usuń</button>
           </form>
-
-          <?php
-     if (isset($_POST['usuSz'])) {
-          $nazwaSzkoly = "";
-          foreach ($klasaSzkoly as $key => $value) {
-               if ($_POST['usuSz'] == $value['idSzkoly']) {
-                   $nazwaSzkoly = $key;
-               }
-          }
-
-          $sqlDelNauSz = "DELETE FROM nauczyciele_szkoly WHERE nauczyciele_szkoly.id_szkoly =".$_POST['usuSz'];
-          $sqlDelKl = "DELETE FROM klasa WHERE `klasa`.`id_szkola` =".$_POST['usuSz'];
-          $sqlDelSz = "DELETE FROM szkola WHERE `szkola`.`id` =".$_POST['usuSz'];
-
-          if (mysqli_query($conn, $sqlDelNauSz)) {
-               if (mysqli_query($conn, $sqlDelKl)) {
-                    if (mysqli_query($conn, $sqlDelSz)) {
-                         echo "<p>Usunięto wybraną szkołę.</p>";
-                    } else {
-                         echo "<p>Wystąpił błąd.</p>";
-                    }
-               } else {
-                    echo "<p>Wystąpił błąd.</p>";
-               }
-          } else {
-               echo "<p>Wystąpił błąd.</p>";
-          }
-
-
-     //      echo "<form action='#' method='post'>
-     //      <p>Czy na pewno chcesz usunąć dane powiązane ze szkołą $nazwaSzkoly? Tej czynności nie da się cofnąć!</p>
-     //      <label for='potwierdzenie'>Wiem co robie</label>
-     //      <input type='checkbox' name='potwierdzenie' id='potwierdzenie'>
-     //      <button type='submit'>Potwierdzam</button>
-     // </form>"; 
-}
-
-     if (isset($_POST['potwierdzenie'])) {
-          global $_POST;
-          if ($_POST['potwierdzenie'] != "on") {
-               echo "<p>Anulowano usuwanie szkoły.</p>";
-          } else {
-               // $sqlDelNauSz = "DELETE FROM nauczyciele_szkoly WHERE nauczyciele_szkoly.id_szkoly =".$_GET['usuSz'];
-               // $sqlDelKl = "DELETE FROM klasa WHERE `klasa`.`id_szkola` =".$_GET['usuSz'];
-               // $sqlDelSz = "DELETE FROM szkola WHERE `szkola`.`id` =".$_GET['usuSz'];
-
-               // if (mysqli_query($conn, $sqlDelNauSz)) {
-               //      if (mysqli_query($conn, $sqlDelKl)) {
-               //           if (mysqli_query($conn, $sqlDelSz)) {
-               //                echo "<p>Usunięto wybraną szkołę.</p>";
-               //           } else {
-               //                echo "<p>Wystąpił błąd.</p>";
-               //           }
-               //      } else {
-               //           echo "<p>Wystąpił błąd.</p>";
-               //      }
-               // } else {
-               //      echo "<p>Wystąpił błąd.</p>";
-               // }
-          }
-     }
-
-         
-
-    
-     ?>
      </div>
      </div>
-
-    
      
      <div id="editOFF">
           <div class="lewy">
@@ -147,27 +79,9 @@ $result = mysqli_query($conn, "SELECT * from szkola");
 while ($row = mysqli_fetch_assoc($result)) {
      echo "<tr>" ;   
      foreach($row as $el){
-     // echo "<tr>" ;   
-     // echo "<td>".$el."</td>";
-
-     // echo "</tr>" ;   
-     // echo "<tr>" ;   
-     // echo "<td>".$el."</td>";
-
-     // echo "</tr>" ;   
-     // echo "<tr>" ;   
-     // echo "<td>".$el."</td>";
-
-     // echo "</tr>" ;   
-     // echo "<tr>" ;   
-     // echo "<td>".$el."</td>";
-
-     // echo "</tr>" ;//   DEBUG
-
           echo "<td>".$el."</td>";
      }
      echo "</tr>" ; 
-
 }
 ?>
 </table>
@@ -190,7 +104,6 @@ while ($row = mysqli_fetch_assoc($result)) {
                document.getElementById("editOFF").style.display = "block";
                document.getElementById("editON").style.display = "none";
           }
-     
      urlParams.set("edit", edit);
      </script>
      <?php addFooter();?>

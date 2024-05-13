@@ -14,7 +14,6 @@
      addheader();?>
 <h2 class="pageFunc center">Usuwanie klasy</h2>
 <div class="dodKlase">
-
 <?php
      if (!isset($_GET['id'])) {
           echo "<p>Nie udało się pobrać informacji. Proszę spróbować jescze raz</p>
@@ -22,7 +21,6 @@
           ";
      } else {
           $nazwaKlasy = "nr. ".$_GET['id'];
-
           global $planLekcjiKlasy;
           foreach ($planLekcjiKlasy as $key => $value) {
                if ($value['id'] == $_GET['id']) {
@@ -38,15 +36,8 @@
                echo "<p class='infZwrotna'>Nie udało się usunąć klasy</p>";
                echo"<a href='klasy.php'>Powrót</a>"; 
           }
-          
-     //      echo "<form action='#' method='post'>
-     //      <label for=''>Na pewno?</label>
-     //      <a href='klasy.php'>NIE</a>
-     //      <button type='submit'>TAK</button>
-     //  </form>";
      }
      ?>
-
 </div>
 <?php addFooter();?>
 </body>

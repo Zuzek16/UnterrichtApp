@@ -35,7 +35,7 @@ window.addEventListener("resize", function() {
   }
   document.cookie=`desktopMode=${desktopMode}; expires=Thu, 18 Dec 2090 12:00:00 UTC`;
 
-  reload();
+  location.reload();
 }); 
 
     </script>
@@ -372,7 +372,7 @@ if ($tab == NULL) {
                     echo "<p>GOTOWE</p>";
                     echo "<p>Udało Ci się storzyć nowy plan lekcji!</p>";
                     echo "<p>Przypisać go klasie?</p>
-                    <button class ='odpY'><a href='edycjaPlan.php'>TAK</a></button>/ 
+                    <button class ='odpY'><a href='klasa.php'>TAK</a></button>/ 
                     <button class ='odpN'>NIE</button>
                     <br><br><a class='button' href='pokazNPlan.php?nowyPlan=".$idPlanuLekcji."' >Zobacz twój nowo stworzony plan tutaj</a>
                     ";
@@ -393,5 +393,6 @@ if ($tab == NULL) {
         }
     }
 ?>
+<?php addFooter();?>
 </body>
 </html>

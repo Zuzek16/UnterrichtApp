@@ -34,6 +34,9 @@ addheader();
                ?>
           </div>
      </div>
+
+     <a href="choosePlan.php"> powrót do wyboru</a>
+
 <?php addFooter();?>
 
 </body>
