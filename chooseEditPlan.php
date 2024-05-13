@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styl.css">
 </head>
 <body>
+<a class="skip-link" href="#firstEl">Przejdź do głównej treści</a>
     <?php
     include_once "conn.php";
     include_once "getAll.php";
@@ -23,7 +24,13 @@
           if (($i-1)%10 == 0) {
                echo "<div class='breakup'>";
           }
-            echo "<li><a href='pokazPlan.php?id=".$value['id']."&src=edit'>nr ".$value['id']."</a> -- <a href='editPlan.php?id=".$value['id']."'>edytuj</a></li>";
+
+          if ($i == 1) {
+            $anchor = "id='firstEl'";
+       } else {
+            $anchor = "";
+       }
+            echo "<li><a href='pokazPlan.php?id=".$value['id']."&src=edit' $anchor>nr ".$value['id']."</a> -- <a href='editPlan.php?id=".$value['id']."'>edytuj</a></li>";
 
             if ($i%10 == 0) {
                echo "</div>";

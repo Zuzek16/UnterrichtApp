@@ -266,6 +266,10 @@ a:visited {
     text-decoration: underline solid var(--kolor-akcent-ciemny);
 }
 
+body {
+    margin-bottom: 30px;
+}
+
 @media only screen and (max-width: 2600px) {
 
     :root{
@@ -308,10 +312,51 @@ a:visited {
     }
 
     :root {
-        --wielkosc-tekstu: 22px;
+        --wielkosc-tekstu: 20px;
+        --wielkosc-h1: calc(var(--wielkosc-h1)/1.5);
+        --wielkosc-h2: calc(var(--wielkosc-h2)/1.5);
+        --wielkosc-h3: calc(var(--wielkosc-h3)/1.5);
     }
 
     .icon {
         display: none;
     }
+
+    div.main>p {
+        margin: 8px;
+    }
+
+    .title {
+        font-size: 200%;
+    }
+
+    .conn, .email:not(.mobile) {
+        display: none;
+    }
+
+    header {
+        padding: 0px 6px 0px 6px
+    }
+
+    li {
+        text-decoration: underline solid var(--kolor-akcent-jasny) 3px;
+    }
+
+    .lewy, .prawy {
+        width: 100%;
+        text-align: center;
+    }
+
+    .prawy {
+        margin-bottom: 400px;
+    }
+
+    select {
+        width: 100%;
+    }
+
+    select#usuSz {
+        margin-bottom: 3px;
+    }
+
 }

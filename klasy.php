@@ -7,6 +7,7 @@
      <link rel="stylesheet" href="styl.css">
 </head>
 <body>
+<a class="skip-link" href="#nazwa">Przejdź do głównej treści</a>
      <?php
      include_once "func.php";
      include_once "conn.php";

@@ -67,8 +67,8 @@
      </div>
      
      <div id="editOFF">
-          <div class="lewy">
-               <h3>Lista szkół</h3>
+          <div class="center">
+               <h3 class="center">Lista szkół</h3>
                <table>
                     <tr>
                          <th>ID</th>
