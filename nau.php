@@ -144,7 +144,8 @@ addheader();
         }
     }
     echo"</td>";
-    echo "<td> <a class='btn' href='usuNau.php?id=".$nauczyciel['id']."'>usuń</a></td>";
+    echo "<td> <a class='btn' href='usuNau.php?id=".$nauczyciel['id']."'>usuń</a>/";
+    echo "<a class='btn' href='editNau.php?id=".$nauczyciel['id']."'>edytuj</a></td>";
     echo "</tr>";
      }
      ?>

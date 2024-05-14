@@ -367,13 +367,16 @@ if ($tab == NULL) {
                 }
                 if ( mysqli_multi_query($conn,$sqlLekcjePlanu)) {
                     // if (false){
+                        echo "<div class='infZwrotna end'>";
                     echo "<p>GOTOWE</p>";
                     echo "<p>Udało Ci się storzyć nowy plan lekcji!</p>";
-                    echo "<p>Przypisać go klasie?</p>
-                    <button class ='odpY'><a href='klasa.php'>TAK</a></button>/ 
-                    <button class ='odpN'>NIE</button>
-                    <br><br><a class='button' href='pokazNPlan.php?nowyPlan=".$idPlanuLekcji."' >Zobacz twój nowo stworzony plan tutaj</a>
+                    echo "<a class='button' href='pokazNPlan.php?nowyPlan=".$idPlanuLekcji."' >Zobacz twój nowo stworzony plan tutaj</a>
                     ";
+                    echo "</div>";
+                    // <p>Przypisać go klasie?</p>
+                    // <button class ='odpY'><a href='klasa.php'>TAK</a></button>/ 
+                    // <button class ='odpN'>NIE</button>
+                    // <br><br>
                     //tutaj dać dwa przyciśki jesli tak to wyświetlamy formularz a jak nie to przenosimy na index.php
                 } else {
                     echo "<p>Wystąpił błąd w tworzeniu planu lekcji..</p>";
