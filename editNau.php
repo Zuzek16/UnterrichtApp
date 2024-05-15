@@ -62,13 +62,9 @@
                     echo "<input type='checkbox' name='".$el['id']."' id='".$el['id']."' value='".$el['id']."'>";
               echo "<label for='".$el['id']."'>".$el['nazwa']."</label><br>";
                }
-              
           }
 
-
-
           echo "</div>";
-          //  echo "<input type='checkbox' checked>";
 
           echo "<label for='szkola'>Szkoła w której uczy:</label>";
           echo "<select name='szkola' id='szkola'>";
@@ -94,16 +90,33 @@
      }
      ?>
      <?php
-     if (isset($_POST['nowyPlan'])) {
-          $sql = "UPDATE `klasa` SET `id_planu_lekcji` = '".$_POST['nowyPlan']."' WHERE `klasa`.`id` =".$_GET['id'];
-          if (mysqli_query($conn, $sql)) {
-               echo "<p class='infZwrotna'>Pomyślnie zmieniono plan lekcji</p>";
-            echo"<a href='klasy.php'>Powrót</a>";
-          } else {
-               echo "<p class='infZwrotna'>Nie udało się zmenić planu</p>";
-               echo"<a href='klasy.php'>Powrót</a>"; 
-          }
+     if (isset($_POST['imie']) && trim($_POST['imie']) != "" && isset($_POST['nazwisko']) && trim($_POST['nazwisko']) != "" && isset($_POST['szkola'])) {
+
+          if (maCyfre($_POST['imie']) || maCyfre($_POST['nazwisko'])) {
+               echo "<p class='infZwrotna'>Imie oraz nazwisko nie może zawierać cyfr</p>";            
+           } else {
+           $setPrzed = [];
+           foreach ($przedmiot as $el) {
+                   if (isset($_POST[$el['id']])) {
+                       array_push($setPrzed, $el['id']);
+                   }
+           }
+           $imie = mysqli_real_escape_string($conn, trim($_POST['imie']));
+           $nazwisko = mysqli_real_escape_string($conn, trim($_POST['nazwisko']));
+
+          $sqlNau = "UPDATE `nauczyciel` SET `imie` = 'Testowa23', `nazwisko` = 'Pani234' WHERE `nauczyciel`.`id` = 9";
+          $sqlNauPrzedDel = "DELETE `nauczany_przedmiot` WHERE `nauczany_przedmiot`.`id` = 18";
+          $sqlNauPrzedSet = "UPDATE `nauczany_przedmiot` SET `id_przedmiotu` = '5' WHERE `nauczany_przedmiot`.`id` = 18";
+          $sqlNauSz = "UPDATE `nauczyciele_szkoly` SET `id_szkoly` = '12' WHERE `nauczyciele_szkoly`.`id_nauczyciela` = 9";
+          // if (mysqli_query($conn, $sql)) {
+          //      echo "<p class='infZwrotna'>Pomyślnie zmieniono dane nauczyciela</p>";
+          //   echo"<a href='nau.php'>Powrót</a>";
+          // } else {
+          //      echo "<p class='infZwrotna'>Nie udało się zmenić danych nauczyciela</p>";
+          //      echo"<a href='nau.php'>Powrót</a>"; 
+          // }
      }
+}
      ?>
 </div>
 <?php addFooter();?>
