@@ -19,10 +19,10 @@ addheader();
     <div class="dodNau">
 
     <label for="imie">Imię:</label>
-    <input type="text" name="imie" id="imie" required>
+    <input type="text" name="imie" id="imie" required value="<?php echo isset($_POST["imie"]) ? $_POST["imie"] : ''; ?>">
 
     <label for="nazwisko">Nazwisko:</label>
-    <input type="text" name="nazwisko" id="nazwisko" required>
+    <input type="text" name="nazwisko" id="nazwisko" required value="<?php echo isset($_POST["nazwisko"]) ? $_POST["nazwisko"] : ''; ?>">
     
     <label for="szkola">Do której szkoły dodać?</label>
     <select name="szkola" id="szkola">
@@ -31,7 +31,7 @@ addheader();
         include_once "conn.php";
         include_once "getAll.php";
         foreach ($klasaSzkoly as $key => $value) {
-            echo "<option value='".$value['idSzkoly']."'>".$key."</option>";
+            echo "<option value='".$value['idSzkoly']."' ".isSelected("szkola", $value['idSzkoly']).">".$key."</option>";
         }
         ?>
     </select>
@@ -103,6 +103,8 @@ addheader();
         $_POST['imie'] = "";
         $_POST['nazwisko'] = "";
         }//end of else for digit check
+    } else {
+        echo "<p class='infZwrotna'>Imie, nazwisko ani szkoła nie mogą być puste.</p>";
     }
 ?>
 </div>

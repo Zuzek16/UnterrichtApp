@@ -7,9 +7,8 @@
      <link rel="stylesheet" href="styl.css">
      <link rel="icon" type="image/x-icon" href="/zdj/UnterrichtAppLOGO.png">
      <!--
-          -add edit to teachers
+          --keep value in teacher creation and edit
           get to responsivity 
-     -skip-link on other pages
           -jeśli input przedmiot jest pusty to nie dodajemy lekcji
       -->
      </head>

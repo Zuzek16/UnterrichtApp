@@ -365,7 +365,7 @@ if ($tab == NULL) {
                         $sqlLekcjePlanu .= ",(NULL, '$idPlanuLekcji', '$el')";
                     }
                 }
-                if ( mysqli_multi_query($conn,$sqlLekcjePlanu)) {
+                if (mysqli_multi_query($conn,$sqlLekcjePlanu)) {
                     // if (false){
                         echo "<div class='infZwrotna end'>";
                     echo "<p>GOTOWE</p>";

@@ -22,16 +22,35 @@ function addheader ($includeIndexLink = true) {
                <li><a href='dodPrzed.php'>Przedmioty</a></li>
           </ul>
      </nav>
-</header>    ";
+</header>";
 }
 
 function addFooter($startC = "", $endC = "") {
-
      echo "<footer>";
      echo $startC;
      echo "<p>UnterrichtApp - Autor: Zuzanna Zych 2024</p>";
      echo $endC;
      echo "</footer>";
+}
 
+function isSelected($inputName, $value, $planLekcji = false) {
+     if ($planLekcji) {
+          // $set = [];
+          // foreach ($inputName as $el) {
+              $postKey = $inputName;
+              $postKey = (explode("]",$postKey));
+              $postKey = (implode("",$postKey));
+              $postKey = (explode("[",$postKey));
+  
+              if (isset($_POST[$postKey[0]][$postKey[1]][$postKey[2]]) && $_POST[$postKey[0]][$postKey[1]][$postKey[2]] == $value) {
+               return "selected";
+               //    return "selected=\"selected\"";
+              }
+     } else {
+          if(isset($_POST[$inputName]) && $_POST[$inputName] == $value) {
+               return "selected";
+          // return "selected=\"selected\"";
+     } 
+     }
 }
 ?>

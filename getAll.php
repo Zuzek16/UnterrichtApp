@@ -29,7 +29,6 @@ while ($rowSz = mysqli_fetch_assoc($r_szkola)) {
       }
 }
 
-
 $nauSzkoly = [];
 $sqlnauSzkoly = "SELECT nauczyciele_szkoly.id, nauczyciele_szkoly.id_nauczyciela, nauczyciele_szkoly.id_szkoly, szkola.nazwa, nauczyciel.imie, nauczyciel.nazwisko FROM nauczyciele_szkoly INNER JOIN nauczyciel ON nauczyciel.id = nauczyciele_szkoly.id_nauczyciela INNER JOIN szkola ON szkola.id = nauczyciele_szkoly.id_szkoly;";
 $r=mysqli_query($conn, $sqlnauSzkoly);
@@ -41,7 +40,6 @@ $nauczany_przedmiot = [];
 foreach ($przedmiot as $el) {
     $nauczany_przedmiot[$el['nazwa']] = [];
 
-    //nauczyciel
     $sql = "SELECT przedmiot.nazwa, nauczyciel.id, nauczyciel.imie, nauczyciel.nazwisko FROM nauczany_przedmiot INNER JOIN nauczyciel ON nauczany_przedmiot.id_nauczyciela = nauczyciel.id INNER JOIN przedmiot ON nauczany_przedmiot.id_przedmiotu = przedmiot.id WHERE przedmiot.nazwa ='".$el['nazwa']."' ORDER BY nauczyciel.nazwisko, nauczyciel.imie ASC";
     $result = mysqli_query($conn, $sql);
     while ($row = mysqli_fetch_assoc($result)) {
@@ -137,16 +135,6 @@ function lekcjaInput($licznikLekcji, $dzien, $edit = false, $dane = ""){
       global $nauczycielSelectIds;
       global $salaSelectIds;
 
-      if ($edit == true) {//!!place this where it belongs
-            // $dane = getDanePlanLekcji($idPlanu);//not sure this will work
-            //we gotta get what is chosen and we get that 
-            // foreach ($dane as $key => $v) {
-                  //if ($v['nazwa'] == $el['nazwa']) {
-//                  echo <option selected></opton>    
-                  //}
-            // }
-      }
-      // global $dane;
       $przedmiotName = $dzien."[".$licznikLekcji."]"."[przedmiot]";
       $nauczycielName = $dzien."[".$licznikLekcji."]"."[nauczyciel]";
       $salaName = $dzien."[".$licznikLekcji."]"."[sala]";
@@ -168,7 +156,9 @@ function lekcjaInput($licznikLekcji, $dzien, $edit = false, $dane = ""){
                         }
                   }
             } else {
-                  echo '<option value="'.$el['nazwa'].'">'.$el['nazwa'].'</option>';
+                  //!!put in the other places and we are done
+                  //check this file and tworzPlan nad func
+                  echo '<option value="'.$el['nazwa'].'" '.isSelected($przedmiotName, $el['nazwa'], true).'>'.$el['nazwa'].'</option>';
             }
       }
   echo "</select>
@@ -200,7 +190,6 @@ function lekcjaInput($licznikLekcji, $dzien, $edit = false, $dane = ""){
       foreach ($dane as $key => $v) {
             if ($v['nr_lekcji'] == $licznikLekcji && $v['dzienTyg'] == $dzien) {
                   echo '<option value="'.$v['imie'].'"selected>'.$v['imie'].' '.$v['nazwisko'].'</option>';
-
             }
       }
 

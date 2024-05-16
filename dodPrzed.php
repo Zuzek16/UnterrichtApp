@@ -41,7 +41,7 @@
           echo "<tr>";
           echo "<td>".$value['id']."</td>";
           echo "<td>".$value['nazwa']."</td>";
-          echo "<td> <a class='btn' href='usuPrzed.php?id=".$value['id']."'>usuń</a></td>";
+          echo "<td> <a class='btn' href='editPrzed.php?id=".$value['id']."&nazwa=".$value['nazwa']."'>edytuj</a></td>";
           echo "</tr>";
      }
      ?>

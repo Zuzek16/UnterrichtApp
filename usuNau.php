@@ -18,17 +18,20 @@
           $sqlP = "DELETE FROM nauczany_przedmiot WHERE nauczany_przedmiot.id_nauczyciela =".$_GET['id'];
 
           $sqlSz = "DELETE FROM nauczyciele_szkoly WHERE `nauczyciele_szkoly`.`id_nauczyciela` = ".$_GET['id'];
-          if (mysqli_query($conn, $sqlP) && mysqli_query($conn, $sqlSz)) {
+          try {
+               if (@mysqli_query($conn, $sqlP) && @mysqli_query($conn, $sqlSz)) {
                
-          if (mysqli_query($conn, $sqlN)) {
-               echo "<p class='infZwrotna'>Pomyślnie usunięto nauczyciela.</p>";
-          } else {
-              echo "<p class='infZwrotna'>Nie udało się usunąć nauczyciela.</p>";
-          }
-          } else {
-               echo "<p class='infZwrotna'>Nie udało się usunąć nauczyciela. Błąd:".mysqli_error($conn)."</p>";
-          }
-
+                    if (@mysqli_query($conn, $sqlN)) {
+                         echo "<p class='infZwrotna'>Pomyślnie usunięto nauczyciela.</p>";
+                    } else {
+                        echo "<p class='infZwrotna'>Nie udało się usunąć nauczyciela.</p>";
+                    }
+                    } else {
+                         echo "<p class='infZwrotna'>Nie udało się usunąć nauczyciela. Błąd:".mysqli_error($conn)."</p>";
+                    }
+           } catch (Exception $e) {
+               echo "<p class='infZwrotna'>Nie udało się usunąć nauczyciela.</p>", "\n";
+           }
      }
 ?>
      <a href="nau.php">Powrót</a>

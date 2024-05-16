@@ -14,6 +14,7 @@
      addheader();?>
 <h2 class="pageFunc">Edytowanie danych nauczyciela</h2>
 <div class="dodKlase">
+     <!-- <form action="" method="post"></form> -->
 <?php
      if (!isset($_GET['id'])) {
           echo "<p>Nie udało się pobrać informacji. Proszę spróbować jescze raz</p>
@@ -22,7 +23,6 @@
      } else {
           $imie = "";
           $nazwisko = "";
-          // var_dump($nauczyciele);
           foreach ($nauczyciele as $key => $value) {
                if ($value['id'] == $_GET['id']) {
                     $imie = $value['imie'];
@@ -30,12 +30,11 @@
                }
           }
 
-          echo "<form method='POST' action='#'>";
+          echo "<form action='#' method='post'>";
           echo "<label for='imie'>Imię: </label>";
-          echo "<input type='text' value='$imie'>";
-
+          echo "<input type='text' value='$imie' name='imie' id='imie'>";
           echo "<label for='nazwisko'>Nazwisko: </label>";
-          echo "<input type='text' value='$nazwisko'>";
+          echo "<input type='text' value='$nazwisko' name='nazwisko' id='nazwisko'>";
           echo "<p>Nauczane przedmioty</p>";
           echo '<div class="checkboxes">';
           $nauPrzed = [];
@@ -43,7 +42,6 @@
                foreach ($value as $key2 => $value2) {
                     if ($imie." ".$nazwisko == $value2[1] && $_GET['id'] == $value2[0]) {
                          array_push($nauPrzed, $key);
-                    //    echo "<p>$key</p>";
                    }
                }
           }
@@ -63,12 +61,9 @@
               echo "<label for='".$el['id']."'>".$el['nazwa']."</label><br>";
                }
           }
-
           echo "</div>";
-
           echo "<label for='szkola'>Szkoła w której uczy:</label>";
           echo "<select name='szkola' id='szkola'>";
-
           $aktSzkola = "";
           foreach ($nauSzkoly as $row => $value) {
                if ($_GET['id'] == $value['id_nauczyciela']) {
@@ -80,9 +75,9 @@
 
           foreach ($klasaSzkoly as $key => $value) {
                if ($key == $aktSzkola) {
-                    echo "<option value='".$key."' selected >".$key."</option>";          
+                    echo "<option value='".$value['idSzkoly']."' selected >".$key."</option>";          
                } else {
-                    echo "<option value='".$key."' >".$key."</option>";          
+                    echo "<option value='".$value['idSzkoly']."' >".$key."</option>";          
                }
           }
           echo "</select>";
@@ -90,7 +85,7 @@
      }
      ?>
      <?php
-     if (isset($_POST['imie']) && trim($_POST['imie']) != "" && isset($_POST['nazwisko']) && trim($_POST['nazwisko']) != "" && isset($_POST['szkola'])) {
+     if (isset($_POST['imie']) && isset($_POST['nazwisko']) && trim($_POST['nazwisko']) != "" && isset($_POST['szkola'])) {
 
           if (maCyfre($_POST['imie']) || maCyfre($_POST['nazwisko'])) {
                echo "<p class='infZwrotna'>Imie oraz nazwisko nie może zawierać cyfr</p>";            
@@ -101,20 +96,53 @@
                        array_push($setPrzed, $el['id']);
                    }
            }
+
            $imie = mysqli_real_escape_string($conn, trim($_POST['imie']));
            $nazwisko = mysqli_real_escape_string($conn, trim($_POST['nazwisko']));
 
-          $sqlNau = "UPDATE `nauczyciel` SET `imie` = 'Testowa23', `nazwisko` = 'Pani234' WHERE `nauczyciel`.`id` = 9";
-          $sqlNauPrzedDel = "DELETE `nauczany_przedmiot` WHERE `nauczany_przedmiot`.`id` = 18";
-          $sqlNauPrzedSet = "UPDATE `nauczany_przedmiot` SET `id_przedmiotu` = '5' WHERE `nauczany_przedmiot`.`id` = 18";
-          $sqlNauSz = "UPDATE `nauczyciele_szkoly` SET `id_szkoly` = '12' WHERE `nauczyciele_szkoly`.`id_nauczyciela` = 9";
-          // if (mysqli_query($conn, $sql)) {
-          //      echo "<p class='infZwrotna'>Pomyślnie zmieniono dane nauczyciela</p>";
-          //   echo"<a href='nau.php'>Powrót</a>";
-          // } else {
-          //      echo "<p class='infZwrotna'>Nie udało się zmenić danych nauczyciela</p>";
-          //      echo"<a href='nau.php'>Powrót</a>"; 
-          // }
+          $sqlNau = "UPDATE `nauczyciel` SET `imie` = '".htmlentities($imie)."', `nazwisko` = '".htmlentities($nazwisko)."' WHERE `nauczyciel`.`id` =".$_GET['id'];
+
+          $sqlNauPrzedDel = "DELETE FROM `nauczany_przedmiot` WHERE `nauczany_przedmiot`.`id_nauczyciela` =".$_GET['id'];
+
+          $sqlNauPrzedSet = "";
+          foreach ($setPrzed as $key => $value) {
+               if ($sqlNauPrzedSet == "") {
+                    $sqlNauPrzedSet = "INSERT INTO `nauczany_przedmiot` (`id`, `id_przedmiotu`, `id_nauczyciela`) VALUES (NULL, '$value', '".$_GET['id']."')";
+               } else {
+                    $sqlNauPrzedSet.=",(NULL, '$value', '".$_GET['id']."')";
+               }
+          }
+
+          $sqlNauSz = "UPDATE `nauczyciele_szkoly` SET `id_szkoly` = '".$_POST['szkola']."' WHERE `nauczyciele_szkoly`.`id_nauczyciela` =".$_GET['id'];
+
+          if (!mysqli_query($conn, $sqlNau)) {
+               echo "<p class='infZwrotna'>Nie udało się zmenić danych nauczyciela</p>";
+               echo"<a href='nau.php'>Powrót</a>"; 
+          } else {
+              if (!mysqli_query($conn, $sqlNauPrzedDel)) {
+               echo "<p class='infZwrotna'>Nie udało się usunąć starych danych nauczyciela</p>";
+               echo"<a href='nau.php'>Powrót</a>";
+              } else {
+               if (!mysqli_query($conn, $sqlNauPrzedSet)) {
+                    echo "<p class='infZwrotna'>Nie udało się dodać nowych danych nauczyciela</p>";
+               echo"<a href='nau.php'>Powrót</a>";
+               } else {
+                    if (!mysqli_query($conn, $sqlNauSz)) {
+                         echo "<p class='infZwrotna'>Nie udało się zmenić danych o szkole w której uczy nauczyciel</p>";
+               echo"<a href='nau.php'>Powrót</a>";
+                    } else {
+                         echo "<p class='infZwrotna'>Pomyślnie zmieniono dane nauczyciela</p>";
+            echo"<a href='nau.php'>Powrót</a>";
+                         ?>
+                         <script>
+                              //test this
+                              location.replace("http://localhost/proKon/UnterrichtApp/nau.php");
+                         </script>
+                         <?php
+                    }
+               }
+              }
+          }
      }
 }
      ?>
