@@ -44,12 +44,10 @@ function isSelected($inputName, $value, $planLekcji = false) {
   
               if (isset($_POST[$postKey[0]][$postKey[1]][$postKey[2]]) && $_POST[$postKey[0]][$postKey[1]][$postKey[2]] == $value) {
                return "selected";
-               //    return "selected=\"selected\"";
               }
      } else {
           if(isset($_POST[$inputName]) && $_POST[$inputName] == $value) {
                return "selected";
-          // return "selected=\"selected\"";
      } 
      }
 }

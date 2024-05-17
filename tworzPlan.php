@@ -41,8 +41,8 @@ window.addEventListener("resize", function() {
     </script>
 </head>
 <body>
+<a class="skip-link" href="#firstEl">Przejdź do głównej treści</a>
 <?php
-
 include_once ("func.php");
 addheader();
 ?>
@@ -120,7 +120,11 @@ if ($tab == NULL) {
                     $dzien = "piątek";
                     break;
             }
-            echo "<td>";
+            if ($i == 0) {
+                echo "<td id='firstEl'>";
+            } else {
+                echo "<td>";
+            }
             lekcjaInput($i, $dzien);
             echo "</td>";
         }
@@ -157,7 +161,6 @@ if ($tab == NULL) {
                     break;
             }
             echo "<tr>
-
             <th></th>
             <th>$dzien</th>
             </tr>";
@@ -166,11 +169,14 @@ if ($tab == NULL) {
                 echo "<td>";
                 echo $i + 1;
                 echo "</td>";
-                echo "<td>";
+                if ($i == 0) {
+                    echo "<td id='firstEl'>";
+                } else {
+                    echo "<td>";
+                }
                 lekcjaInput($i, $dzien);
                 echo "</td>";
                 echo "</tr>";
-
             }
         }
        echo "</tr>";
@@ -189,16 +195,102 @@ if ($tab == NULL) {
 }
 ?>
 <script>
-    let allSelect = document.querySelectorAll("select");
-
+    console.log(nauczany_przedmiot);
+    let allSelect = document.querySelectorAll("select.przedmiot");
     allSelect.forEach(el => {
-        el.addEventListener('change', ()=>{
-            console.log(el.value);
-            let form = '';
-            nauczany_przedmiot[`${el.value}`].forEach(el => {
+        let form = '';
+
+        <?php
+        foreach ($przedmiotSelectIds as $key => $value) {
+            $postKey = $value;
+            $postKey = (explode("]",$postKey));//rozdzielanie name select
+            $postKey = (implode("",$postKey));
+            $postKey = (explode("[",$postKey));
+            if (isset($_POST[$postKey[0]][$postKey[1]][$postKey[2]]) && $_POST[$postKey[0]][$postKey[1]][$postKey[2]] != "") {
+
+
+                ?>
+            if (el.value != "") {
+
+                <?php
+
+                foreach ($nauczycielSelectIds as $key => $value) {
+                    $postKey = $value;
+                    $postKey = (explode("]",$postKey));//rozdzielanie name select
+                    $postKey = (implode("",$postKey));
+                    $postKey = (explode("[",$postKey));
+                    if (isset($_POST[$postKey[0]][$postKey[1]][$postKey[2]]) && $_POST[$postKey[0]][$postKey[1]][$postKey[2]] != "") {
+
+
+                        setcookie("idNau", $_POST[$postKey[0]][$postKey[1]][$postKey[2]], time() + (86400 * 30));//try to set it in JS
+                        // $_COOKIE['idNau'] = ;
+
+
+
+                    }//check nauczyciel
+                }
+?>
+
+function getCookieValue(name) 
+    {
+      const regex = new RegExp(`(^| )${name}=([^;]+)`)
+      const match = document.cookie.match(regex)
+      if (match) {
+        return match[2]
+      }
+   }
+
+                if (typeof nauczany_przedmiot[`${el.value}`] !== "undefined") {
+                    nauczany_przedmiot[`${el.value}`].forEach(el => {
+
+                    let idNau = getCookieValue("idNau");
+                    console.log(idNau);
+
+                   form += `<option value="${el[0]}" >${el[1]}</option>`;
+                //    unset($_COOKIE['idNau']);
+                   
+                });
+    
+                el.parentElement.querySelector('.nauczyciel').innerHTML = form;
+                form = '';
+                }
+                } else {
+                    el.parentElement.querySelector('.nauczyciel').innerHTML = "";    
+                }
+          
+           
+<?php
+            }//check przedmiot
+        }
+        ?>
+
+        el.addEventListener('change', ()=>{//working solution
+            console.log("from changed");
+            let nauczycielName = el.name;
+            form = '';
+          
+            if (el.value != "") {
+                
+            if (typeof nauczany_przedmiot[`${el.value}`] !== "undefined") {
+                nauczany_przedmiot[`${el.value}`].forEach(el => {
                form += `<option value="${el[0]}" >${el[1]}</option>`;
+               
             });
+
             el.parentElement.querySelector('.nauczyciel').innerHTML = form;
+            form = '';
+            }
+            } else {
+                el.parentElement.querySelector('.nauczyciel').innerHTML = "";    
+            }
+            ///working /solution
+            
+            // document.cookie=`selectedPrzedmiot=${el.value}; expires=Thu, 18 Dec 2090 12:00:00 UTC`;
+            //
+            //cookie solutioin
+
+              //set cookies along with the przedmiot selected - set the form for the przedmiot and when doing that check if teacher is set
+
         })        
     });
 </script>

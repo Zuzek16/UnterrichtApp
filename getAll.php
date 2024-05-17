@@ -143,7 +143,7 @@ function lekcjaInput($licznikLekcji, $dzien, $edit = false, $dane = ""){
       array_push($nauczycielSelectIds, $nauczycielName);
       array_push($salaSelectIds, $salaName);
 
-      echo '<select name='.$przedmiotName.'>';
+      echo '<select class="przedmiot" name='.$przedmiotName.'>';
       echo '<option value="">Wybierz przedmiot</option>';
       foreach ($przedmiot as $el) {
             if ($edit == true) {
@@ -152,11 +152,11 @@ function lekcjaInput($licznikLekcji, $dzien, $edit = false, $dane = ""){
                         echo '<option value="'.$el['nazwa'].'" selected>'.$el['nazwa'].'</option>';
 
                         } else if ($v['nr_lekcji'] == $licznikLekcji && $v['dzienTyg'] == $dzien) {
-                              echo '<option value="'.$el['nazwa'].'">'.$el['nazwa'].'</option>';
+                              echo '<option value="'.$el['nazwa'].'"'.isSelected($przedmiotName, $el['nazwa'], true).'>'.$el['nazwa'].'</option>';//does this work
                         }
                   }
             } else {
-                  //!!put in the other places and we are done
+                  //!!put in the other places and we are donegi
                   //check this file and tworzPlan nad func
                   echo '<option value="'.$el['nazwa'].'" '.isSelected($przedmiotName, $el['nazwa'], true).'>'.$el['nazwa'].'</option>';
             }
@@ -173,11 +173,11 @@ function lekcjaInput($licznikLekcji, $dzien, $edit = false, $dane = ""){
                               echo '<option value="'.$el['numer'].'"selected>'.$el['numer'].'</option>';
 
                         } elseif ($v['nr_lekcji'] == $licznikLekcji && $v['dzienTyg'] == $dzien) {
-                              echo '<option value="'.$el['numer'].'">'.$el['numer'].'</option>';
+                              echo '<option value="'.$el['numer'].'"'.isSelected($salaName, $el['numer'], true).'>'.$el['numer'].'</option>';
                         }
                   }     
             } else {
-                  echo '<option value="'.$el['numer'].'">'.$el['numer'].'</option>';
+                  echo '<option value="'.$el['numer'].'"'.isSelected($salaName, $el['numer'], true).'>'.$el['numer'].'</option>';
             }
       }
 
@@ -189,7 +189,7 @@ function lekcjaInput($licznikLekcji, $dzien, $edit = false, $dane = ""){
 
       foreach ($dane as $key => $v) {
             if ($v['nr_lekcji'] == $licznikLekcji && $v['dzienTyg'] == $dzien) {
-                  echo '<option value="'.$v['imie'].'"selected>'.$v['imie'].' '.$v['nazwisko'].'</option>';
+                  echo '<option value="'.$v['id'].'"selected '.isSelected($nauczycielName, $v['id'], true).'>'.$v['imie'].' '.$v['nazwisko'].'</option>';
             }
       }
 
