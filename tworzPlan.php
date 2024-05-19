@@ -203,34 +203,31 @@ if ($tab == NULL) {
         <?php
         foreach ($przedmiotSelectIds as $key => $value) {
             $postKey = $value;
-            $postKey = (explode("]",$postKey));//rozdzielanie name select
+            $postKey = (explode("]",$postKey));
             $postKey = (implode("",$postKey));
             $postKey = (explode("[",$postKey));
             if (isset($_POST[$postKey[0]][$postKey[1]][$postKey[2]]) && $_POST[$postKey[0]][$postKey[1]][$postKey[2]] != "") {
-
-
+                //isset przedmiot
                 ?>
             if (el.value != "") {
-
                 <?php
-
                 foreach ($nauczycielSelectIds as $key => $value) {
                     $postKey = $value;
                     $postKey = (explode("]",$postKey));//rozdzielanie name select
                     $postKey = (implode("",$postKey));
                     $postKey = (explode("[",$postKey));
                     if (isset($_POST[$postKey[0]][$postKey[1]][$postKey[2]]) && $_POST[$postKey[0]][$postKey[1]][$postKey[2]] != "") {
-
-
-                        setcookie("idNau", $_POST[$postKey[0]][$postKey[1]][$postKey[2]], time() + (86400 * 30));//try to set it in JS
-                        // $_COOKIE['idNau'] = ;
-
-
-
+                        //isset nau
+                    $jsonNauId = json_encode($_POST[$postKey[0]][$postKey[1]][$postKey[2]]);
+                    $jsonNauIdNr = json_encode($postKey[0].$postKey[1]);
+                    echo "var idNauPost = $jsonNauId;";
+                    echo "var idNauPostNr = $jsonNauIdNr;";
+?>
+                document.cookie = `idNau${idNauPostNr}=${idNauPost}`;
+<?php
                     }//check nauczyciel
                 }
 ?>
-
 function getCookieValue(name) 
     {
       const regex = new RegExp(`(^| )${name}=([^;]+)`)
@@ -239,17 +236,23 @@ function getCookieValue(name)
         return match[2]
       }
    }
-
                 if (typeof nauczany_przedmiot[`${el.value}`] !== "undefined") {
-                    nauczany_przedmiot[`${el.value}`].forEach(el => {
 
-                    let idNau = getCookieValue("idNau");
-                    console.log(idNau);
+                    let postKey = el.name;
+                    postKey = postKey.split("]");
+                    postKey = postKey.join("");
+                    postKey = postKey.split("[");                
 
-                   form += `<option value="${el[0]}" >${el[1]}</option>`;
-                //    unset($_COOKIE['idNau']);
-                   
+                    let idNau = getCookieValue(`idNau${postKey[0]}${postKey[1]}`);
+            
+            nauczany_przedmiot[`${el.value}`].forEach((el, i) => {
+                    if (parseInt(el[0]) == parseInt(idNau)) {
+                        form += `<option value="${el[0]}" selected>${el[1]}</option>`;
+                    } else {
+                        form += `<option value="${el[0]}" >${el[1]}</option>`;
+                    }
                 });
+             
     
                 el.parentElement.querySelector('.nauczyciel').innerHTML = form;
                 form = '';
@@ -257,24 +260,19 @@ function getCookieValue(name)
                 } else {
                     el.parentElement.querySelector('.nauczyciel').innerHTML = "";    
                 }
-          
-           
 <?php
             }//check przedmiot
         }
         ?>
-
         el.addEventListener('change', ()=>{//working solution
             console.log("from changed");
             let nauczycielName = el.name;
             form = '';
           
             if (el.value != "") {
-                
             if (typeof nauczany_przedmiot[`${el.value}`] !== "undefined") {
                 nauczany_przedmiot[`${el.value}`].forEach(el => {
                form += `<option value="${el[0]}" >${el[1]}</option>`;
-               
             });
 
             el.parentElement.querySelector('.nauczyciel').innerHTML = form;
@@ -284,13 +282,6 @@ function getCookieValue(name)
                 el.parentElement.querySelector('.nauczyciel').innerHTML = "";    
             }
             ///working /solution
-            
-            // document.cookie=`selectedPrzedmiot=${el.value}; expires=Thu, 18 Dec 2090 12:00:00 UTC`;
-            //
-            //cookie solutioin
-
-              //set cookies along with the przedmiot selected - set the form for the przedmiot and when doing that check if teacher is set
-
         })        
     });
 </script>
