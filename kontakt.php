@@ -18,7 +18,7 @@
 <h2 class="pageFunc">Napisz do nas</h2>
 
 
-<p>
+<p class="contact">
      <a href="mailto:zzych22@zs1.nowotarski.edu.pl">E-mail: zzych22@zs1.nowotarski.edu.pl</a>
 </p>
 
@@ -28,7 +28,7 @@
 
 
 </div>
-<div class="prawy">
+<div class="prawy last">
 <h2 class="pageFunc">Zachęcamy do dzielenia się opiniami</h2>
 <img src="zdj/dyrektor.jpeg" alt="zdjęcie symboliczne dyrektora szkoły">
 

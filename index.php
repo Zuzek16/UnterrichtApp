@@ -7,11 +7,10 @@
      <link rel="stylesheet" href="styl.css">
      <link rel="icon" type="image/x-icon" href="/zdj/UnterrichtAppLOGO.png">
      <!--
-          --add the remember function to the editing of timetable
-          --keep value in teacher creation and edit
+          -!teacher table is not responsive
+          CSS!!!!!
           get to responsivity 
-          -jeśli input przedmiot jest pusty to nie dodajemy lekcji
-      -->
+     -->
      </head>
      <body>
           <!-- NO SKIP-LINK -->

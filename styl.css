@@ -61,6 +61,10 @@ header p {
     text-align: center;
 }
 
+.last {
+    /* margin-bottom: 50px; */
+}
+
 /* tabelka */
 table, tr, td, th {
     border: 2.5px solid var(--kolor-tekstu);
@@ -265,7 +269,9 @@ justify-content: space-around;
     translate: 0;
 }
 
-/* a {} */
+.contact {
+    margin: 0;
+}
 
 a:visited {
     text-decoration: underline solid var(--kolor-akcent-ciemny);
@@ -370,6 +376,8 @@ body {
     }
 
     .lewy, .prawy {
+        padding-left: 0;
+        padding-right: 0;
         width: 100%;
         text-align: center;
     }
@@ -396,4 +404,10 @@ body {
     
     .breakup li {
     }
+
+    img:not(header img) {
+        width: 100%;
+    }
+
+
 }
