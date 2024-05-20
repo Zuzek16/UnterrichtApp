@@ -147,17 +147,18 @@ function lekcjaInput($licznikLekcji, $dzien, $edit = false, $dane = ""){
       echo '<option value="">Wybierz przedmiot</option>';
       foreach ($przedmiot as $el) {
             if ($edit == true) {
+                  // echo "<script>console.log(".var_dump($dane).")</script>";
                   foreach ($dane as $key => $v) {
                         if ($v['nazwa'] == $el['nazwa'] && $v['nr_lekcji'] == $licznikLekcji && $v['dzienTyg'] == $dzien) {
-                        echo '<option value="'.$el['nazwa'].'" selected>'.$el['nazwa'].'</option>';
+                        
+                              // echo '<option value="'.$el['nazwa'].'" selected> '.$v['idLekcji'].'</option>';
 
+                        echo '<option value="'.$el['nazwa'].'" selected> '.$el['nazwa'].'</option>';
                         } else if ($v['nr_lekcji'] == $licznikLekcji && $v['dzienTyg'] == $dzien) {
                               echo '<option value="'.$el['nazwa'].'"'.isSelected($przedmiotName, $el['nazwa'], true).'>'.$el['nazwa'].'</option>';//does this work
                         }
                   }
             } else {
-                  //!!put in the other places and we are donegi
-                  //check this file and tworzPlan nad func
                   echo '<option value="'.$el['nazwa'].'" '.isSelected($przedmiotName, $el['nazwa'], true).'>'.$el['nazwa'].'</option>';
             }
       }

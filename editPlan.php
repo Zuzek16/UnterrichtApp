@@ -50,7 +50,7 @@ window.addEventListener("resize", function() {
      include_once "getAll.php";
      addheader();?>
 <h2 class="pageFunc">Edytowanie planu leckji </h2>
-<p>Zmień przedmiot aby zobaczyć resztę nauczycieli</p>
+<!-- <p>Zmień przedmiot aby zobaczyć resztę nauczycieli</p> -->
 <div class="dodKlase">
 
 <?php
@@ -228,12 +228,13 @@ window.addEventListener("resize", function() {
 
         $sqlTLekcja = "";
         //tabela 'lekcja' sql
+        $editLekcjiDoWykonania = [];
+
         foreach ($_POST as $dzienTyg => $value) {
             foreach ($_POST[$dzienTyg] as $nrLekcji => $value){
                 foreach ($_POST[$dzienTyg][$nrLekcji] as $key => $value){
 
                     if ($key == "nauczyciel") {
-                        
                         $idNauczyciela = $value;
                     } else if ($key == "przedmiot"){
                         foreach ($przedmiot as $val) {
@@ -249,20 +250,18 @@ window.addEventListener("resize", function() {
                         }
                     }
                 }
+                global $editLekcjiDoWykonania;
                 //!!HERE
+                $idLekcji = "?";
+                $editLekcjaSql = "UPDATE `lekcja` SET `id_sali` = '$idSali', `id_nauczyciela` = '$idNauczyciela', `id_przedmiotu` = '$idPrzedmiotu' WHERE `lekcja`.`id` = $idLekcji";
 
-                ///!! and work on blank lessons  also working
-               //  $dodLekcjeSzablonGlowny = "ALTER `lekcja` (`id`, `id_sali`, `id_nauczyciela`, `id_przedmiotu`) VALUES (NULL, '".$idSali."', '".$idNauczyciela."', '".$idPrzedmiotu."')";
+                array_push($editLekcjiDoWykonania);
+                //prepare the sql commands
+               //  $editLekcjeSzablonGlowny = "ALTER `lekcja` (`id`, `id_sali`, `id_nauczyciela`, `id_przedmiotu`) VALUES (NULL, '".$idSali."', '".$idNauczyciela."', '".$idPrzedmiotu."')";
 
-               //  $dodLekcjeSzablonDrugi = ",(NULL, '".$idSali."', '".$idNauczyciela."', '".$idPrzedmiotu."')";
-
-                if ($sqlTLekcja == "") {
-                    $sqlTLekcja = $dodLekcjeSzablonGlowny;
-                } else {
-                    $sqlTLekcja .= $dodLekcjeSzablonDrugi;
-                }
             }
-        }
+        }//koniec przejścia po wartościach $_POST
+
         if (mysqli_query($conn, $sqlTLekcja)){
 
         $sqlTPrzypLek = "";
@@ -300,16 +299,7 @@ window.addEventListener("resize", function() {
             
             global $dzien_tygodnia;
             
-            // var_dump($dzien_tygodnia);
-            //$dzien_tygodnia['poniedziałek']
             $idDniaTyg = $dzien_tygodnia[$selectEl[0]];
-            
-           //
-            // foreach ($dzien_tygodnia as $value) {//!!
-            //     if ($value['nazwa'] == $selectEl[0]) {
-            //         $idDniaTyg = $value['id'];//this is funky - pon twice at start
-            //     }
-            // }
            
             $nrLekcji = $selectEl[1];
             $idLekcji = $idsLekcji[$idLekcjiCounter];

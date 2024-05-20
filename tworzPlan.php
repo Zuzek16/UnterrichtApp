@@ -324,16 +324,12 @@ function getCookieValue(name)
         foreach ($_POST as $dzienTyg => $value) {
             foreach ($_POST[$dzienTyg] as $nrLekcji => $value){
                 foreach ($_POST[$dzienTyg][$nrLekcji] as $key => $value){
-
-                    if ($key == "nauczyciel") {
-                        
+                    if ($key == "nauczyciel") {       
                         $idNauczyciela = $value;
                     } else if ($key == "przedmiot"){
                         foreach ($przedmiot as $val) {
                             if ($value == $val['nazwa']) {
                                 $idPrzedmiotu = $val['id'];
-                                //JEŚLI PRZEDMIOT NULL TO NIE DODAJEMY!
-                                //można zrobić bez spr czy jest po kolei żeby tylko przeskoczyło samo
                             }
                         }
                     } else if ($key == "sala") {
@@ -392,23 +388,14 @@ function getCookieValue(name)
             
             global $dzien_tygodnia;
             
-            // var_dump($dzien_tygodnia);
-            //$dzien_tygodnia['poniedziałek']
             $idDniaTyg = $dzien_tygodnia[$selectEl[0]];
-            
-           //
-            // foreach ($dzien_tygodnia as $value) {//!!
-            //     if ($value['nazwa'] == $selectEl[0]) {
-            //         $idDniaTyg = $value['id'];//this is funky - pon twice at start
-            //     }
-            // }
            
             $nrLekcji = $selectEl[1];
             $idLekcji = $idsLekcji[$idLekcjiCounter];
 
-            if ($lastAddedDay == $idDniaTyg) {//didnt change
-                echo "<p>Znowu to samo </p>";
-            } 
+            // if ($lastAddedDay == $idDniaTyg) {//didnt change
+            //     echo "<p>Znowu to samo </p>";
+            // } 
             $PrzypLekGlowny = "INSERT INTO `przyporzadkowanie_lekcji` (`id`, `nr_lekcji`, `id_dnia_tyg`, `id_lekcji`) VALUES (NULL, '".$nrLekcji."', '".$idDniaTyg."', '".$idLekcji."')"; 
             $PrzypLekDrugi = ", (NULL, '".$nrLekcji."', '".$idDniaTyg."', '".$idLekcji."')";
             if ($sqlTPrzypLek == "") {

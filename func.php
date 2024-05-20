@@ -17,7 +17,7 @@ function addheader ($includeIndexLink = true) {
           </ul>";
           }
           echo "<ul>
-               <li><a href='chooseEditPlan.php'>Edytuj plan</a></li>
+               <li><a href='kontakt.php'>Kontakt</a></li>
                <li><a href='choosePlan.php'>Plany lekcji</a></li>
                <li><a href='dodPrzed.php'>Przedmioty</a></li>
           </ul>
