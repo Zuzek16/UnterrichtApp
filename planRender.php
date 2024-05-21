@@ -12,8 +12,6 @@ function getDanePlanLekcji($idPlanuLekcji) {
      $r_istnieje = mysqli_query($conn, $sqlIstniejePlan);
 
      if (!($row = mysqli_fetch_assoc($r_istnieje))) {
-
-          echo "<h3>Wystąpił błąd. Nie można znaleść nowego planu (nieistniejący identyfikator planu lekcji)</h3>";
          return false;
      }
 

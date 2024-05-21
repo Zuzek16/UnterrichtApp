@@ -23,6 +23,11 @@ function addheader ($includeIndexLink = true) {
           </ul>
      </nav>
 </header>";
+if ($includeIndexLink) {
+     echo "<a id='toggle' class='toggle indexBtn' href='index.php'>Strona główna</a>";
+} else {
+     echo "<a id='toggle' class='toggle indexBtn' href='tworzPlan.php'>Twórz plan</a>";
+}
 }
 
 function addFooter($startC = "", $endC = "") {

@@ -5,6 +5,7 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Usuwanie...</title>
      <link rel="stylesheet" href="styl.css">
+<a class="skip-link" href="#firstEl">Przejdź do głównej treści</a>
 </head>
 <body>
 <?php
@@ -14,7 +15,6 @@
 
      if (!isset($_GET['id'])) {
           echo "<p>Nie udało się pobrać informacji. Proszę spróbować jescze raz</p>
-          <a href='choosePlan.php'>Powrót</a>
           ";
      } else {
           $sqlLPlanu = "DELETE FROM `lekcje_planu` WHERE lekcje_planu.id_planu_lekcji =".$_GET['id'];
@@ -31,7 +31,7 @@
           }
      }
 ?>
-     <a href="choosePlan.php">Powrót</a>
+     <a id="firstEl" href="choosePlan.php">Powrót</a>
 <?php addFooter();?>
 </body>
 </html>

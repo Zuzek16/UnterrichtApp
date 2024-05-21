@@ -22,7 +22,7 @@
     <div class="dodKlase">
 
     <label for="nazwa">Nazwa klasy:</label>
-    <input type="text" name="nazwa" id="nazwa" required>
+    <input placeholder="nazwa klasy, np: 3PGP" type="text" name="nazwa" id="nazwa" value="<?php echo isset($_POST["nazwa"]) ? $_POST["nazwa"] : ''; ?>" required>
 
     <label for="szkola">Do której szkoły dodać?</label>
     <select name="szkola" id="szkola">
@@ -30,14 +30,12 @@
         <?php
         include_once "conn.php";
         foreach ($klasaSzkoly as $key => $value) {
-            echo "<option value='".$value['idSzkoly']."'>".$key."</option>";
+            echo "<option value='".$value['idSzkoly']."'".isSelected("szkola", $value['idSzkoly']).">".$key."</option>";
         }
         ?>
     </select>
 
-
     <label for="planL">Przypisz plan lekcji dla tworzonej klasy(opcjonalne):</label>
-    <!-- !!NOT WORKING -->
     <select name="planL" id="planL">
         <option value="">Wybierz</option>
         <?php

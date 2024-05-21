@@ -109,7 +109,7 @@ addheader();
 ?>
 </div>
 
-<div class="prawy">
+<div class="prawy scroll">
 <table>
      <tr>
           <th>ID</th>

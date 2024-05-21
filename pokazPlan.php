@@ -15,6 +15,7 @@ include "planRender.php";
      <link rel="stylesheet" href="styl.css">
 </head>
 <body>
+<a class="skip-link" href="#firstEl">Przejdź do głównej treści</a>
 <?php
 include_once ("func.php");
 addheader();
@@ -35,6 +36,7 @@ addheader();
           </div>
      </div>
 
+     <div id="firstEl">
      <?php
      if (isset($_GET['src'])) {
           if ($_GET['src'] == "edit") {
@@ -46,7 +48,7 @@ addheader();
           echo '<a href="choosePlan.php"> powrót do wyboru</a>';
      }
      ?>
-     <!-- <a href="choosePlan.php"> powrót do wyboru</a> -->
+     </div>
 
 <?php addFooter();?>
 

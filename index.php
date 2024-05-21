@@ -7,9 +7,7 @@
      <link rel="stylesheet" href="styl.css">
      <link rel="icon" type="image/x-icon" href="/zdj/UnterrichtAppLOGO.png">
      <!--
-          -!teacher table is not responsive
-          CSS!!!!!
-          get to responsivity 
+          tworzPlan.php - make the message when the creation is succefful apear on the top 
      -->
      </head>
      <body>

@@ -28,14 +28,26 @@ if (!x.matches) {
   document.cookie=`desktopMode=${desktopMode}; expires=Thu, 18 Dec 2090 12:00:00 UTC`;
 
 window.addEventListener("resize", function() {
+    let reload = false;
+    
     if (!x.matches) {
+        if (desktopMode != y) {
+            reload = false;
+        }
         desktopMode = y;
-  } else {
-    desktopMode = n;
-  }
+    } else {
+        if (desktopMode != n) {
+            reload = false;
+        }
+        desktopMode = n;
+    }
+
   document.cookie=`desktopMode=${desktopMode}; expires=Thu, 18 Dec 2090 12:00:00 UTC`;
 
-  location.reload();
+    if (reload == true) {
+        location.reload();
+    }
+
 }); 
 
     </script>
@@ -60,32 +72,13 @@ if ($tab == NULL) {
     <p><a href=szkola.php?edit=true>Dodaj ją</a></p>";
 } else {
 ?>
-<!-- <form action="" method="post">
-    <label for="szkolaAktyw">Dla której szkoły chcesz zrobić plan?</label>
-    <select name="szkolaAktyw" id="szkolaAktyw">
-        <option value="">Wybierz szkołę</option>
-        <?php
-        // foreach($tab as $szkola){echo "<option value='".$szkola['nazwa']."'>".$szkola['nazwa']."</option>";}
-        ?>
-    </select>
-    <button type="submit">Zatwierdź</button>
-</form> -->
 
-<p>
-    <?php
-    // if (isset($_POST['szkolaAktyw'])) {
-    //     echo "<p>Wybrana szkoła: ".($_POST['szkolaAktyw'])."</p>";
-    // } else {
-    //     echo "<p>Proszę wybrać szkołę</p>";
-    // }
-    ?>
-</p>
-<!-- <h3>Wskazówka: Jeśli potrzebujesz mieć mniej lekcji w danym dniu ostatnie z opcji pozostaw puste [WIP]</h3> -->
+<p>Wszystkie pola muszą być uzupełnione</p>
+
 <div class="tableContainer">
 <form action="#" method="post">
     <table class="calosc" id="calosc">
     <?php
-    
     if (str_contains($_COOKIE['desktopMode'], "1")) {
         echo "<tr>
         <th>nr</th>
@@ -138,7 +131,7 @@ if ($tab == NULL) {
 
     } else {
     global $nauczany_przedmiot;
-    for ($i=0; $i < 2; $i++) {//liczba lekcji
+    for ($i=0; $i < 2; $i++) {
         echo "<tr>";
         
         for ($j=0; $j < 5; $j++) {//dni tyg
@@ -164,7 +157,7 @@ if ($tab == NULL) {
             <th></th>
             <th>$dzien</th>
             </tr>";
-            for ($i=0; $i < 6; $i++) { 
+            for ($i=0; $i < 8; $i++) {//liczba lekcji
                 echo "<tr>";
                 echo "<td>";
                 echo $i + 1;

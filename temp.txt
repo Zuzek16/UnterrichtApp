@@ -241,3 +241,15 @@ SELECT szkola.id, szkola.nazwa, klasa.id, klasa.nazwa, klasa.id_szkola, klasa.id
             }
       }
 };
+
+
+<!-- <form action="" method="post">
+    <label for="szkolaAktyw">Dla której szkoły chcesz zrobić plan?</label>
+    <select name="szkolaAktyw" id="szkolaAktyw">
+        <option value="">Wybierz szkołę</option>
+        <?php
+        // foreach($tab as $szkola){echo "<option value='".$szkola['nazwa']."'>".$szkola['nazwa']."</option>";}
+        ?>
+<div class="tableContainer">
+<form action="#" method="post">
+    <table class="calosc" id="calosc">
