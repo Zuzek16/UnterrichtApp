@@ -81,20 +81,25 @@ addheader();
                 $sqlP .= $sqlPDrugi;
             }
         }
-        if (mysqli_query($conn, $sqlP)) {
-            echo "<p class='infZwrotna'>Pomyślnie dodano nauczane przedmioty.</p>";
-            $idSzkoly = $_POST['szkola'];
-            $sqlNSz = "INSERT INTO `nauczyciele_szkoly` (`id`, `id_nauczyciela`, `id_szkoly`) VALUES (NULL, '$idNau', '$idSzkoly');";
+        $idSzkoly = $_POST['szkola'];
+        $sqlNSz = "INSERT INTO `nauczyciele_szkoly` (`id`, `id_nauczyciela`, `id_szkoly`) VALUES (NULL, '$idNau', '$idSzkoly');";
+        if ($sqlP != "") {
+            if (mysqli_query($conn, $sqlP)) {//!!
+                echo "<p class='infZwrotna'>Pomyślnie dodano nauczane przedmioty.</p>";
+               
+               
+            } else {
+                echo "<p class='infZwrotna'>Wystąpił błąd podczas dodawnia nauczanych przedmiotów.</p>";
+            }
+        } else {
             if (mysqli_query($conn, $sqlNSz)) {
                 echo "<p class='infZwrotna'>Pomyślnie dodano nauczyciela do szkoły.</p>";
                 echo "<p><a class='infZwrotna' href='nau.php'>Załaduj nowe dane</a></p>";
             } else {
                 echo "<p class='infZwrotna'>Wystąpił błąd podczas dodawnia nauczyciela do szkoły.</p>";
             }
-
-        } else {
-            echo "<p class='infZwrotna'>Wystąpił błąd podczas dodawnia nauczanych przedmiotów.</p>";
         }
+       
 
         } else {
             echo "<p class='infZwrotna'>Nie udało się dodać nauczyciela.</p>";

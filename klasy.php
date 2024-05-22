@@ -53,9 +53,9 @@
         $nazwa = mysqli_real_escape_string($conn, trim($_POST['nazwa']));
 
         if (isset($_POST['planL']) && trim($_POST['planL']) != "") {
-            $sqlK = "INSERT INTO `klasa` (`id`, `nazwa`, `id_szkola`, `id_planu_lekcji`) VALUES (NULL, '".$_POST['nazwa']."', '".$_POST['szkola']."', '".$_POST['planL']."')";
+            $sqlK = "INSERT INTO `klasa` (`id`, `nazwa`, `id_szkola`, `id_planu_lekcji`) VALUES (NULL, '".htmlentities($nazwa)."', '".$_POST['szkola']."', '".$_POST['planL']."')";
         } else {
-            $sqlK = "INSERT INTO `klasa` (`id`, `nazwa`, `id_szkola`, `id_planu_lekcji`) VALUES (NULL, '".$_POST['nazwa']."', '".$_POST['szkola']."', 'NULL')";
+            $sqlK = "INSERT INTO `klasa` (`id`, `nazwa`, `id_szkola`, `id_planu_lekcji`) VALUES (NULL, '".htmlentities($nazwa)."', '".$_POST['szkola']."', 'NULL')";
         }
 
         if (mysqli_query($conn, $sqlK)) {

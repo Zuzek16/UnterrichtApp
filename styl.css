@@ -61,9 +61,9 @@ header p {
     text-align: center;
 }
 
-.last {
-    /* margin-bottom: 50px; */
-}
+/* .last {
+    margin-bottom: 50px;
+} */
 
 /* tabelka */
 table, tr, td, th {
@@ -114,6 +114,13 @@ h1,h2,h3,h4,h5,h6 {
 
 .end {
     margin-bottom: 100px;
+}
+
+.top {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    text-align: center;
 }
 
 .title {
@@ -310,6 +317,10 @@ body {
     div.main>p {
         margin: 0 calc(var(--p-margin)*0.4) 0 calc(var(--p-margin)*0.4);
     }
+
+    :root {
+        --wielkosc-tekstu: 18px;
+    }
 }
 
 
@@ -414,12 +425,11 @@ body {
         width: 100%;
     }
     
-    .breakup li {
-    }
+    /* .breakup li {
+    } */
 
     img:not(header img) {
         width: 100%;
     }
-
 
 }

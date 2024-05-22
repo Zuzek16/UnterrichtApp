@@ -197,8 +197,6 @@ window.addEventListener("resize", function() {
      <?php
      }//główny if 
      ?>
-
-     <!-- WORKINGs -->
      <?php
     function allSet($tab){
         $set = [];
@@ -226,17 +224,13 @@ window.addEventListener("resize", function() {
     global $nauczycielSelectIds;
     global $salaSelectIds;
 
-    // var_dump($przedmiotSelectIds);
     if (allset($przedmiotSelectIds) && allset($nauczycielSelectIds)&& allset($salaSelectIds)) {
-        // if (false) {
         $idSali;
         $idNauczyciela;
         $idPrzedmiotu;
 
         $sqlTLekcja = "";
-        //tabela 'lekcja' sql
         $editLekcjiDoWykonania = [];
-
         foreach ($_POST as $dzienTyg => $value) {
             foreach ($_POST[$dzienTyg] as $nrLekcji => $value){
                 foreach ($_POST[$dzienTyg][$nrLekcji] as $key => $value){
@@ -258,59 +252,41 @@ window.addEventListener("resize", function() {
                     }
                 }
                 global $editLekcjiDoWykonania;
-                //!!HERE
                 $idLekcji = "?";
                 $editLekcjaSql = "UPDATE `lekcja` SET `id_sali` = '$idSali', `id_nauczyciela` = '$idNauczyciela', `id_przedmiotu` = '$idPrzedmiotu' WHERE `lekcja`.`id` = $idLekcji";
 
                 array_push($editLekcjiDoWykonania);
-                //prepare the sql commands
-               //  $editLekcjeSzablonGlowny = "ALTER `lekcja` (`id`, `id_sali`, `id_nauczyciela`, `id_przedmiotu`) VALUES (NULL, '".$idSali."', '".$idNauczyciela."', '".$idPrzedmiotu."')";
-
             }
         }//koniec przejścia po wartościach $_POST
-
         if (mysqli_query($conn, $sqlTLekcja)){
-
         $sqlTPrzypLek = "";
         $nrLekcji;
         $idDniaTyg;
         $idLekcji;
         $idsLekcji = [];
         $idOstatLek = mysqli_insert_id($conn);
-
          $liczbaLekcji = count($przedmiotSelectIds);
             for ($i=$liczbaLekcji; $i >= 0; $i--) { 
-
                 if ($i == $liczbaLekcji) {
                     $idsLekcji[$i]=$idOstatLek;
                 } else {
                     $idsLekcji[$i]=$idsLekcji[$i+1]-1;
                 }
             }
-            // echo "<pre>IDS LEKCJI".var_dump($idsLekcji)."</pre>";
         $idLekcjiCounter = 0;
         $idsCounter = 0;
-
         $idsPrzyporzadkowanejLekcji[0] = 0;
-
         $lastAddedDay = -1;
-
         foreach ($przedmiotSelectIds as $el) {
-
             global $lastAddedDay;
-
             $selectEl = $el;
             $selectEl = (explode("]",$selectEl));
             $selectEl = (implode("",$selectEl));
             $selectEl = (explode("[",$selectEl));
-            
             global $dzien_tygodnia;
-            
             $idDniaTyg = $dzien_tygodnia[$selectEl[0]];
-           
             $nrLekcji = $selectEl[1];
             $idLekcji = $idsLekcji[$idLekcjiCounter];
-
             if ($lastAddedDay == $idDniaTyg) {//didnt change
                 echo "<p>Znowu to samo </p>";
             } 
@@ -325,22 +301,17 @@ window.addEventListener("resize", function() {
             $idLekcjiCounter ++;
             $idsCounter ++; 
         }
-
         if (mysqli_query($conn, $sqlTPrzypLek)){
-        // if (false){
             global $idsPrzyporzadkowanejLekcji;
             global $liczbaLekcji;
             $idOstatPrzypLekcji = mysqli_insert_id($conn);
-
             for ($i=$liczbaLekcji; $i >= 0; $i--) { 
-
                 if ($i == $liczbaLekcji) {
                     $idsPrzyporzadkowanejLekcji[$i]=$idOstatPrzypLekcji;
                 } else {
                     $idsPrzyporzadkowanejLekcji[$i]=$idsPrzyporzadkowanejLekcji[$i+1]-1;
                 }
             }
-
             $sqlPlanLekcji = "ALTER `plan_lekcji` (`id`) VALUES (NULL)";
             $sqlLekcjePlanu="";
             if (mysqli_query($conn, $sqlPlanLekcji)) {
@@ -354,7 +325,6 @@ window.addEventListener("resize", function() {
                     }
                 }
                 if ( mysqli_multi_query($conn,$sqlLekcjePlanu)) {
-                    // if (false){
                     echo "<p>GOTOWE</p>";
                     echo "<p>Udało Ci się storzyć nowy plan lekcji!</p>";
                     echo "<p>Przypisać go klasie?</p>
@@ -362,15 +332,12 @@ window.addEventListener("resize", function() {
                     <button class ='odpN'>NIE</button>
                     <br><br><a class='button' href='pokazNPlan.php?nowyPlan=".$idPlanuLekcji."' >Zobacz twój nowo stworzony plan tutaj</a>
                     ";
-                    //tutaj dać dwa przyciśki jesli tak to wyświetlamy formularz a jak nie to przenosimy na index.php
                 } else {
                     echo "<p>Wystąpił błąd w tworzeniu planu lekcji..</p>";
                 }
-
             } else {
                 echo "<p>Wystąpił błąd przy tworzeniu planu lekcji</p>";
             }
-
         } else {
             echo "<p>Wystąpił błąd w przyporządkowywaniu lekcji</p>";
         }
@@ -379,8 +346,6 @@ window.addEventListener("resize", function() {
         }
     }
 ?>
-     <!-- WORKINGs -->
-
 <?php addFooter();?>
 </body>
 </html>

@@ -38,7 +38,7 @@
           echo "<p>Nauczane przedmioty</p>";
           echo '<div class="checkboxes">';
           $nauPrzed = [];
-          foreach ($nauczany_przedmiot as $key => $value) {//spr jakie przedmioty uczą / move to a fn
+          foreach ($nauczany_przedmiot as $key => $value) {
                foreach ($value as $key2 => $value2) {
                     if ($imie." ".$nazwisko == $value2[1] && $_GET['id'] == $value2[0]) {
                          array_push($nauPrzed, $key);
@@ -123,9 +123,24 @@
                echo "<p class='infZwrotna'>Nie udało się usunąć starych danych nauczyciela</p>";
                echo"<a href='nau.php'>Powrót</a>";
               } else {
-               if (!mysqli_query($conn, $sqlNauPrzedSet)) {
-                    echo "<p class='infZwrotna'>Nie udało się dodać nowych danych nauczyciela</p>";
-               echo"<a href='nau.php'>Powrót</a>";
+               if ($sqlNauPrzedSet != "") {
+                    if (!mysqli_query($conn, $sqlNauPrzedSet)) {
+                         echo "<p class='infZwrotna'>Nie udało się dodać nowych danych nauczyciela</p>";
+                    echo"<a href='nau.php'>Powrót</a>";
+                    } else {
+                         if (!mysqli_query($conn, $sqlNauSz)) {
+                              echo "<p class='infZwrotna'>Nie udało się zmenić danych o szkole w której uczy nauczyciel</p>";
+                    echo"<a href='nau.php'>Powrót</a>";
+                         } else {
+                              echo "<p class='infZwrotna'>Pomyślnie zmieniono dane nauczyciela</p>";
+                 echo"<a href='nau.php'>Powrót</a>";
+                              ?>
+                              <script>
+                                   location.replace("http://localhost/proKon/UnterrichtApp/nau.php");
+                              </script>
+                              <?php
+                         }
+                    }
                } else {
                     if (!mysqli_query($conn, $sqlNauSz)) {
                          echo "<p class='infZwrotna'>Nie udało się zmenić danych o szkole w której uczy nauczyciel</p>";
@@ -135,12 +150,12 @@
             echo"<a href='nau.php'>Powrót</a>";
                          ?>
                          <script>
-                              //test this
                               location.replace("http://localhost/proKon/UnterrichtApp/nau.php");
                          </script>
                          <?php
                     }
                }
+              
               }
           }
      }

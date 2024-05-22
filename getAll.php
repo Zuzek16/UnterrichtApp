@@ -72,7 +72,7 @@ $przedmiotSelectIds = [];
 $nauczycielSelectIds = [];
 $salaSelectIds = [];
 
-function maCyfre($string) {//:bool
+function maCyfre($string) {
       foreach (str_split($string) as $litera) {
             if (is_numeric($litera)) {
                   return true;
@@ -111,12 +111,10 @@ echo "<table> <tr> <th colspan=3>$szkola</th> </tr> <tr>
                   
                   $idPlanuWritten = 0;
 
-                  echo "<td><a href='editKlasa.php?id=".$klasaSzkoly[$szkola][$i][0]."'>edytuj</a>/<a href='usuKl.php?id=".$klasaSzkoly[$szkola][$i][0]."'>usuń</a></td>";//edit/del
-
+                  echo "<td><a href='editKlasa.php?id=".$klasaSzkoly[$szkola][$i][0]."'>edytuj</a>/<a href='usuKl.php?id=".$klasaSzkoly[$szkola][$i][0]."'>usuń</a></td>";
                   echo "</tr>";
                   $i ++;
             }
-    
       } else {
             echo "<tr>";
             echo "<td>"."Brak"."</td>";//ID
@@ -124,10 +122,8 @@ echo "<table> <tr> <th colspan=3>$szkola</th> </tr> <tr>
             echo "<td>"."Brak"."</td>";//planLEkjci
             echo "</tr>";
         }
-        
 echo "</table>";
 }
-
 function lekcjaInput($licznikLekcji, $dzien, $edit = false, $dane = ""){
       global $przedmiot;
       global $sala;
@@ -147,15 +143,11 @@ function lekcjaInput($licznikLekcji, $dzien, $edit = false, $dane = ""){
       echo '<option value="">Wybierz przedmiot</option>';
       foreach ($przedmiot as $el) {
             if ($edit == true) {
-                  // echo "<script>console.log(".var_dump($dane).")</script>";
                   foreach ($dane as $key => $v) {
                         if ($v['nazwa'] == $el['nazwa'] && $v['nr_lekcji'] == $licznikLekcji && $v['dzienTyg'] == $dzien) {
-                        
-                              // echo '<option value="'.$el['nazwa'].'" selected> '.$v['idLekcji'].'</option>';
-
                         echo '<option value="'.$el['nazwa'].'" selected> '.$el['nazwa'].'</option>';
                         } else if ($v['nr_lekcji'] == $licznikLekcji && $v['dzienTyg'] == $dzien) {
-                              echo '<option value="'.$el['nazwa'].'"'.isSelected($przedmiotName, $el['nazwa'], true).'>'.$el['nazwa'].'</option>';//does this work
+                              echo '<option value="'.$el['nazwa'].'"'.isSelected($przedmiotName, $el['nazwa'], true).'>'.$el['nazwa'].'</option>';
                         }
                   }
             } else {
@@ -172,7 +164,6 @@ function lekcjaInput($licznikLekcji, $dzien, $edit = false, $dane = ""){
                   foreach ($dane as $key => $v) {
                         if ($v['nr_sali'] == $el['numer'] && $v['nr_lekcji'] == $licznikLekcji && $v['dzienTyg'] == $dzien) {
                               echo '<option value="'.$el['numer'].'"selected>'.$el['numer'].'</option>';
-
                         } elseif ($v['nr_lekcji'] == $licznikLekcji && $v['dzienTyg'] == $dzien) {
                               echo '<option value="'.$el['numer'].'"'.isSelected($salaName, $el['numer'], true).'>'.$el['numer'].'</option>';
                         }
@@ -183,19 +174,14 @@ function lekcjaInput($licznikLekcji, $dzien, $edit = false, $dane = ""){
       }
 
   echo "</select><br>";
-  
   echo '<select name='.$nauczycielName.' class="nauczyciel">';
-
   if ($edit==true) {
-
       foreach ($dane as $key => $v) {
             if ($v['nr_lekcji'] == $licznikLekcji && $v['dzienTyg'] == $dzien) {
                   echo '<option value="'.$v['id'].'"selected '.isSelected($nauczycielName, $v['id'], true).'>'.$v['imie'].' '.$v['nazwisko'].'</option>';
             }
       }
-
   }
-  
   echo '</select>';
 };
 ?>

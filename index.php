@@ -6,9 +6,6 @@
      <title>UnterrichtApp</title>
      <link rel="stylesheet" href="styl.css">
      <link rel="icon" type="image/x-icon" href="/zdj/UnterrichtAppLOGO.png">
-     <!--
-          tworzPlan.php - make the message when the creation is succefful apear on the top 
-     -->
      </head>
      <body>
           <!-- NO SKIP-LINK -->

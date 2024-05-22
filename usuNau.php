@@ -7,6 +7,7 @@
      <link rel="stylesheet" href="styl.css">
 </head>
 <body>
+<a class="skip-link" href="#firstEl">Przejdź do głównej treści</a>
 <?php
      include "conn.php";
      include_once "func.php";
@@ -34,7 +35,7 @@
            }
      }
 ?>
-     <a href="nau.php">Powrót</a>
+     <a href="nau.php" id="firstEl">Powrót</a>
      <?php
      addFooter();
      ?>

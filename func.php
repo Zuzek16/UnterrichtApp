@@ -40,8 +40,6 @@ function addFooter($startC = "", $endC = "") {
 
 function isSelected($inputName, $value, $planLekcji = false) {
      if ($planLekcji) {
-          // $set = [];
-          // foreach ($inputName as $el) {
               $postKey = $inputName;
               $postKey = (explode("]",$postKey));
               $postKey = (implode("",$postKey));
@@ -53,7 +51,7 @@ function isSelected($inputName, $value, $planLekcji = false) {
      } else {
           if(isset($_POST[$inputName]) && $_POST[$inputName] == $value) {
                return "selected";
-     } 
+          } 
      }
 }
 ?>

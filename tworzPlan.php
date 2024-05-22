@@ -428,27 +428,22 @@ function getCookieValue(name)
                         $sqlLekcjePlanu .= ",(NULL, '$idPlanuLekcji', '$el')";
                     }
                 }
+                echo "<h1>$sqlLeckcjePlanu</h1>";
                 if (mysqli_multi_query($conn,$sqlLekcjePlanu)) {
                     // if (false){
-                        echo "<div class='infZwrotna end'>";
+                        echo "<div class='infZwrotna top'>";
                     echo "<p>GOTOWE</p>";
                     echo "<p>Udało Ci się storzyć nowy plan lekcji!</p>";
                     echo "<a class='button' href='pokazNPlan.php?nowyPlan=".$idPlanuLekcji."' >Zobacz twój nowo stworzony plan tutaj</a>
+                    <a href='index.php'><button>OK</button></a>
                     ";
                     echo "</div>";
-                    // <p>Przypisać go klasie?</p>
-                    // <button class ='odpY'><a href='klasa.php'>TAK</a></button>/ 
-                    // <button class ='odpN'>NIE</button>
-                    // <br><br>
-                    //tutaj dać dwa przyciśki jesli tak to wyświetlamy formularz a jak nie to przenosimy na index.php
                 } else {
                     echo "<p>Wystąpił błąd w tworzeniu planu lekcji..</p>";
                 }
-
             } else {
                 echo "<p>Wystąpił błąd przy tworzeniu planu lekcji</p>";
             }
-
         } else {
             echo "<p>Wystąpił błąd w przyporządkowywaniu lekcji</p>";
         }
